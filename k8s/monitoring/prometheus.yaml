@@ -14,3 +14,8 @@ spec:
         name: prometheus-community
         namespace: flux-system
       interval: 5m
+    values:
+      prometheus:
+        prometheusSpec:
+          serviceMonitorSelectorNilUsesHelmValues: false
+          podMonitorSelectorNilUsesHelmValues: false
