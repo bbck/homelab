@@ -14,3 +14,5 @@ spec:
         name: 1password
         namespace: flux-system
       interval: 5m
+  values:
+    namespace: 1password
