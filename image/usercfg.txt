@@ -1,5 +1,0 @@
-# Give GPU least amount of dedicated memory in headless mode
-gpu_mem=16
-
-# Disable WiFi and Bluetooth
-dtoverlay=disable-wifi,disable-bt

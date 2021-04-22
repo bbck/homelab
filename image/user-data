@@ -1,25 +1,23 @@
 #cloud-config
 
-hostname: rpi-master
-manage_etc_hosts: true
+fqdn: rpi-master.bbck.local
 timezone: "America/New_York"
 
 chpasswd:
   expire: false
   list:
-    - pi:pi
+    - ubuntu:ubuntu
 
 users:
-  - name: pi
+  - name: ubuntu
     sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
     lock_passwd: true
     ssh_authorized_keys:
-      - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJM4OCiiQHVK8IyDR8hg0b1McU9VrzuPMNNq15pSEkzO96vGznvRbvbrZVQj5+9YD4DVrffnX93h1sqYfZv/Tso= work-laptop
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHlbHT/8ejIsD/ci9CfTk7jegwFjR+T5kCuKL7LFHz2G cboyle@cboyle-a02.vmware.com
 
-write_files:
-  - content: |
-      DPkg::Post-Invoke {"/bin/bash /boot/firmware/auto_decompress_kernel"; };
-    path: /etc/apt/apt.conf.d/90decompress-rpi-kernel
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
 
 final_message: "The system is configured after $UPTIME seconds"
