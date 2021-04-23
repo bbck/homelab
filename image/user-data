@@ -1,6 +1,6 @@
 #cloud-config
 
-fqdn: rpi-master.bbck.local
+fqdn: $HOST.bbck.local
 timezone: "America/New_York"
 
 chpasswd:
@@ -13,8 +13,8 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
     lock_passwd: true
-    ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHlbHT/8ejIsD/ci9CfTk7jegwFjR+T5kCuKL7LFHz2G cboyle@cboyle-a02.vmware.com
+    ssh_import_id:
+      - gh:bbck
 
 package_update: true
 package_upgrade: true
