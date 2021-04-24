@@ -1,0 +1,10 @@
+grafana.ini:
+  server:
+    domain: homelab.bbck.net
+    root_url: "%(protocol)s://%(domain)s/grafana"
+    serve_from_sub_path: true
+ingress:
+  enabled: true
+  hosts:
+    - homelab.bbck.net
+  path: /grafana
