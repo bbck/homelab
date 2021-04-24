@@ -1,0 +1,20 @@
+namespace: metallb-system
+
+resources:
+  - github.com/metallb/metallb//manifests?ref=v0.9.6
+
+configMapGenerator:
+  - name: config
+    files:
+      - config
+
+# TODO: auto-generate this
+# kubectl create secret generic -n metallb-system memberlist \
+#   --from-literal=secretkey="$(openssl rand -base64 128)
+# secretGenerator:
+#   - name: memberlist
+#     files:
+#       - secret
+
+generatorOptions:
+  disableNameSuffixHash: true
