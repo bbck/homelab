@@ -1,0 +1,6 @@
+grafana:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeProxy:
+  enabled: false
