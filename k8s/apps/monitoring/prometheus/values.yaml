@@ -1,5 +1,7 @@
 alertmanager:
   enabled: false
+kubeStateMetrics:
+  enabled: false
 nodeExporter:
   enabled: false
 pushgateway:
