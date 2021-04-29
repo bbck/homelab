@@ -18,3 +18,9 @@ datasources:
       access: proxy
       isDefault: true
       editable: false
+dashboards:
+  default:
+    flux-cluster:
+      url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
+    flux-control-plane:
+      url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
