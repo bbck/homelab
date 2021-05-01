@@ -7,6 +7,10 @@ resources:
 configMapGenerator:
   - name: traefik-values
     files:
-      - values.yaml=values.yaml
+      - values.yaml
+secretGenerator:
+  - name: traefik
+    files:
+      - CF_DNS_API_TOKEN=token.encrypted
 configurations:
   - kustomizeconfig.yaml

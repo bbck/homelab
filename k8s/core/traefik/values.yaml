@@ -1,0 +1,21 @@
+additionalArguments:
+  - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
+  - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+env:
+  - name: CF_DNS_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: traefik
+        key: CF_DNS_API_TOKEN
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+persistence:
+  enabled: true
+ports:
+  web:
+    redirectTo: websecure
+  websecure:
+    tls:
+      enabled: true
+      certResolver: letsencrypt
