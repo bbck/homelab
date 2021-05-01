@@ -5,7 +5,7 @@ env:
   - name: CF_DNS_API_TOKEN
     valueFrom:
       secretKeyRef:
-        name: traefik
+        name: cloudflare-token
         key: CF_DNS_API_TOKEN
 ingressClass:
   enabled: true
