@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - grafana.yaml
   - k8s-at-home.yaml
+  - longhorn.yaml
   - prometheus-community.yaml
   - traefik.yaml
