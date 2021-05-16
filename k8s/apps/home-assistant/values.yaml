@@ -1,0 +1,6 @@
+ingress:
+  enabled: true
+  hosts:
+  - host: homelab.bbck.net
+    paths:
+    - path: /home-assistant
