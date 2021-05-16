@@ -11,6 +11,8 @@ grafana.ini:
     check_for_updates: false
 ingress:
   enabled: true
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
   hosts:
     - homelab.bbck.net
   path: /grafana
