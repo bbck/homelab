@@ -1,0 +1,27 @@
+version: '3'
+
+tasks:
+  deps:
+    desc: Download playbooks from Ansible Galaxy
+    dir: ansible
+    cmds:
+      - ansible-galaxy install --force --role-file requirements.yml
+
+  play:
+    desc: Execute ansible
+    deps: [deps]
+    dir: ansible
+    cmds:
+      - ansible-playbook main.yml
+
+  ping:
+    desc: Ping nodes in ansible inventory
+    dir: ansible
+    cmds:
+      - ansible all -m ping
+
+  k3s-restart:
+    desc: Restart k3s everywhere
+    dir: ansible
+    cmds:
+      - ansible all -m ansible.builtin.systemd -a "name=k3s state=restarted"
