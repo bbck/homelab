@@ -2,6 +2,14 @@ additionalArguments:
   - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
   - --certificatesresolvers.letsencrypt.acme.email=letsencrypt@bbck.net
   - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+deployment:
+  initContainers:
+    - name: volume-permissions
+      image: busybox:1.31.1
+      command: ["sh", "-c", "chmod -Rv 600 /data/*"]
+      volumeMounts:
+        - name: data
+          mountPath: /data
 env:
   - name: CF_DNS_API_TOKEN
     valueFrom:
