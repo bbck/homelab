@@ -1,5 +1,6 @@
 additionalArguments:
   - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
+  - --certificatesresolvers.letsencrypt.acme.email=letsencrypt@bbck.net
   - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
 env:
   - name: CF_DNS_API_TOKEN
