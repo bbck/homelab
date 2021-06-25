@@ -19,6 +19,11 @@ env:
 ingressClass:
   enabled: true
   isDefaultClass: true
+logs:
+  access:
+    enabled: true
+  general:
+    level: DEBUG
 persistence:
   enabled: true
 ports:
