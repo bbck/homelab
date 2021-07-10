@@ -1,8 +1,9 @@
 ingress:
-  enabled: true
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-  hosts:
-  - host: homelab.bbck.net
-    paths:
-    - path: /home-assistant
+  main:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hosts:
+    - host: homelab.bbck.net
+      paths:
+      - path: /home-assistant
