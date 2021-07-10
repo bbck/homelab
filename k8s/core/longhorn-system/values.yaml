@@ -4,3 +4,5 @@ ingress:
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
   host: homelab.bbck.net
   path: /longhorn
+persistence:
+  defaultClassReplicaCount: 2
