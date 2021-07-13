@@ -7,3 +7,5 @@ k3s_server:
     - servicelb
     - traefik
     - local-storage
+  node-taint:
+    - "master=true:PreferNoSchedule"
