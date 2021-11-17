@@ -1,6 +1,6 @@
 #cloud-config
 
-fqdn: $HOST.bbck.local
+hostname: $HOST
 timezone: "America/New_York"
 
 chpasswd:
@@ -19,5 +19,8 @@ users:
 package_update: true
 package_upgrade: true
 package_reboot_if_required: true
+
+packages:
+  - linux-modules-extra-raspi # Required for veth
 
 final_message: "The system is configured after $UPTIME seconds"
