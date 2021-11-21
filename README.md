@@ -32,7 +32,8 @@ kubectl create secret generic sops-age \
 ```
 
 ## ToDo
-[] Better automation for image flashing
+- [ ] Better automation for image flashing
+- [ ] Automated k3s upgrade PRs
 
 ## Inspiration & Credits
 * [k8s-at-home](https://github.com/k8s-at-home)
