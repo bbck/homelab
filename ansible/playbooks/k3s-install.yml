@@ -1,0 +1,67 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pausing for 5 seconds...
+      pause:
+        seconds: 5
+  tasks:
+    - name: Install k3s
+      include_role:
+        name: xanmanning.k3s
+
+    # https://github.com/cilium/cilium/issues/10645
+    - name: Set Cilium network configuration
+      ansible.builtin.blockinfile:
+        path: /etc/sysctl.d/99-override_cilium_rp_filter.conf
+        mode: 0644
+        create: true
+        block: |
+          net.ipv4.conf.lxc*.rp_filter = 0
+      notify: Reload systemd-sysctl
+
+    - name: Flush handlers
+      meta: flush_handlers
+
+    - name: Check if cilium is installed
+      ansible.builtin.stat:
+        path: /etc/cni/net.d/05-cilium.conf
+      register: cilium_check
+
+    - name: Setup kubernetes networking
+      block:
+        - name: Download cilium-cli
+          ansible.builtin.get_url:
+            dest: /tmp/cilium-linux-arm64.tar.gz
+            url: https://github.com/cilium/cilium-cli/releases/latest/download/cilium-linux-arm64.tar.gz
+            checksum: sha256:https://github.com/cilium/cilium-cli/releases/latest/download/cilium-linux-arm64.tar.gz.sha256sum
+          when:
+            - k3s_control_node is defined
+            - k3s_control_node
+
+        - name: Extract cilium-cli into /usr/local/bin
+          ansible.builtin.unarchive:
+            src: /tmp/cilium-linux-arm64.tar.gz
+            remote_src: true
+            dest: /usr/local/bin
+          when:
+            - k3s_control_node is defined
+            - k3s_control_node
+
+        - name: Install cilium
+          ansible.builtin.command: cilium install --wait
+          environment:
+            KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+      when:
+        - cilium_check.exists is not defined
+        - k3s_control_node is defined
+        - k3s_control_node
+
+  handlers:
+    - name: Reload systemd-sysctl
+      systemd:
+        name: systemd-sysctl
+        state: reloaded

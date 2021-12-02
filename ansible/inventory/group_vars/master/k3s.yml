@@ -2,10 +2,13 @@
 k3s_control_node: true
 k3s_server:
   write-kubeconfig-mode: "0644"
+  flannel-backend: "none"
   disable:
+    - flannel
     - metrics-server
     - servicelb
     - traefik
-    - local-storage
+  disable-network-policy: true
+  disable-cloud-controller: true
   node-taint:
     - "master=true:PreferNoSchedule"
