@@ -9,6 +9,10 @@ diskutil mountDisk /dev/disk2
 envsubst < image/config.txt > /Volumes/system-boot/config.txt
 envsubst < image/network-config > /Volumes/system-boot/network-config
 envsubst < image/user-data > /Volumes/system-boot/user-data
+read -s AUTH_KEY
+echo $AUTH_KEY > /Volumes/system-boot/tailscale-authkey
+unset AUTH_KEY
+sync
 diskutil unmountDisk /dev/disk2
 ```
 
