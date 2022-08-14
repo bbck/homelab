@@ -1,8 +1,0 @@
-version: 2
-ethernets:
-  eth0:
-    dhcp4: no
-    addresses: [$IP/24]
-    gateway4: $GW
-    nameservers:
-      addresses: [1.1.1.1, 1.0.0.1]

@@ -1,7 +1,7 @@
 #cloud-config
 
 hostname: $HOST
-timezone: "America/New_York"
+timezone: "America/Los_Angeles"
 
 chpasswd:
   expire: false
@@ -30,11 +30,12 @@ packages:
   - linux-modules-extra-raspi # Required for veth
   - tailscale
 
+bootcmd:
+  - [sleep, "60"] # wait for clock sync
+
 runcmd:
-  - [ tailscale, up, --authkey, "file:/boot/firmware/tailscale-authkey" ]
-  - [ rm, /boot/firmware/tailscale-authkey ]
+  - [tailscale, up, --authkey, "file:/boot/firmware/tailscale-authkey"]
+  - [rm, /boot/firmware/tailscale-authkey]
 
 # For debugging
-output: { all: "| tee -a /boot/firmware/cloud-init-output.log" }
-
-final_message: "The system is configured after $UPTIME seconds"
+#output: { all: "| tee -a /boot/firmware/cloud-init-output.log" }

@@ -1,19 +1,24 @@
 # homelab
 
 ## Raspberry Pi Setup
-Flash with [Ubuntu Server 21.10](https://ubuntu.com/download/raspberry-pi). Once flashed copy over the contents of image/ for headless setup.
+Run the flash script with an [Ubuntu Server 22.04](https://ubuntu.com/download/raspberry-pi) image. Once flashed copy over the contents of image/ for headless setup.
 
 ```
-export IP=192.168.16.10 GW=192.168.16.1 HOST=rpi-master
-diskutil mountDisk /dev/disk2
-envsubst < image/config.txt > /Volumes/system-boot/config.txt
-envsubst < image/network-config > /Volumes/system-boot/network-config
-envsubst < image/user-data > /Volumes/system-boot/user-data
-read -s AUTH_KEY
-echo $AUTH_KEY > /Volumes/system-boot/tailscale-authkey
-unset AUTH_KEY
-sync
-diskutil unmountDisk /dev/disk2
+❯ ./image/flash.sh $HOME/Downloads/ubuntu-22.04-preinstalled-server-arm64+raspi.img
+Password:
+HOSTNAME: rpi-node-01
+TAILSCALE AUTH KEY:
+Unmount of all volumes on disk2 was successful
+Flashing onto /dev/disk2
+..........
+3755+0 records in
+3755+0 records out
+3937402880 bytes transferred in 300.710638 secs (13093660 bytes/sec)
+re-mounting disk...
+One or more volume(s) failed to mount
+copying files...
+unmounting disk...
+Unmount of all volumes on disk2 was successful
 ```
 
 ## Ansible
