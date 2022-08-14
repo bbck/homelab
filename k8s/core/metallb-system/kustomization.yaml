@@ -1,9 +1,0 @@
-namespace: metallb-system
-
-resources:
-  - github.com/metallb/metallb//manifests?ref=v0.13.4
-  - config.yaml
-  - secret.yaml
-
-generatorOptions:
-  disableNameSuffixHash: true
