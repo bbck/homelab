@@ -1,3 +1,0 @@
----
-ansible_host: "192.168.16.12"
-ansible_user: ubuntu

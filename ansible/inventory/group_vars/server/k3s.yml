@@ -11,4 +11,4 @@ k3s_server:
   disable-network-policy: true
   disable-cloud-controller: true
   node-taint:
-    - "master=true:PreferNoSchedule"
+    - "node-role.kubernetes.io/control-plane:PreferNoSchedule"

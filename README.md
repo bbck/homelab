@@ -24,8 +24,10 @@ Unmount of all volumes on disk2 was successful
 ## Ansible
 
 ```
-ansible-galaxy install -r requirements.yml
-ansible-playbook main.yml
+task ansible:deps
+task ansible:play -- os
+task ansible:play -- k3s
+task anisble:play -- cilium
 ```
 
 ## Bootstraping Flux

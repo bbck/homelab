@@ -13,21 +13,14 @@ tasks:
     cmds:
       - ansible all -m ping
 
-  k3s-install:
-    desc: Install k3s
-    deps: [deps]
+  play:
+    desc: Run ansible playbook
     dir: ansible
     cmds:
-      - ansible-playbook playbooks/k3s-install.yml
+      - ansible-playbook playbooks/{{.CLI_ARGS}}.yml
 
   k3s-restart:
     desc: Restart k3s everywhere
     dir: ansible
     cmds:
       - ansible all -m ansible.builtin.systemd -a "name=k3s state=restarted"
-
-  k3s-nuke:
-    desc: Nuke k3s everywhere
-    dir: ansible
-    cmds:
-      - ansible-playbook playbooks/k3s-nuke.yml
