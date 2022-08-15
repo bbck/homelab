@@ -8,11 +8,11 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: cillium
+      chart: cilium
       version: 1.12.0
       sourceRef:
         kind: HelmRepository
-        name: cillium
+        name: cilium
         namespace: flux-system
       interval: 1m
   install:
