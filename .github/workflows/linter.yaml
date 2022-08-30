@@ -1,11 +1,6 @@
 ---
 name: Super Linter
 
-#
-# Documentation:
-# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
-#
-
 on:
   push:
   pull_request:
@@ -25,8 +20,6 @@ jobs:
       - name: Super Linter
         uses: github/super-linter@v4
         env:
-          VALIDATE_ALL_CODEBASE: true
-          VALIDATE_KUBERNETES_KUBEVAL: true
-          KUBERNETES_KUBEVAL_OPTIONS: --schema-location https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/
+          VALIDATE_KUBERNETES_KUBEVAL: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
