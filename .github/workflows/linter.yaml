@@ -27,5 +27,6 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_KUBERNETES_KUBEVAL: false
+          KUBERNETES_KUBEVAL_OPTIONS: --schema-location https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
