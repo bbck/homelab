@@ -26,7 +26,7 @@ jobs:
         uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: true
-          VALIDATE_KUBERNETES_KUBEVAL: false
+          VALIDATE_KUBERNETES_KUBEVAL: true
           KUBERNETES_KUBEVAL_OPTIONS: --schema-location https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
