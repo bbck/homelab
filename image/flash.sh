@@ -2,7 +2,7 @@
 
 set -e
 
-DISK="/dev/disk2"
+DISK="/dev/disk4"
 
 sudo -v
 read -r -p "HOSTNAME: " HOST
@@ -27,7 +27,8 @@ diskutil mountDisk $DISK
 echo "copying files..."
 # We do not want variable expansion in the SHELL-FORMAT argument
 # shellcheck disable=SC2016
-envsubst '$HOST' < "$(basename "${0}")/user-data" > /Volumes/system-boot/user-data
+export HOST
+envsubst '${HOST}' < "$(dirname "${0}")/user-data" > /Volumes/system-boot/user-data
 echo "$HOST" > /Volumes/system-boot/hostname
 echo "$AUTH_KEY" > /Volumes/system-boot/tailscale-authkey
 
