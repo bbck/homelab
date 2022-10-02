@@ -11,6 +11,14 @@
         "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
       ],
       "datasourceTemplate": "helm"
+    },
+    {
+      "fileMatch": [
+        "ansible/.+\\.yml$"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\n.*?\"(?<currentValue>.*)\"\n"
+      ]
     }
   ]
 }
