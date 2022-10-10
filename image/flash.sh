@@ -7,6 +7,7 @@ DISK="/dev/disk4"
 sudo -v
 read -r -p "HOSTNAME: " HOST
 read -r -s -p "TAILSCALE AUTH KEY: " AUTH_KEY
+export HOST
 echo
 
 echo "flashing onto $DISK"
@@ -27,7 +28,6 @@ diskutil mountDisk $DISK
 echo "copying files..."
 # We do not want variable expansion in the SHELL-FORMAT argument
 # shellcheck disable=SC2016
-export HOST
 envsubst '${HOST}' < "$(dirname "${0}")/user-data" > /Volumes/system-boot/user-data
 echo "$HOST" > /Volumes/system-boot/hostname
 echo "$AUTH_KEY" > /Volumes/system-boot/tailscale-authkey

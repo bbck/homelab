@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Base configuration for Ubuntu
+  hosts: all
   become: true
   gather_facts: true
   any_errors_fatal: true
@@ -13,4 +14,4 @@
       ansible.builtin.blockinfile:
         path: /etc/hosts
         block: |
-          127.0.1.1   {{ inventory_hostname }}
+          127.0.1.1 {{ inventory_hostname }}
