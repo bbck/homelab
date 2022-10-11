@@ -2,16 +2,16 @@
   "extends": [
     "config:base"
   ],
+  "kubernetes": {
+    "fileMatch": ["k8s/.+\\.yaml$"]
+  },
+  "flux": {
+    "fileMatch": ["k8s/.+\\.yaml$"]
+  },
+  "helm-values": {
+    "fileMatch": ["k8s/.+\\.yaml$"]
+  },
   "regexManagers": [
-    {
-      "fileMatch": [
-        "k8s/.+release\\.yaml$"
-      ],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
     {
       "fileMatch": [
         "ansible/.+\\.yml$"
