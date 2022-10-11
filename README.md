@@ -50,6 +50,12 @@ kubectl create secret generic sops-age \
 kubectl apply -k ./k8s/base/flux-system
 ```
 
+## pre-commit
+
+```sh
+pre-commit install --install-hooks
+```
+
 ## Inspiration & Credits
 * [k8s-at-home](https://github.com/k8s-at-home)
 * [raspbernetes](https://github.com/raspbernetes)
