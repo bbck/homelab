@@ -24,6 +24,13 @@ spec:
       retries: 5
   values:
     grafana:
+      grafana.ini:
+        auth.anonymous:
+          enabled: true
+        server:
+          domain: homelab.bbck.net
+          root_url: "%(protocol)s://%(domain)s/grafana"
+          serve_from_sub_path: true
       ingress:
         enabled: true
         annotations:
