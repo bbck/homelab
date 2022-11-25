@@ -23,3 +23,11 @@ spec:
     remediation:
       retries: 5
   values:
+    grafana:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+        hosts:
+          - homelab.bbck.net
+        path: /grafana
