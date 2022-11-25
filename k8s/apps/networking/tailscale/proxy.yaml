@@ -5,6 +5,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: proxy
+  namespace: networking
 spec:
   serviceAccountName: "tailscale"
   initContainers:
