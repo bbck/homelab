@@ -4,3 +4,4 @@ resources:
   - 1password.yaml
   - cilium.yaml
   - prometheus-community.yaml
+  - traefik.yaml
