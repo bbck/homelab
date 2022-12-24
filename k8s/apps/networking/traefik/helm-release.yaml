@@ -23,6 +23,8 @@ spec:
     remediation:
       retries: 5
   values:
+    deployment:
+      replicas: 2
     logs:
       access:
         enabled: true
@@ -30,3 +32,14 @@ spec:
       type: ClusterIP
       spec:
         clusterIP: 10.43.0.100
+    metrics:
+      prometheus:
+        serviceMonitor:
+          interval: 30s
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "50Mi"
+      limits:
+        cpu: "300m"
+        memory: "150Mi"
