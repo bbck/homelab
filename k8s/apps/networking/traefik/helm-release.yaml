@@ -32,6 +32,8 @@ spec:
       type: ClusterIP
       spec:
         clusterIP: 10.43.0.100
+      internal:
+        type: ClusterIP
     metrics:
       prometheus:
         serviceMonitor:
