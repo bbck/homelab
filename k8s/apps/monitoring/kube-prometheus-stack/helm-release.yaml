@@ -28,13 +28,10 @@ spec:
         auth.anonymous:
           enabled: true
         server:
-          domain: homelab.bbck.net
+          domain: homelab.taild1477.ts.net
           root_url: "%(protocol)s://%(domain)s/grafana"
           serve_from_sub_path: true
       ingress:
         enabled: true
-        annotations:
-          kubernetes.io/ingress.class: traefik
-        hosts:
-          - homelab.bbck.net
+        ingressClassName: traefik
         path: /grafana
