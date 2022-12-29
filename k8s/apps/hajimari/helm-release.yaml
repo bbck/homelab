@@ -36,6 +36,31 @@ spec:
           icon: simple-icons:duckduckgo
           searchUrl: https://duckduckgo.com/?q={query}
           url: https://duckduckgo.com
+      bookmarks:
+        - group: News
+          bookmarks:
+            - name: The New York Times
+              url: https://www.nytimes.com
+        - group: Aggregators
+          bookmarks:
+            - name: Hacker News
+              url: https://news.ycombinator.com
+            - name: reddit
+              url: https://www.reddit.com
+        - group: Finance
+          bookmarks:
+            - name: YNAB
+              url: https://app.youneedabudget.com
+        - group: Code
+          bookmarks:
+            - name: GitHub
+              url: https://github.com
+        - group: Video
+          bookmarks:
+            - name: YouTube
+              url: https://www.youtube.com
+            - name: Twitch
+              url: https://www.twitch.tv
     ingress:
       main:
         enabled: true
