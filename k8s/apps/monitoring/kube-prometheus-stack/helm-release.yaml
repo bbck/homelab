@@ -35,6 +35,7 @@ spec:
         enabled: true
         annotations:
           hajimari.io/enable: "true"
+          hajimari.io/appName: "grafana"
           hajimari.io/icon: "mdi:chart-areaspline"
         ingressClassName: traefik
         hosts:
