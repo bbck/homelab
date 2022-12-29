@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - 1password.yaml
   - cilium.yaml
+  - hajimari.yaml
   - prometheus-community.yaml
   - traefik.yaml
