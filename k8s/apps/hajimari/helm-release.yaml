@@ -23,9 +23,11 @@ spec:
   values:
     hajimari:
       name: Chris
+      lightTheme: paper
+      darkTheme: espresso
       namespaceSelector:
-        matchNames:
-          - monitoring
+        any: true
+      defaultSearchProvider: DuckDuckGo
       searchProviders:
         - name: DuckDuckGo
           token: d
@@ -37,7 +39,7 @@ spec:
         enabled: true
         ingressClassName: traefik
         hosts:
-          - host: "*"
+          - host: homelab
             paths:
               - path: /
                 pathType: Prefix
