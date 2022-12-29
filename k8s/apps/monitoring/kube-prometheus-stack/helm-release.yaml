@@ -33,5 +33,10 @@ spec:
           serve_from_sub_path: true
       ingress:
         enabled: true
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "mdi:chart-areaspline"
         ingressClassName: traefik
+        hosts:
+          - homelab
         path: /grafana
