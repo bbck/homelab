@@ -36,7 +36,7 @@ spec:
           icon: simple-icons:duckduckgo
           searchUrl: https://duckduckgo.com/?q={query}
           url: https://duckduckgo.com
-      bookmarks:
+      globalBookmarks:
         - group: News
           bookmarks:
             - name: The New York Times
