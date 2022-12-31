@@ -29,11 +29,11 @@ spec:
       access:
         enabled: true
     service:
-      type: ClusterIP
-      spec:
-        clusterIP: 10.43.0.100
+      type: LoadBalancer
       internal:
         type: ClusterIP
+        spec:
+          clusterIP: 10.43.0.100
     metrics:
       prometheus:
         serviceMonitor:
