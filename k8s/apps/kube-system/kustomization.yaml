@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - https://kube-vip.io/manifests/rbac.yaml
   - ./kube-vip.yaml
-  - ./kube-vip-cloud-provider.yaml
+  - ./kube-vip-cloud-controller.yaml
