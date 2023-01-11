@@ -1,53 +1,9 @@
-resource "cloudflare_record" "mx_10" {
-  zone_id  = var.zone_id
-  name     = var.domain
-  value    = "in1-smtp.messagingengine.com"
-  type     = "MX"
-  priority = 10
-}
-
-resource "cloudflare_record" "mx_20" {
-  zone_id  = var.zone_id
-  name     = var.domain
-  value    = "in2-smtp.messagingengine.com"
-  type     = "MX"
-  priority = 20
-}
-
-resource "cloudflare_record" "dkim_1" {
-  zone_id = var.zone_id
-  name    = "fm1._domainkey"
-  value   = "fm1.${var.domain}.dkim.fmhosted.com"
-  type    = "CNAME"
-}
-
-resource "cloudflare_record" "dkim_2" {
-  zone_id = var.zone_id
-  name    = "fm2._domainkey"
-  value   = "fm2.${var.domain}.dkim.fmhosted.com"
-  type    = "CNAME"
-}
-
-resource "cloudflare_record" "dkim_3" {
-  zone_id = var.zone_id
-  name    = "fm3._domainkey"
-  value   = "fm3.${var.domain}.dkim.fmhosted.com"
-  type    = "CNAME"
-}
-
-resource "cloudflare_record" "spf" {
-  zone_id = var.zone_id
-  name    = var.domain
-  value   = "v=spf1 include:spf.messagingengine.com ?all"
-  type    = "TXT"
-}
-
 resource "cloudflare_record" "_submission" {
   zone_id = var.zone_id
   name    = "_submission._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_submission"
     proto    = "_tcp"
     name     = "smtp"
@@ -63,7 +19,7 @@ resource "cloudflare_record" "_imap" {
   name    = "_imap._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_imap"
     proto    = "_tcp"
     name     = "imap"
@@ -79,7 +35,7 @@ resource "cloudflare_record" "_imaps" {
   name    = "_imaps._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_imaps"
     proto    = "_tcp"
     name     = "imaps"
@@ -95,7 +51,7 @@ resource "cloudflare_record" "_pop3" {
   name    = "_pop3._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_pop3"
     proto    = "_tcp"
     name     = "pop3"
@@ -111,7 +67,7 @@ resource "cloudflare_record" "_pop3s" {
   name    = "_pop3s._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_pop3s"
     proto    = "_tcp"
     name     = "pop3s"
@@ -127,7 +83,7 @@ resource "cloudflare_record" "_jmap" {
   name    = "_jmap._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_jmap"
     proto    = "_tcp"
     name     = "jmap"
@@ -143,7 +99,7 @@ resource "cloudflare_record" "_carddav" {
   name    = "_carddav._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_carddav"
     proto    = "_tcp"
     name     = "carddav"
@@ -159,7 +115,7 @@ resource "cloudflare_record" "_carddavs" {
   name    = "_carddavs._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_carddavs"
     proto    = "_tcp"
     name     = "carddavs"
@@ -175,7 +131,7 @@ resource "cloudflare_record" "_caldav" {
   name    = "_caldav._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_caldav"
     proto    = "_tcp"
     name     = "caldav"
@@ -191,7 +147,7 @@ resource "cloudflare_record" "_caldavs" {
   name    = "_caldavs._tcp"
   type    = "SRV"
 
-  data = {
+  data {
     service  = "_caldavs"
     proto    = "_tcp"
     name     = "caldavs"
