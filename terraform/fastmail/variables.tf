@@ -6,9 +6,9 @@ variable "zone_id" {
   type = string
 }
 
-variable "disable_email" {
+variable "email_delivery" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "dmarc_extra" {

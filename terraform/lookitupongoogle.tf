@@ -7,7 +7,7 @@ module "lookitupongoogle_dot_com_fastmail" {
 
   domain        = "lookitupongoogle.com"
   zone_id       = cloudflare_zone.lookitupongoogle_dot_com.id
-  disable_email = true
+  email_delivery = false
 }
 
 resource "cloudflare_record" "lookitupongoogle_dot_com_root" {
