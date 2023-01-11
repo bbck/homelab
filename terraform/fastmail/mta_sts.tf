@@ -5,10 +5,6 @@ resource "cloudflare_record" "mta_sts" {
   type    = "TXT"
 }
 
-resource "cloudflare_workers_kv_namespace" "mta_sts" {
-  title = "mta-sts.${var.domain}"
-}
-
 resource "cloudflare_worker_script" "mta_sts" {
   name    = "mta-sts-${replace(var.domain, ".", "-")}"
   content = file("${path.module}/mta-sts.js")
