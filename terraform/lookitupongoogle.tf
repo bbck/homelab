@@ -5,8 +5,8 @@ resource "cloudflare_zone" "lookitupongoogle_dot_com" {
 module "lookitupongoogle_dot_com_fastmail" {
   source = "./fastmail"
 
-  domain = "lookitupongoogle.com"
-  zone_id = cloudflare_zone.lookitupongoogle_dot_com.id
+  domain        = "lookitupongoogle.com"
+  zone_id       = cloudflare_zone.lookitupongoogle_dot_com.id
   disable_email = true
 }
 
@@ -27,8 +27,8 @@ resource "cloudflare_record" "lookitupongoogle_dot_com_www" {
 }
 
 resource "cloudflare_page_rule" "lookitupongoogle_dot_com_subdomain" {
-  zone_id = cloudflare_zone.lookitupongoogle_dot_com.id
-  target  = "*.lookitupongoogle.com/*"
+  zone_id  = cloudflare_zone.lookitupongoogle_dot_com.id
+  target   = "*.lookitupongoogle.com/*"
   priority = 1
 
   actions {
@@ -40,8 +40,8 @@ resource "cloudflare_page_rule" "lookitupongoogle_dot_com_subdomain" {
 }
 
 resource "cloudflare_page_rule" "lookitupongoogle_dot_com_root" {
-  zone_id = cloudflare_zone.lookitupongoogle_dot_com.id
-  target  = "lookitupongoogle.com/*"
+  zone_id  = cloudflare_zone.lookitupongoogle_dot_com.id
+  target   = "lookitupongoogle.com/*"
   priority = 2
 
   actions {
