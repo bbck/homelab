@@ -1,6 +1,6 @@
 resource "cloudflare_record" "mx_10" {
   zone_id  = var.zone_id
-  name     = "@"
+  name     = var.domain
   value    = "in1-smtp.messagingengine.com"
   type     = "MX"
   priority = 10
@@ -8,7 +8,7 @@ resource "cloudflare_record" "mx_10" {
 
 resource "cloudflare_record" "mx_20" {
   zone_id  = var.zone_id
-  name     = "@"
+  name     = var.domain
   value    = "in2-smtp.messagingengine.com"
   type     = "MX"
   priority = 20
@@ -42,7 +42,7 @@ resource "cloudflare_record" "dkim_3" {
 resource "cloudflare_record" "spf" {
   count   = var.disable_email ? 0 : 1
   zone_id = var.zone_id
-  name    = "@"
+  name    = var.domain
   value   = "v=spf1 include:spf.messagingengine.com ~all"
   type    = "TXT"
 }
@@ -50,7 +50,7 @@ resource "cloudflare_record" "spf" {
 resource "cloudflare_record" "spf_disabled" {
   count   = var.disable_email ? 1 : 0
   zone_id = var.zone_id
-  name    = "@"
+  name    = var.domain
   value   = "v=spf1 -all"
   type    = "TXT"
 }

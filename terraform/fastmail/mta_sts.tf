@@ -10,7 +10,7 @@ resource "cloudflare_workers_kv_namespace" "mta_sts" {
 }
 
 resource "cloudflare_worker_script" "mta_sts" {
-  name    = "mta-sts"
+  name    = "mta-sts.${var.domain}"
   content = file("${path.module}/mta-sts.js")
 }
 
