@@ -58,6 +58,6 @@ resource "cloudflare_record" "spf_disabled" {
 resource "cloudflare_record" "_dmarc" {
   zone_id = var.zone_id
   name    = "_dmarc"
-  value   = "v=DMARC1; p=reject; ${var.dmarc_extra}"
+  value   = "v=DMARC1; p=reject;%{ if var.dmarc_extra != "" } ${var.dmarc_extra}%{ endif }"
   type    = "TXT"
 }

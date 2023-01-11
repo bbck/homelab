@@ -6,7 +6,7 @@ resource "cloudflare_record" "_submission" {
   data {
     service  = "_submission"
     proto    = "_tcp"
-    name     = "smtp"
+    name     = "smtp.${var.domain}"
     priority = 0
     weight   = 1
     port     = 587
@@ -22,7 +22,7 @@ resource "cloudflare_record" "_imap" {
   data {
     service  = "_imap"
     proto    = "_tcp"
-    name     = "imap"
+    name     = "imap.${var.domain}"
     priority = 0
     weight   = 0
     port     = 0
@@ -38,7 +38,7 @@ resource "cloudflare_record" "_imaps" {
   data {
     service  = "_imaps"
     proto    = "_tcp"
-    name     = "imaps"
+    name     = "imaps.${var.domain}"
     priority = 0
     weight   = 1
     port     = 993
@@ -54,7 +54,7 @@ resource "cloudflare_record" "_pop3" {
   data {
     service  = "_pop3"
     proto    = "_tcp"
-    name     = "pop3"
+    name     = "pop3.${var.domain}"
     priority = 0
     weight   = 0
     port     = 0
@@ -70,7 +70,7 @@ resource "cloudflare_record" "_pop3s" {
   data {
     service  = "_pop3s"
     proto    = "_tcp"
-    name     = "pop3s"
+    name     = "pop3s.${var.domain}"
     priority = 10
     weight   = 1
     port     = 995
@@ -86,7 +86,7 @@ resource "cloudflare_record" "_jmap" {
   data {
     service  = "_jmap"
     proto    = "_tcp"
-    name     = "jmap"
+    name     = "jmap.${var.domain}"
     priority = 0
     weight   = 1
     port     = 443
@@ -102,7 +102,7 @@ resource "cloudflare_record" "_carddav" {
   data {
     service  = "_carddav"
     proto    = "_tcp"
-    name     = "carddav"
+    name     = "carddav.${var.domain}"
     priority = 0
     weight   = 0
     port     = 0
@@ -118,7 +118,7 @@ resource "cloudflare_record" "_carddavs" {
   data {
     service  = "_carddavs"
     proto    = "_tcp"
-    name     = "carddavs"
+    name     = "carddavs.${var.domain}"
     priority = 0
     weight   = 1
     port     = 443
@@ -134,7 +134,7 @@ resource "cloudflare_record" "_caldav" {
   data {
     service  = "_caldav"
     proto    = "_tcp"
-    name     = "caldav"
+    name     = "caldav.${var.domain}"
     priority = 0
     weight   = 0
     port     = 0
@@ -150,7 +150,7 @@ resource "cloudflare_record" "_caldavs" {
   data {
     service  = "_caldavs"
     proto    = "_tcp"
-    name     = "caldavs"
+    name     = "caldavs.${var.domain}"
     priority = 0
     weight   = 1
     port     = 443
