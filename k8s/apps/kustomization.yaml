@@ -5,3 +5,4 @@ resources:
   - hajimari
   - monitoring
   - networking
+  - tailscale
