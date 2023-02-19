@@ -30,10 +30,8 @@ spec:
         enabled: true
     service:
       type: LoadBalancer
-      internal:
-        type: ClusterIP
-        spec:
-          clusterIP: 10.43.0.100
+      spec:
+        loadBalancerClass: tailscale
     metrics:
       prometheus:
         serviceMonitor:
