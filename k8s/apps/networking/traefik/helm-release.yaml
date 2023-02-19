@@ -32,6 +32,8 @@ spec:
       type: LoadBalancer
       spec:
         loadBalancerClass: tailscale
+      annotations:
+        tailscale.com/hostname: homelab
     metrics:
       prometheus:
         serviceMonitor:
