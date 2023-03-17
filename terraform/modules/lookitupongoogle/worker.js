@@ -1,14 +1,15 @@
-export default {
-  async fetch (request) {
-    const base = 'https://www.google.com'
-    const statusCode = 301
+const base = 'https://www.google.com'
+const statusCode = 301
 
-    const url = new URL(request.url)
-    const { pathname, search } = url
+async function handleRequest (request) {
+  const url = new URL(request.url)
+  const { pathname, search } = url
 
-    const destinationURL = `${base}${pathname}${search}`
-    console.log(destinationURL)
+  const destinationURL = base + pathname + search
 
-    return Response.redirect(destinationURL, statusCode)
-  }
+  return Response.redirect(destinationURL, statusCode)
 }
+
+addEventListener('fetch', async event => {
+  event.respondWith(handleRequest(event.request))
+})
