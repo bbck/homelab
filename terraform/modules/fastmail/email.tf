@@ -15,7 +15,6 @@ resource "cloudflare_record" "mx_20" {
 }
 
 resource "cloudflare_record" "dkim_1" {
-  count   = var.email_delivery ? 1 : 0
   zone_id = var.zone_id
   name    = "fm1._domainkey"
   value   = "fm1.${var.domain}.dkim.fmhosted.com"
@@ -24,7 +23,6 @@ resource "cloudflare_record" "dkim_1" {
 }
 
 resource "cloudflare_record" "dkim_2" {
-  count   = var.email_delivery ? 1 : 0
   zone_id = var.zone_id
   name    = "fm2._domainkey"
   value   = "fm2.${var.domain}.dkim.fmhosted.com"
@@ -32,7 +30,6 @@ resource "cloudflare_record" "dkim_2" {
 }
 
 resource "cloudflare_record" "dkim_3" {
-  count   = var.email_delivery ? 1 : 0
   zone_id = var.zone_id
   name    = "fm3._domainkey"
   value   = "fm3.${var.domain}.dkim.fmhosted.com"
@@ -42,7 +39,7 @@ resource "cloudflare_record" "dkim_3" {
 resource "cloudflare_record" "spf" {
   zone_id = var.zone_id
   name    = var.domain
-  value   = "v=spf1 %{if var.email_delivery}include:spf.messagingengine.com ~all%{else}-all%{endif}"
+  value   = "v=spf1 include:spf.messagingengine.com ~all"
   type    = "TXT"
 }
 

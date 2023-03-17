@@ -1,16 +1,18 @@
 resource "cloudflare_zone" "bbck_dot_net" {
-  zone = "bbck.net"
+  account_id = var.cloudflare_account_id
+  zone       = "bbck.net"
 }
 
 module "bbck_dot_net_fastmail" {
-  source = "./fastmail"
+  source = "./modules/fastmail"
 
-  domain      = "bbck.net"
-  zone_id     = cloudflare_zone.bbck_dot_net.id
-  dmarc_extra = "rua=mailto:478fff8e@in.mailhardener.com"
+  cloudflare_account_id = var.cloudflare_account_id
+  domain                = cloudflare_zone.bbck_dot_net.zone
+  zone_id               = cloudflare_zone.bbck_dot_net.id
+  dmarc_extra           = "rua=mailto:478fff8e@in.mailhardener.com"
 }
 
-resource "cloudflare_record" "smtp_tls_reporting" {
+resource "cloudflare_record" "bbck_dot_net_smtp_tls_reporting" {
   zone_id = cloudflare_zone.bbck_dot_net.id
   name    = "_smtp._tls"
   value   = "v=TLSRPTv1; rua=mailto:478fff8e@in.mailhardener.com"

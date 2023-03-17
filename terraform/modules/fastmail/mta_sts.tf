@@ -6,8 +6,9 @@ resource "cloudflare_record" "mta_sts" {
 }
 
 resource "cloudflare_worker_script" "mta_sts" {
-  name    = "mta-sts-${replace(var.domain, ".", "-")}"
-  content = file("${path.module}/mta-sts.js")
+  account_id = var.cloudflare_account_id
+  name       = "mta-sts-${replace(var.domain, ".", "-")}"
+  content    = file("${path.module}/mta-sts.js")
 }
 
 resource "cloudflare_worker_route" "mta_sts" {
