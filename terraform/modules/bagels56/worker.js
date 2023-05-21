@@ -1,4 +1,4 @@
-const destinationURL = 'https://twitch.tv/56bagels'
+const destinationURL = 'https://twitch.tv/bagels56'
 const statusCode = 301
 
 async function handleRequest (request) {
