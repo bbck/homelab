@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Super Linter
-        uses: github/super-linter@v4
+        uses: github/super-linter@v5
         env:
           VALIDATE_KUBERNETES_KUBEVAL: false
           DEFAULT_BRANCH: master
