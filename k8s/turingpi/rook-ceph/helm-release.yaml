@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: rook-ceph
+  namespace: rook-ceph
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: rook-ceph
+      version: 1.13.3
+      sourceRef:
+        kind: HelmRepository
+        name: rook-release
+        namespace: rook-ceph
+      interval: 1m
+  values:
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+  namespace: rook-ceph
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: rook-ceph-cluster
+      version: 1.13.3
+      sourceRef:
+        kind: HelmRepository
+        name: rook-release
+        namespace: rook-ceph
+      interval: 1m
+  values:
+    cephClusterSpec:
+      placement:
+        all:
+          tolerations:
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+      storage:
+        deviceFilter: nvme0n1
+    monitoring:
+      enabled: true
+    operatorNamespace: rook-ceph
+    toolbox:
+      enabled: true
