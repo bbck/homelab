@@ -3,3 +3,13 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+patches:
+  - patch: | 
+      - op: add
+        path: /spec/template/spec/tolerations
+        value:
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/part-of=flux"
