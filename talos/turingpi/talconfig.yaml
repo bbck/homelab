@@ -1,0 +1,32 @@
+clusterName: turningpi
+talosVersion: v1.6.5
+endpoint: https://192.168.254.42:6443
+cniConfig:
+  name: none
+nodes:
+  - hostname: rk1-1
+    ipAddress: 192.168.254.42
+    installDisk: /dev/mmcblk0
+    controlPlane: true
+  - hostname: rk1-2
+    ipAddress: 192.168.254.43
+    installDisk: /dev/mmcblk0
+  - hostname: rk1-3
+    ipAddress: 192.168.254.44
+    installDisk: /dev/mmcblk0
+  - hostname: rk1-4
+    ipAddress: 192.168.254.45
+    installDisk: /dev/mmcblk0
+patches:
+  - |-
+    cluster:
+      proxy:
+        disabled: true
+controlPlane:
+  talosImageURL: ghcr.io/nberlee/installer:v1.6.5-rk3588 
+  kernelModules:
+    - name: rockchip-cpufreq
+worker:
+  talosImageURL: ghcr.io/nberlee/installer:v1.6.5-rk3588 
+  kernelModules:
+    - name: rockchip-cpufreq
