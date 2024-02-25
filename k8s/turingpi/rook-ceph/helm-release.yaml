@@ -42,7 +42,7 @@ spec:
       storage:
         deviceFilter: nvme0n1
     monitoring:
-      enabled: false
+      enabled: true
     operatorNamespace: rook-ceph
     toolbox:
       enabled: true
