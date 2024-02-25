@@ -5,4 +5,4 @@ metadata:
   namespace: kube-system
 spec:
   interval: 1m
-  url: https://charts.rook.io/release
+  url: https://helm.cilium.io/
