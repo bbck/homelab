@@ -117,3 +117,10 @@ spec:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
+    ingress:
+      enabled: true
+      ingressClassName: tailscale
+      hosts: []
+      tls:
+        - hosts:
+          - grafana
