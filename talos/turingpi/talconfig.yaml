@@ -1,5 +1,5 @@
 clusterName: turningpi
-talosVersion: v1.6.5
+talosVersion: v1.6.6
 endpoint: https://192.168.254.42:6443
 cniConfig:
   name: none
@@ -23,10 +23,10 @@ patches:
       proxy:
         disabled: true
 controlPlane:
-  talosImageURL: ghcr.io/nberlee/installer:v1.6.5-rk3588 
+  talosImageURL: ghcr.io/nberlee/installer
   kernelModules:
     - name: rockchip-cpufreq
 worker:
-  talosImageURL: ghcr.io/nberlee/installer:v1.6.5-rk3588 
+  talosImageURL: ghcr.io/nberlee/installer
   kernelModules:
     - name: rockchip-cpufreq
