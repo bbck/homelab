@@ -60,6 +60,14 @@ spec:
         namespace: monitoring
       interval: 1m
   values:
+    grafana.ini:
+      news:
+        news_feed_enabled: false
+      analytics:
+        enabled: false
+        reporting_enabled: false
+        check_for_updates: false
+        check_for_plugin_updates: false
     datasources:
       datasources.yaml:
         apiVersion: 1
