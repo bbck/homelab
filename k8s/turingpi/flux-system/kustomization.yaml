@@ -1,16 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- gotk-components.yaml
-- gotk-sync.yaml
-- podmonitor.yaml
-patches:
-  - patch: | 
-      - op: add
-        path: /spec/template/spec/tolerations
-        value:
-          - key: node-role.kubernetes.io/control-plane
-            operator: Exists
-    target:
-      kind: Deployment
-      labelSelector: "app.kubernetes.io/part-of=flux"
+  - gotk-components.yaml
+  - gotk-sync.yaml
+  - podmonitor.yaml

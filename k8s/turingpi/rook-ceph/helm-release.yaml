@@ -39,11 +39,6 @@ spec:
       interval: 1m
   values:
     cephClusterSpec:
-      placement:
-        all:
-          tolerations:
-          - key: node-role.kubernetes.io/control-plane
-            operator: Exists
       storage:
         deviceFilter: nvme0n1
     monitoring:

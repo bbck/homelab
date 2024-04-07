@@ -11,9 +11,11 @@ nodes:
   - hostname: rk1-2
     ipAddress: 192.168.254.43
     installDisk: /dev/mmcblk0
+    controlPlane: true
   - hostname: rk1-3
     ipAddress: 192.168.254.44
     installDisk: /dev/mmcblk0
+    controlPlane: true
   - hostname: rk1-4
     ipAddress: 192.168.254.45
     installDisk: /dev/mmcblk0
@@ -27,6 +29,9 @@ controlPlane:
   kernelModules:
     - name: rockchip-cpufreq
   patches:
+    - |-
+      cluster:
+        allowSchedulingOnControlPlanes: true
     - |-
       cluster:
         controllerManager:
