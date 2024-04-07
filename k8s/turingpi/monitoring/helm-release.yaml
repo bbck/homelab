@@ -17,6 +17,8 @@ spec:
   values:
     grafana:
       enabled: false
+    kubeProxy:
+      enabled: false
     prometheus:
       prometheusSpec:
         ruleSelectorNilUsesHelmValues: false
@@ -58,6 +60,11 @@ spec:
             url: http://prometheus-operated.monitoring.svc.cluster.local:9090
             access: proxy
             isDefault: true
+            jsonData:
+              manageAlerts: true
+              prometheusType: Prometheus
+              prometheusVersion: 2.51.1
+              cacheLevel: "High"
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
@@ -129,4 +136,6 @@ spec:
       hosts: []
       tls:
         - hosts:
-          - grafana
+            - grafana
+    serviceMonitor:
+      enabled: true
