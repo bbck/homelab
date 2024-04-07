@@ -43,6 +43,7 @@ spec:
         deviceFilter: nvme0n1
     monitoring:
       enabled: true
+      createPrometheusRules: true
     operatorNamespace: rook-ceph
     toolbox:
       enabled: true
