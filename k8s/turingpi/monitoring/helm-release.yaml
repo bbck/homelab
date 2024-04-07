@@ -80,8 +80,13 @@ spec:
             jsonData:
               manageAlerts: true
               prometheusType: Prometheus
-              prometheusVersion: 2.51.1
               cacheLevel: "High"
+          - name: Alertmanager
+            type: alertmanager
+            url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+            access: proxy
+            jsonData:
+              implementation: prometheus
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
@@ -122,31 +127,42 @@ spec:
       kubernetes:
         k8s-system-api-server:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+          datasource: Prometheus
         k8s-system-coredns:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+          datasource: Prometheus
         k8s-views-global:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+          datasource: Prometheus
         k8s-views-namespaces:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+          datasource: Prometheus
         k8s-views-nodes:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+          datasource: Prometheus
         k8s-views-pods:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+          datasource: Prometheus
       ceph:
         ceph-cluster:
           gnetId: 2842
           revision: 17
+          datasource: Prometheus
         ceph-osd:
           gnetId: 5336
           revision: 9
+          datasource: Prometheus
         ceph-pools:
           gnetId: 5342
           revision: 9
+          datasource: Prometheus
       flux:
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
+          datasource: Prometheus
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
+          datasource: Prometheus
     ingress:
       enabled: true
       ingressClassName: tailscale
