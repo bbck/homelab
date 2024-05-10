@@ -22,7 +22,7 @@ spec:
           homarr:
             image:
               repository: ghcr.io/ajnart/homarr
-              tag: "0.15.2"
+              tag: "0.15.3"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
