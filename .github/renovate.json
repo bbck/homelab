@@ -1,7 +1,6 @@
 {
   "extends": [
-    "config:base",
-    ":disableDependencyDashboard"
+    "config:base"
   ],
   "kubernetes": {
     "fileMatch": ["k8s/.+\\.yaml$"]
