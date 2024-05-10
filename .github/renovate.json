@@ -1,26 +1,8 @@
 {
-  "extends": [
-    "config:base"
-  ],
-  "kubernetes": {
-    "fileMatch": ["k8s/.+\\.yaml$"]
-  },
-  "flux": {
-    "fileMatch": ["k8s/.+\\.yaml$"]
-  },
-  "helm-values": {
-    "fileMatch": ["k8s/.+\\.yaml$"]
-  },
-  "regexManagers": [
-    {
-      "fileMatch": [
-        "ansible/.+\\.yml$"
-      ],
-      "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\n.*?\"(?<currentValue>.*)\"\n"
-      ]
-    }
-  ],
+  "extends": ["config:recommended"],
+  "kubernetes": {"fileMatch": ["k8s/.+\\.yaml$"]},
+  "flux": {"fileMatch": ["k8s/.+\\.yaml$"]},
+  "helm-values": {"fileMatch": ["k8s/.+\\.yaml$"]},
   "packageRules": [
     {
       "matchDatasources": ["docker"],
