@@ -1,5 +1,5 @@
 {
-  "extends": ["config:recommended", ":dependencyDashboard"],
+  "extends": ["config:recommended"],
   "kubernetes": {"fileMatch": ["k8s/.+\\.yaml$"]},
   "flux": {"fileMatch": ["k8s/.+\\.yaml$"]},
   "helm-values": {"fileMatch": ["k8s/.+\\.yaml$"]},
