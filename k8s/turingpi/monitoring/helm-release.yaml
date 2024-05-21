@@ -15,6 +15,10 @@ spec:
         namespace: monitoring
       interval: 1m
   values:
+    alertmanager:
+      alertmanagerSpec:
+        useExistingSecret: true
+        configSecret: alertmanager-config
     grafana:
       enabled: false
     kubeControllerManager:
