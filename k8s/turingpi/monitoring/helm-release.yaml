@@ -16,17 +16,9 @@ spec:
       interval: 1m
   values:
     alertmanager:
-      config:
-        route:
-          receiver: discord
-        receivers:
-          - name: "null"
-          - name: "discord"
-            discord_configs:
-              - webhook_url_file: /etc/alertmanager/secrets/alertmanager-secrets/discord-webhook-url
       alertmanagerSpec:
-        secrets:
-          - alertmanager-secrets
+        useExistingSecret: true
+        configSecret: alertmanager-config
     grafana:
       enabled: false
     kubeControllerManager:
