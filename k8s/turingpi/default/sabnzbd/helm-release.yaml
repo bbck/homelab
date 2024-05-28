@@ -82,3 +82,7 @@ spec:
         size: 50Mi
         globalMounts:
           - path: /config
+      media:
+        existingClaim: media
+        globalMounts:
+          - path: /media
