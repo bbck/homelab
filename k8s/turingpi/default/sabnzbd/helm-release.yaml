@@ -1,0 +1,77 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sabnzbd
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 1m
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+
+    controllers:
+      sabnzbd:
+        replicas: 1
+        containers:
+          sabnzbd:
+            image:
+              repository: ghcr.io/onedr0p/sabnzbd
+              tag: "4.3.1"
+              pullPolicy: IfNotPresent
+            resources:
+              limits:
+                memory: 1024Mi
+              requests:
+                cpu: 100m
+                memory: 256Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  periodSeconds: 5
+                  failureThreshold: 30
+    service:
+      sabnzbd:
+        controller: sabnzbd
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      sabnzbd:
+        className: tailscale
+        hosts:
+          - host: sabnzbd
+            paths:
+              - path: /
+                service:
+                  identifier: sabnzbd
+                  port: http
+        tls:
+          - hosts:
+              - sabnzbd
+
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 50Mi
+        globalMounts:
+          - path: /config

@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - ./homarr/helm-release.yaml
   - ./prowlarr/helm-release.yaml
+  - ./sabnzbd//helm-release.yaml
