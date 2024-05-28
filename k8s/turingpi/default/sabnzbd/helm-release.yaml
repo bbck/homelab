@@ -31,6 +31,13 @@ spec:
               repository: ghcr.io/onedr0p/sabnzbd
               tag: "4.3.1"
               pullPolicy: IfNotPresent
+            env:
+              SABNZBD__HOST_WHITELIST_ENTRIES: >-
+                sabnzbd,
+                sabnzbd.default,
+                sabnzbd.default.svc,
+                sabnzbd.default.svc.cluster,
+                sabnzbd.default.svc.cluster.local
             resources:
               limits:
                 memory: 1024Mi
