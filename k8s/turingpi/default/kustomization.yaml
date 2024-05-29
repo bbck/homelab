@@ -6,3 +6,4 @@ resources:
   - ./homarr/helm-release.yaml
   - ./prowlarr/helm-release.yaml
   - ./sabnzbd//helm-release.yaml
+  - ./sonarr/helm-release.yaml
