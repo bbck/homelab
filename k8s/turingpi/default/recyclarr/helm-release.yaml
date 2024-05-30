@@ -26,8 +26,7 @@ spec:
       recyclarr:
         type: cronjob
         cronjob:
-          # TODO: reduce frequency to daily
-          schedule: "@hourly"
+          schedule: "@daily"
         containers:
           recyclarr:
             image:
@@ -38,9 +37,6 @@ spec:
               - "sync"
             env:
               TZ: America/Los_Angeles
-            envFrom:
-              - secretRef:
-                  name: recyclarr-secret
             resources:
               limits:
                 memory: 128Mi
@@ -60,4 +56,11 @@ spec:
         globalMounts:
           - path: /config/recyclarr.yml
             subPath: recyclarr.yml
+            readOnly: true
+      secrets-file:
+        type: secret
+        name: recyclarr-secrets
+        globalMounts:
+          - path: /config/secrets.yml
+            subPath: secrets.yml
             readOnly: true

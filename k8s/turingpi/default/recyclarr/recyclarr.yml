@@ -1,8 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
 sonarr:
-  main:
+  sonarr:
     base_url: http://sonarr.default.svc.cluster.local:8989
-    api_key: !env_var SONARR_API_KEY
     include:
       - template: sonarr-quality-definition-series
       - template: sonarr-v4-quality-profile-web-1080p
