@@ -4,3 +4,6 @@ creation_rules:
     pgp: >-
       050787E6CDC4F90636141B1D2C5BB181A0326054,
       E39A9ADC5719F27F46267014C7339B5CD6A9FAB1
+stores:
+  yaml:
+    indent: 2
