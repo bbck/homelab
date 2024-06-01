@@ -41,7 +41,7 @@ spec:
                 sabnzbd.taild1477.ts.net
             resources:
               limits:
-                memory: 2048Mi
+                memory: 4096Mi
               requests:
                 cpu: 100m
                 memory: 256Mi
