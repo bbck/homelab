@@ -1,0 +1,113 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 1m
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+
+    controllers:
+      plex:
+        replicas: 1
+        containers:
+          plex:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: "1.40.2.8395-c67dce28e"
+              pullPolicy: IfNotPresent
+            env:
+              TZ: America/Los_Angeles
+              PLEX_ADVERTISE_URL: https://plex.taild1477.ts.net:443
+            resources:
+              limits:
+                memory: 4096Mi
+              requests:
+                cpu: 100m
+                memory: 2048Mi
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /identity
+                    port: 32400
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  periodSeconds: 5
+                  failureThreshold: 30
+    service:
+      plex:
+        controller: plex
+        ports:
+          http:
+            port: 32400
+
+    ingress:
+      plex:
+        className: tailscale
+        hosts:
+          - host: plex
+            paths:
+              - path: /
+                service:
+                  identifier: plex
+                  port: http
+        tls:
+          - hosts:
+              - plex
+
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server
+      cache:
+        # TODO: Change to emptyDir when Talos is off eMMC
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Cache
+      logs:
+        # TODO: Change to emptyDir when Talos is off eMMC
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Logs
+      tmp:
+        # TODO: Change to emptyDir when Talos is off eMMC
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        globalMounts:
+          - path: /tmp
+      media:
+        existingClaim: media
+        globalMounts:
+          - path: /media
