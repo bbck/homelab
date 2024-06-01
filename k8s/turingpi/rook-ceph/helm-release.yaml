@@ -41,6 +41,7 @@ spec:
     cephClusterSpec:
       storage:
         deviceFilter: nvme0n1
+    cephObjectStores: []
     monitoring:
       enabled: true
       createPrometheusRules: true
