@@ -9,8 +9,8 @@ sonarr:
     media_naming:
       series: plex
     custom_formats:
+      # Optional
       - trash_ids:
-          # Optional
           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
           - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
@@ -18,3 +18,49 @@ sonarr:
           - 1b3994c551cbb92a2c781af061f4ab44 # Scene
         quality_profiles:
           - name: WEB-1080p
+radarr:
+  radarr:
+    base_url: http://radarr.default.svc.cluster.local:7878
+    include:
+      - template: radarr-quality-definition-movie
+      - template: radarr-quality-profile-uhd-bluray-web
+      - template: radarr-quality-profile-hd-bluray-web
+      - template: radarr-custom-formats-uhd-bluray-web
+      - template: radarr-custom-formats-hd-bluray-web
+    media_naming:
+      folder: plex
+    custom_formats:
+      # Audio
+      - trash_ids:
+          - 496f355514737f7d83bf7aa4d24f8169 # TrueHD Atmos
+          - 2f22d89048b01681dde8afe203bf2e95 # DTS X
+          - 417804f7f2c4308c1f4c5d380d4c4475 # ATMOS (undefined)
+          - 1af239278386be2919e1bcee0bde047e # DD+ ATMOS
+          - 3cafb66171b47f226146a0770576870f # TrueHD
+          - dcf3ec6938fa32445f590a4da84256cd # DTS-HD MA
+          - a570d4a0e56a2874b64e5bfa55202a1b # FLAC
+          - e7c2fcae07cbada050a0af3357491d7b # PCM
+          - 8e109e50e0a0b83a5098b056e13bf6db # DTS-HD HRA
+          - 185f1dd7264c4562b9022d963ac37424 # DD+
+          - f9f847ac70a0af62ea4a08280b859636 # DTS-ES
+          - 1c1a4c5e823891c75bc50380a6866f73 # DTS
+          - 240770601cc226190c367ef59aba7463 # AAC
+          - c2998bd0d90ed5621d8df281e839436e # DD
+        quality_profiles:
+          - name: UHD Bluray + WEB
+      # SDR - block ALL SDR releases
+      - trash_ids:
+          - 9c38ebb7384dada637be8899efa68e6f # SDR
+        quality_profiles:
+          - name: UHD Bluray + WEB
+      # Optional
+      - trash_ids:
+          - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
+          - 90cedc1fea7ea5d11298bebd3d1d3223 # EVO (no WEBDL)
+          - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
+          - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
+          - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
+          - f537cf427b64c38c8e36298f657e4828 # Scene
+        quality_profiles:
+          - name: UHD Bluray + WEB
+          - name: HD Bluray + WEB
