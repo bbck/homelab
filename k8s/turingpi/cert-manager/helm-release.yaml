@@ -16,6 +16,8 @@ spec:
       interval: 1m
   values:
     installCRDs: true
+    dns01RecursiveNameservers: 1.1.1.1:53,1.0.0.1:53
+    dns01RecursiveNameserversOnly: true
     prometheus:
       enabled: true
       servicemonitor:
