@@ -4,7 +4,9 @@ resources:
   - namespace.yaml
   - pvc.yaml
   - ./homarr/helm-release.yaml
+  - ./plex/helm-release.yaml
   - ./prowlarr/helm-release.yaml
+  - ./radarr/helm-release.yaml
   - ./recyclarr/helm-release.yaml
   - ./recyclarr/secret.enc.yaml
   - ./sabnzbd//helm-release.yaml
