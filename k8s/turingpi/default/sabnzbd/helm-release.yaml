@@ -84,6 +84,6 @@ spec:
         globalMounts:
           - path: /config
       media:
-        existingClaim: media
-        globalMounts:
-          - path: /media
+        type: nfs
+        server: 192.168.254.47
+        path: /mnt/nas
