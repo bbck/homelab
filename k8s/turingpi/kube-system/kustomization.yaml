@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - ./cilium/helm-release.yaml
-  - ./csi-driver-nfs/helm-release.yaml
