@@ -20,18 +20,16 @@ nodes:
     ipAddress: 192.168.254.45
     installDisk: /dev/mmcblk0
 patches:
-  - |-
-    cluster:
-      proxy:
-        disabled: true
 controlPlane:
   talosImageURL: ghcr.io/nberlee/installer
-  kernelModules:
+  kernelModules: &kernelModules
     - name: rockchip-cpufreq
   patches:
+    # Schedule on all nodes
     - |-
       cluster:
         allowSchedulingOnControlPlanes: true
+    # Allow metric collection
     - |-
       cluster:
         controllerManager:
@@ -43,7 +41,26 @@ controlPlane:
         etcd:
           extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
+    # Disable kube-proxy in favor of Cilium
+    - &ciliumPatch |-
+      cluster:
+        proxy:
+          disabled: true
+    # NFS mount options
+    - &nfsPatch |-
+      machine:
+        files:
+          - op: overwrite
+            path: /etc/nfsmount.conf
+            permissions: 0o644
+            content: |
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              nconnect=8
 worker:
   talosImageURL: ghcr.io/nberlee/installer
-  kernelModules:
-    - name: rockchip-cpufreq
+  kernelModules: *kernelModules
+  patches:
+    - *ciliumPatch
+    - *nfsPatch
