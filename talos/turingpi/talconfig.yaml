@@ -19,7 +19,6 @@ nodes:
   - hostname: rk1-4
     ipAddress: 192.168.254.45
     installDisk: /dev/mmcblk0
-patches:
 controlPlane:
   talosImageURL: ghcr.io/nberlee/installer
   kernelModules: &kernelModules
