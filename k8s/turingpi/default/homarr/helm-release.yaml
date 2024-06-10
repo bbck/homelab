@@ -78,7 +78,7 @@ spec:
         accessMode: ReadWriteOnce
         size: 50Mi
         globalMounts:
-          - path: /app/database
+          - path: /data
       icons:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
