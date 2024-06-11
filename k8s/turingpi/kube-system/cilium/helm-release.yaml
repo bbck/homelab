@@ -25,9 +25,11 @@ spec:
     k8sServicePort: 7445
     kubeProxyReplacement: true
     operator:
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
       replicas: 1
-    prometheus:
-      enabled: true
     securityContext:
       capabilities:
         ciliumAgent:
