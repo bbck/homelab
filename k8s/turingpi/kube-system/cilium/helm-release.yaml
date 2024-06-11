@@ -30,6 +30,10 @@ spec:
         serviceMonitor:
           enabled: true
       replicas: 1
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     securityContext:
       capabilities:
         ciliumAgent:
