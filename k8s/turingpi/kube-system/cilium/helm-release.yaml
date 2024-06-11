@@ -26,6 +26,8 @@ spec:
     kubeProxyReplacement: true
     operator:
       replicas: 1
+    prometheus:
+      enabled: true
     securityContext:
       capabilities:
         ciliumAgent:
