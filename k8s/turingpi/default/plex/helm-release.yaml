@@ -68,6 +68,8 @@ spec:
     ingress:
       plex:
         className: tailscale
+        annotations:
+          tailscale.com/funnel: "true"
         hosts:
           - host: plex
             paths:
