@@ -17,11 +17,13 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
+        runAsNonRoot: true
         runAsUser: 65534
         runAsGroup: 65534
         fsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
-
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       radarr:
         replicas: 1
@@ -49,6 +51,10 @@ spec:
                 spec:
                   periodSeconds: 5
                   failureThreshold: 30
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
     service:
       radarr:
         controller: radarr

@@ -15,6 +15,15 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       homarr:
         replicas: 1
@@ -45,6 +54,10 @@ spec:
                 spec:
                   periodSeconds: 5
                   failureThreshold: 30
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
     service:
       homarr:
         controller: homarr
