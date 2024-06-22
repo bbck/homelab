@@ -10,6 +10,7 @@ resources:
   - ./recyclarr/secret.enc.yaml
   - ./sabnzbd//helm-release.yaml
   - ./sonarr/helm-release.yaml
+  - ./tautulli/helm-release.yaml
 configMapGenerator:
   - name: recyclarr-configmap
     namespace: default
