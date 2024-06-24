@@ -45,6 +45,7 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
+        retention: 30d
         storageSpec:
           volumeClaimTemplate:
             spec:
