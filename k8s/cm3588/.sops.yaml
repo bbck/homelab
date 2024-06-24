@@ -1,0 +1,9 @@
+creation_rules:
+  - path_regex: .*.yaml
+    encrypted_regex: ^(data|stringData)$
+    pgp: >-
+      CC3248CD7FFAD043BD8C51B3E5690E38FAF86EEB,
+      E39A9ADC5719F27F46267014C7339B5CD6A9FAB1
+stores:
+  yaml:
+    indent: 2
