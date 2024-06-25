@@ -38,6 +38,8 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: true
     cephClusterSpec:
       storage:
         deviceFilter: nvme0n1
