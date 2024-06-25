@@ -7,6 +7,7 @@ resources:
   - csi-driver-nfs.yaml
   - grafana.yaml
   - jetstack.yaml
+  - piraeus.yaml
   - prometheus-community.yaml
   - rook-release.yaml
   - tailscale.yaml

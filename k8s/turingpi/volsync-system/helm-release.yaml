@@ -19,3 +19,26 @@ spec:
       repository: ghcr.io/onedr0p/volsync
     metrics:
       disableAuth: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: snapshot-controller
+  namespace: volsync-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: snapshot-controller
+      version: 3.0.5
+      sourceRef:
+        kind: HelmRepository
+        name: piraeus
+        namespace: flux-system
+      interval: 1m
+  values:
+    controller:
+      serviceMonitor:
+        create: true
+    webhook:
+      enabled: false
