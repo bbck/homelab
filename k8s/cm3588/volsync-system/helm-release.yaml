@@ -19,3 +19,5 @@ spec:
       repository: ghcr.io/onedr0p/volsync
     metrics:
       disableAuth: true
+    restic:
+      repository: ghcr.io/onedr0p/volsync
