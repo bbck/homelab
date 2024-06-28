@@ -11,7 +11,7 @@ spec:
     branch: master
   secretRef:
     name: flux-system
-  url: https://github.com/bbck/homelab.git
+  url: ssh://git@github.com/bbck/homelab
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -19,10 +19,6 @@ metadata:
   name: flux-system
   namespace: flux-system
 spec:
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-gpg
   interval: 10m0s
   path: ./k8s/turingpi
   prune: true
