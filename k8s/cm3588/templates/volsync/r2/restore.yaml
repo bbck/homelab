@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "${APP}-r2"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: "${APP}-volsync-r2"
+    destinationPVC: "${APP}"
+    copyMethod: Direct
+    moverSecurityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
+      fsGroup: 65534
