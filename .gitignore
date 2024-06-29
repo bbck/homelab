@@ -1,2 +1,4 @@
-# Just in case
-*.agekey
+# Decrypted secrest
+k8s/**/flux/vars/cluster-secrets.yaml
+k8s/**/apps/**/secret.yaml
+
