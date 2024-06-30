@@ -88,3 +88,5 @@ spec:
       data:
         type: hostPath
         hostPath: /mnt/nas/usenet
+        globalMounts:
+          - path: /data
