@@ -22,7 +22,23 @@ spec:
         lvm:
           enabled: false
         zfs:
-          enabled: false
+          enabled: true
       replicated:
         mayastor:
           enabled: false
+    localpv-provisioner:
+      rbac:
+        create: true
+    openebs-crds:
+      csi:
+        volumeSnapshots:
+          enabled: false
+          keep: false
+    zfs-localpv:
+      enabled: true
+      crds:
+        zfsLocalPv:
+          enabled: true
+        csi:
+          volumeSnapshots:
+            enabled: true
