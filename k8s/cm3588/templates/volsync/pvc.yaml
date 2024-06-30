@@ -8,8 +8,8 @@ spec:
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
-    name: "${APP}-r2"
+    name: "${APP}-bootstrap"
   resources:
     requests:
-      storage: "${VOLSYNC_CAPACITY}"
+      storage: "${VOLSYNC_CAPACITY:-1Gi}"
   storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-zfspv}"
