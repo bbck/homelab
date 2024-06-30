@@ -23,3 +23,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 250Mi
+    substituteFrom:
+      - kind: Secret
+        name: cluster-secrets

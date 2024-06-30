@@ -4,5 +4,5 @@ kind: StorageClass
 metadata:
   name: openebs-zfspv
 parameters:
-  poolname: storage/zfspv
+  poolname: storage
 provisioner: zfs.csi.openebs.io
