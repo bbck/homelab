@@ -118,4 +118,4 @@ spec:
       media:
         type: nfs
         server: 192.168.254.47
-        path: /mnt/nas
+        path: /mnt/nas/media

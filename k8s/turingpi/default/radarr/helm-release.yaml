@@ -83,7 +83,7 @@ spec:
         size: 250Mi
         globalMounts:
           - path: /config
-      media:
+      data:
         type: nfs
         server: 192.168.254.47
         path: /mnt/nas
