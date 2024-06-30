@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - secret.enc.yaml
   - helm-release.yaml
+  - ./services
