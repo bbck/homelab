@@ -1,0 +1,6 @@
+kind: VolumeSnapshotClass
+apiVersion: snapshot.storage.k8s.io/v1
+metadata:
+  name: zfspv
+driver: zfs.csi.openebs.io
+deletionPolicy: Delete
