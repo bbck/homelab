@@ -17,3 +17,4 @@ spec:
   values:
     operatorConfig:
       hostname: turingpi
+      logging: debug
