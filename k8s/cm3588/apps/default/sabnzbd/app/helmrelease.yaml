@@ -69,19 +69,19 @@ spec:
         ports:
           http:
             port: 8080
-    # ingress:
-    #   sabnzbd:
-    #     className: tailscale
-    #     hosts:
-    #       - host: sabnzbd
-    #         paths:
-    #           - path: /
-    #             service:
-    #               identifier: sabnzbd
-    #               port: http
-    #     tls:
-    #       - hosts:
-    #           - sabnzbd
+    ingress:
+      sabnzbd:
+        className: tailscale
+        hosts:
+          - host: sabnzbd
+            paths:
+              - path: /
+                service:
+                  identifier: sabnzbd
+                  port: http
+        tls:
+          - hosts:
+              - sabnzbd
     persistence:
       config:
         existingClaim: sabnzbd
@@ -89,4 +89,4 @@ spec:
         type: hostPath
         hostPath: /mnt/nas/usenet
         globalMounts:
-          - path: /data
+          - path: /data/usenet

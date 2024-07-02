@@ -8,7 +8,7 @@ resources:
   - ./radarr/helm-release.yaml
   - ./recyclarr/helm-release.yaml
   - ./recyclarr/secret.enc.yaml
-  - ./sabnzbd//helm-release.yaml
+  # - ./sabnzbd//helm-release.yaml
   - ./sonarr/helm-release.yaml
   - ./tautulli/helm-release.yaml
 configMapGenerator:
