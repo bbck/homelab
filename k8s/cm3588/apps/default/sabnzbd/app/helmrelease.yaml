@@ -69,6 +69,13 @@ spec:
         ports:
           http:
             port: 8080
+      hack:
+        controller: sabnzbd
+        type: NodePort
+        ports:
+          http:
+            port: 8080
+            nodePort: 30080
     ingress:
       sabnzbd:
         className: tailscale
