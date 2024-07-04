@@ -49,4 +49,4 @@ spec:
       createPrometheusRules: true
     operatorNamespace: rook-ceph
     toolbox:
-      enabled: true
+      enabled: false
