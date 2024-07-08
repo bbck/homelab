@@ -3,11 +3,11 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - ./plex/helm-release.yaml
-  - ./prowlarr/helm-release.yaml
-  - ./radarr/helm-release.yaml
+  - ./prowlarr
+  - ./radarr
   - ./recyclarr/helm-release.yaml
   - ./recyclarr/secret.enc.yaml
-  - ./sonarr/helm-release.yaml
+  - ./sonarr
   - ./tautulli/helm-release.yaml
 configMapGenerator:
   - name: recyclarr-configmap
