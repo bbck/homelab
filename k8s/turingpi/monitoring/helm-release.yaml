@@ -52,7 +52,7 @@ spec:
               storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 256Gi
+                  storage: 512Gi
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
