@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: tailscale
   path: ./k8s/cm3588/apps/monitoring/alloy/app
   prune: true
   sourceRef:

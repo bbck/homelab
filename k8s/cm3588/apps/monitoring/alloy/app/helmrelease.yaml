@@ -14,3 +14,9 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
+  values:
+    alloy:
+      configMap:
+        create: false
+        name: alloy-config
+        key: config.alloy
