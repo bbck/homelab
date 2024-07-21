@@ -4,5 +4,6 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
+  - ./grafana.yaml
   - ./openebs.yaml
   - ./tailscale.yaml
