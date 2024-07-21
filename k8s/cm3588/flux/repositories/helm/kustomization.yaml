@@ -6,4 +6,5 @@ resources:
   - ./cilium.yaml
   - ./grafana.yaml
   - ./openebs.yaml
+  - ./prometheus-community.yaml
   - ./tailscale.yaml
