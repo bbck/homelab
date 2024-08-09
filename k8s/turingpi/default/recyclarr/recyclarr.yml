@@ -35,7 +35,7 @@ sonarr:
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
           # - 1b3994c551cbb92a2c781af061f4ab44 # Scene
-        quality_profiles:
+        assign_scores_to:
           - name: WEB-1080p
 radarr:
   radarr:
@@ -65,12 +65,12 @@ radarr:
           - 1c1a4c5e823891c75bc50380a6866f73 # DTS
           - 240770601cc226190c367ef59aba7463 # AAC
           - c2998bd0d90ed5621d8df281e839436e # DD
-        quality_profiles:
+        assign_scores_to:
           - name: UHD Bluray + WEB
       # SDR - block ALL SDR releases
       - trash_ids:
           - 9c38ebb7384dada637be8899efa68e6f # SDR
-        quality_profiles:
+        assign_scores_to:
           - name: UHD Bluray + WEB
       # Optional
       - trash_ids:
@@ -80,6 +80,6 @@ radarr:
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
           # - f537cf427b64c38c8e36298f657e4828 # Scene
-        quality_profiles:
+        assign_scores_to:
           - name: UHD Bluray + WEB
           - name: HD Bluray + WEB
