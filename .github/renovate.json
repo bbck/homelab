@@ -7,6 +7,11 @@
     {
       "matchDatasources": ["docker"],
       "excludePackagePatterns": ["^ghcr\\.io/fluxcd/.*"]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/onedr0p/plex"],
+      "versioning": "loose"
     }
   ]
 }
