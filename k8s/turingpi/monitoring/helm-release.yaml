@@ -63,6 +63,11 @@ spec:
                   storage: 256Gi
         enableRemoteWriteReceiver: true
         externalUrl: https://prometheus.taild1477.ts.net
+        enableFeatures:
+          - auto-gomemlimit
+          - memory-snapshot-on-shutdown
+          - new-service-discovery-manager
+        walCompression: true
       ingress:
         enabled: true
         ingressClassName: tailscale
@@ -70,6 +75,7 @@ spec:
         tls:
           - hosts:
               - prometheus
+    cleanPrometheusOperatorObjectNames: true
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
