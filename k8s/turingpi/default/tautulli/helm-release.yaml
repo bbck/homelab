@@ -31,7 +31,7 @@ spec:
           tautulli:
             image:
               repository: ghcr.io/tautulli/tautulli
-              tag: "v2.14.3@sha256:410803bc98d480132fb90053c3f5dd6811afb4cc779d2be8050ac48ecab44025"
+              tag: "v2.14.4@sha256:761e51aabc44c5d0dbc76c1f20a0403cdc32b1dd30231d3a86f8fa1aee754142"
               pullPolicy: IfNotPresent
             command: python
             args:
