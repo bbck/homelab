@@ -33,7 +33,7 @@ spec:
           sabnzbd:
             image:
               repository: ghcr.io/onedr0p/sabnzbd
-              tag: "4.3.2@sha256:19b3db0b6cbf2f2f9d393acb347e8ccdbe4e71ade45946b8dea419d85143a23f"
+              tag: "4.3.3@sha256:0d92f75f58c98c8f6e59eb75a73fab0395583cb6aa1fa95c2d8cfa0510482139"
               pullPolicy: IfNotPresent
             env:
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
