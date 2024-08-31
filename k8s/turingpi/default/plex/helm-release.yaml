@@ -31,7 +31,7 @@ spec:
           plex:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: "1.40.5.8921-836b34c27@sha256:5ef194fdd0352002064889da04e4237d1184a2b7acc6ddf8339128d7a063ef2b"
+              tag: "1.40.5.8921-836b34c27@sha256:ed5fe741766220dd3571a7c3cc7f3083f66c3493a564c1966b4e6899625fb862"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
