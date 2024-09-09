@@ -1,0 +1,24 @@
+TS_AUTHKEY: ENC[AES256_GCM,data:WJZhDz3M/IhYOS0YvmMyV6/czyCbI2yV+9BdJgwoRdamdj6KVZTRsLahbJNFXW6VAgBlMHsJ3vmkQE+lQg==,iv:jZ5IXobzoWvqrH4ALgS45HkoDOaRRjJmq6VEZls6lCU=,tag:U9Vi+yz58AGEXVk64otGEQ==,type:str]
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age: []
+  lastmodified: "2024-09-09T07:29:16Z"
+  mac: ENC[AES256_GCM,data:korEX+oHIuPO3Q/Hs7wO7bL7gpdEGBcLUqVka7VGDOpXOrnw6V5OG7WO2aV3w0GrxVxX58r33uAEKECmgb0zE/VlOP344M/rzsQQTYtDvz48x55/dXedeW9qyvoTV+Oxehkdfbt/9xJuTVZQzWloerwm6qC5FyqB+hmZY0a8MfU=,iv:SHyy3WK8e/NC54F0/s8/OiksERiNDuYVisdH6tyHsII=,tag:tJgTtcZHc3VQ2ZTGQLGRQw==,type:str]
+  pgp:
+    - created_at: "2024-09-09T07:29:16Z"
+      enc: |-
+        -----BEGIN PGP MESSAGE-----
+
+        hF4DHfhkqE7LHSASAQdAl6qLBzTDeIblete0A3CHml4tIg2P/2gVGXiYys1ePU0w
+        +VPEPIT02NHG+3s+yrSSHJemTTNJyu1Knlim6fiRQxR9ZXC5DcKhWm9xGkylstmi
+        1GgBCQIQmnL7mL+s9lmY//zEYgVXPuMuJ3AqylXw+6nn9eWomQbiJ0Da1pW5F1tL
+        0EsKSL1d50JV9ItIbLdzDVGS6symjVkgKZm+9cHA+iqxGEwY4Rj9qTzLn1sEVU/Z
+        lzsHfK91pwPOXA==
+        =Ibz5
+        -----END PGP MESSAGE-----
+      fp: E39A9ADC5719F27F46267014C7339B5CD6A9FAB1
+  unencrypted_suffix: _unencrypted
+  version: 3.9.0

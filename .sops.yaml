@@ -1,0 +1,6 @@
+creation_rules:
+  - pgp: >-
+      E39A9ADC5719F27F46267014C7339B5CD6A9FAB1
+stores:
+  yaml:
+    indent: 2

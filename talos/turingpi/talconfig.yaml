@@ -1,5 +1,5 @@
 clusterName: turingpi
-talosVersion: v1.7.5-rk3588
+talosVersion: v1.7.6
 endpoint: https://192.168.254.42:6443
 cniConfig:
   name: none
@@ -20,9 +20,13 @@ nodes:
     ipAddress: 192.168.254.45
     installDisk: /dev/mmcblk0
 controlPlane:
-  talosImageURL: ghcr.io/nberlee/installer
+  talosImageURL: ghcr.io/bbck/talos-rk1
   kernelModules: &kernelModules
     - name: rockchip-cpufreq
+  extensionServices: &extensionServices
+    - name: tailscale
+      environment:
+        - TS_AUTHKEY=${TS_AUTHKEY}
   patches:
     # Schedule on all nodes
     - |-
@@ -58,8 +62,9 @@ controlPlane:
               hard=True
               nconnect=8
 worker:
-  talosImageURL: ghcr.io/nberlee/installer
+  talosImageURL: ghcr.io/bbck/talos-rk1
   kernelModules: *kernelModules
+  extensionServices: *extensionServices
   patches:
     - *ciliumPatch
     - *nfsPatch
