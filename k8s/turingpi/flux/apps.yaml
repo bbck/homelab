@@ -15,7 +15,7 @@ spec:
       - kind: Secret
         name: cluster-secrets
   interval: 10m
-  path: ./k8s/cm3588/apps
+  path: ./k8s/turingpi/apps
   prune: true
   sourceRef:
     kind: GitRepository
