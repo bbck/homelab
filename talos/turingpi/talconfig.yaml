@@ -1,24 +1,24 @@
 clusterName: turingpi
 talosVersion: v1.7.6
-endpoint: https://192.168.254.42:6443
+endpoint: https://192.168.254.41:6443
 cniConfig:
   name: none
 nodes:
   - hostname: rk1-1
-    ipAddress: 192.168.254.42
-    installDisk: /dev/mmcblk0
+    ipAddress: 192.168.254.41
+    installDisk: /dev/nvme0n1
     controlPlane: true
   - hostname: rk1-2
-    ipAddress: 192.168.254.43
-    installDisk: /dev/mmcblk0
+    ipAddress: 192.168.254.42
+    installDisk: /dev/nvme0n1
     controlPlane: true
   - hostname: rk1-3
-    ipAddress: 192.168.254.44
-    installDisk: /dev/mmcblk0
+    ipAddress: 192.168.254.43
+    installDisk: /dev/nvme0n1
     controlPlane: true
   - hostname: rk1-4
-    ipAddress: 192.168.254.45
-    installDisk: /dev/mmcblk0
+    ipAddress: 192.168.254.44
+    installDisk: /dev/nvme0n1
 controlPlane:
   talosImageURL: ghcr.io/bbck/talos-rk1
   kernelModules: &kernelModules
