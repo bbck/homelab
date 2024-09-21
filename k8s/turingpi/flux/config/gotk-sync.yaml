@@ -6,7 +6,7 @@ metadata:
   name: flux-system
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 1m
   ref:
     branch: master
   secretRef:
@@ -23,9 +23,9 @@ spec:
     provider: sops
     secretRef:
       name: sops-gpg
-  interval: 10m0s
-  path: ./k8s/turingpi
-  prune: false
+  interval: 10m
+  path: ./k8s/turingpi/flux
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
