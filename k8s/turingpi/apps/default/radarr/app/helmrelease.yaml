@@ -31,7 +31,7 @@ spec:
           radarr:
             image:
               repository: ghcr.io/onedr0p/radarr
-              tag: "5.9.1.9070@sha256:3dae331f04e8a70786147e6a158fd1c3473fad4ffb78c9cf0f92955973959733"
+              tag: "5.10.4.9218@sha256:171b5a3d0289faaf30b8f8ecc7c1f80ef42bdb2cfefe70ab9f716781dc7e830d"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
