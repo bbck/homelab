@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -17,6 +16,10 @@ spec:
   values:
     defaultSettings:
       createDefaultDiskLabeledNodes: true
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      host: longhorn.${CLUSTER_DOMAIN}
     metrics:
       serviceMonitor:
         enabled: true
