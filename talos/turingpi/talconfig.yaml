@@ -8,21 +8,48 @@ nodes:
     ipAddress: 192.168.254.41
     installDisk: /dev/nvme0n1
     controlPlane: true
+    talosImageURL: ghcr.io/bbck/talos-rk1
+    kernelModules:
+      - name: rockchip-cpufreq
+    nodeLabels:
+      node.longhorn.io/create-default-disk: "true"
   - hostname: rk1-2
     ipAddress: 192.168.254.42
     installDisk: /dev/nvme0n1
     controlPlane: true
+    talosImageURL: ghcr.io/bbck/talos-rk1
+    kernelModules:
+      - name: rockchip-cpufreq
+    nodeLabels:
+      node.longhorn.io/create-default-disk: "true"
   - hostname: rk1-3
     ipAddress: 192.168.254.43
     installDisk: /dev/nvme0n1
     controlPlane: true
+    talosImageURL: ghcr.io/bbck/talos-rk1
+    kernelModules:
+      - name: rockchip-cpufreq
+    nodeLabels:
+      node.longhorn.io/create-default-disk: "true"
   - hostname: rk1-4
     ipAddress: 192.168.254.44
     installDisk: /dev/nvme0n1
+    talosImageURL: ghcr.io/bbck/talos-rk1
+    kernelModules:
+      - name: rockchip-cpufreq
+    nodeLabels:
+      node.longhorn.io/create-default-disk: "true"
+  - hostname: eq12
+    ipAddress: 192.168.254.45
+    installDisk: /dev/sda
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/iscsi-tools
+            - siderolabs/tailscale
+            - siderolabs/util-linux-tools
 controlPlane:
-  talosImageURL: ghcr.io/bbck/talos-rk1
-  kernelModules: &kernelModules
-    - name: rockchip-cpufreq
   extensionServices: &extensionServices
     - name: tailscale
       environment:
@@ -62,8 +89,6 @@ controlPlane:
               hard=True
               nconnect=8
 worker:
-  talosImageURL: ghcr.io/bbck/talos-rk1
-  kernelModules: *kernelModules
   extensionServices: *extensionServices
   patches:
     - *ciliumPatch
