@@ -24,5 +24,7 @@ spec:
             snapshot.storage.kubernetes.io/is-default-class: "true"
           driver: driver.longhorn.io
           deletionPolicy: Delete
+          parameters:
+            type: snap
     webhook:
       enabled: false
