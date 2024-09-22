@@ -1,13 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - backube.yaml
-  - bjw-s.yaml
-  - cilium.yaml
-  - csi-driver-nfs.yaml
-  - grafana.yaml
-  - jetstack.yaml
-  - piraeus.yaml
-  - prometheus-community.yaml
-  - rook-release.yaml
-  - tailscale.yaml
+  - ./backube.yaml
+  - ./bjw-s.yaml
+  - ./cilium.yaml
+  - ./csi-driver-nfs.yaml
+  - ./grafana.yaml
+  - ./jetstack.yaml
+  - ./longhorn.yaml
+  - ./piraeus.yaml
+  - ./prometheus-community.yaml
+  - ./rook-release.yaml
+  - ./tailscale.yaml
