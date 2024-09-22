@@ -59,6 +59,25 @@ spec:
         ports:
           http:
             port: 9696
+
+    ingress:
+      prowlarr:
+        className: tailscale
+        hosts:
+          - host: prowlarr
+            paths:
+              - path: /
+                service:
+                  identifier: prowlarr
+                  port: http
+        tls:
+          - hosts:
+              - prowlarr
+
     persistence:
       config:
-        existingClaim: prowlarr
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 250Mi
+        globalMounts:
+          - path: /config
