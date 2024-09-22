@@ -6,6 +6,7 @@ resources:
   - ./cilium.yaml
   - ./csi-driver-nfs.yaml
   - ./grafana.yaml
+  - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./longhorn.yaml
   - ./piraeus.yaml
