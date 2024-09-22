@@ -14,3 +14,9 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
+  values:
+    defaultSettings:
+      createDefaultDiskLabeledNodes: true
+    metrics:
+      serviceMonitor:
+        enabled: true
