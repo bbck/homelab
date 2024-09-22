@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: radarr
+  name: sonarr
   namespace: default
 spec:
   interval: 5m
@@ -25,13 +25,13 @@ spec:
         seccompProfile:
           type: RuntimeDefault
     controllers:
-      radarr:
+      sonarr:
         replicas: 1
         containers:
-          radarr:
+          sonarr:
             image:
-              repository: ghcr.io/onedr0p/radarr
-              tag: "5.9.1.9070@sha256:3dae331f04e8a70786147e6a158fd1c3473fad4ffb78c9cf0f92955973959733"
+              repository: ghcr.io/onedr0p/sonarr
+              tag: "4.0.9.2244@sha256:951a35cd1ca2247e5477138b6998f907fa80a8715f3b78d2b4607c7441dcd828"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
@@ -56,33 +56,14 @@ spec:
               capabilities:
                 drop: ["ALL"]
     service:
-      radarr:
-        controller: radarr
+      sonarr:
+        controller: sonarr
         ports:
           http:
-            port: 7878
-
-    ingress:
-      radarr:
-        className: tailscale
-        hosts:
-          - host: radarr
-            paths:
-              - path: /
-                service:
-                  identifier: radarr
-                  port: http
-        tls:
-          - hosts:
-              - radarr
-
+            port: 8989
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 250Mi
-        globalMounts:
-          - path: /config
+        existingClaim: sonarr
       data:
         type: nfs
         server: 192.168.254.47

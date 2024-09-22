@@ -5,3 +5,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./prowlarr/ks.yaml
+  - ./radarr/ks.yaml
+  - ./recyclarr/ks.yaml
+  - ./sonarr/ks.yaml
