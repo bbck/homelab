@@ -10,8 +10,10 @@ resources:
   - ./intel.yaml
   - ./jetstack.yaml
   - ./longhorn.yaml
+  - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
   - ./piraeus.yaml
+  - ./postfinance.yaml
   - ./prometheus-community.yaml
   - ./rook-release.yaml
   - ./tailscale.yaml
