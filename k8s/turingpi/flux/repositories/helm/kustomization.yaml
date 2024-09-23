@@ -7,6 +7,7 @@ resources:
   - ./csi-driver-nfs.yaml
   - ./grafana.yaml
   - ./ingress-nginx.yaml
+  - ./intel.yaml
   - ./jetstack.yaml
   - ./longhorn.yaml
   - ./node-feature-discovery.yaml
