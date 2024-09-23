@@ -20,7 +20,7 @@ spec:
         force-ssl-redirect: "true"
       replicaCount: 1
       extraArgs:
-        default-ssl-certificate: network/${CLUSTER_DOMAIN/./-}-tls
+        default-ssl-certificate: networking/${CLUSTER_DOMAIN/./-}-tls
       service:
         type: LoadBalancer
         loadBalancerClass: tailscale
