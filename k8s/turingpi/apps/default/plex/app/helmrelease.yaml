@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -24,6 +26,8 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
     controllers:
       plex:
         replicas: 1
@@ -31,11 +35,11 @@ spec:
           plex:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: "1.41.0.8992-8463ad060@sha256:1b64b20cfaa6b1aac07dff4cd2e7f01ef4f2db4eef3c3aa211837db43717a722"
+              tag: "1.41.0.8992-8463ad060@sha256:5144995628a3d9ed7329e423c1db782570c3a77da163fa37035392f3431fb054"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
-              PLEX_ADVERTISE_URL: https://plex.taild1477.ts.net:443
+              PLEX_ADVERTISE_URL: https://plex.${CLUSTER_DOMAIN}
             resources:
               limits:
                 memory: 4096Mi
@@ -67,53 +71,42 @@ spec:
     service:
       plex:
         controller: plex
+        type: NodePort
         ports:
           http:
+            nodePort: 32400
             port: 32400
-
     ingress:
-      plex:
-        className: tailscale
+      prowlarr:
+        className: nginx
         hosts:
-          - host: plex
+          - host: plex.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: plex
                   port: http
-        tls:
-          - hosts:
-              - plex
-
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
+        existingClaim: plex
         globalMounts:
           - path: /config/Library/Application Support/Plex Media Server
       cache:
-        # TODO: Change to emptyDir when Talos is off eMMC
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 10Gi
+        existingClaim: plex-cache
         globalMounts:
           - path: /config/Library/Application Support/Plex Media Server/Cache
       logs:
-        # TODO: Change to emptyDir when Talos is off eMMC
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
+        type: emptyDir
         globalMounts:
           - path: /config/Library/Application Support/Plex Media Server/Logs
       tmp:
-        # TODO: Change to emptyDir when Talos is off eMMC
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        globalMounts:
-          - path: /tmp
+        type: emptyDir
+      transcode:
+        type: emptyDir
       media:
         type: nfs
         server: 192.168.254.47
         path: /mnt/nas/media
+        globalMounts:
+          - path: /media
+            readOnly: true
