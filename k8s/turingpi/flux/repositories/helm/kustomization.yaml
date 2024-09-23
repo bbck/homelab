@@ -9,6 +9,7 @@ resources:
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./longhorn.yaml
+  - ./node-feature-discovery.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./rook-release.yaml

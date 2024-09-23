@@ -3,6 +3,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
-  - ./cilium/ks.yaml
-  - ./node-feature-discovery/ks.yaml
+  - ./intel-gpu-device.yaml
