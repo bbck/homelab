@@ -42,6 +42,7 @@ spec:
               PLEX_ADVERTISE_URL: https://plex.${CLUSTER_DOMAIN}
             resources:
               limits:
+                gpu.intel.com/i915: 3
                 memory: 4096Mi
               requests:
                 cpu: 100m
