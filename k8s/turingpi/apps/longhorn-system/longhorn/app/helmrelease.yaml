@@ -20,6 +20,8 @@ spec:
       enabled: true
       ingressClassName: nginx
       host: longhorn.${CLUSTER_DOMAIN}
+      annotations:
+        cert-manager.io/issuer: "letsencrypt"
     metrics:
       serviceMonitor:
         enabled: true
