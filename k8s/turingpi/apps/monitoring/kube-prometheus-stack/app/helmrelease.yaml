@@ -1,0 +1,78 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 62.7.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+      interval: 1m
+  values:
+    crds:
+      enabled: false
+    cleanPrometheusOperatorObjectNames: true
+    alertmanager:
+      alertmanagerSpec:
+        useExistingSecret: true
+        configSecret: alertmanager-config
+        externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - alertmanager.${CLUSTER_DOMAIN}
+    grafana:
+      enabled: false
+    kubeApiServer:
+      serviceMonitor:
+        selector:
+          k8s-app: kube-apiserver
+    kubeScheduler:
+      service:
+        selector:
+          k8s-app: kube-scheduler
+    kubeControllerManager: &kubeControllerManager
+      service:
+        selector:
+          k8s-app: kube-controller-manager
+    kubeEtcd:
+      <<: *kubeControllerManager # etcd runs on control plane nodes
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+    prometheus:
+      prometheusSpec:
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        retention: 30d
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn
+              resources:
+                requests:
+                  storage: 256Gi
+        enableRemoteWriteReceiver: true
+        externalUrl: https://prometheus.${CLUSTER_DOMAIN}
+        enableFeatures:
+          - auto-gomemlimit
+          - memory-snapshot-on-shutdown
+          - new-service-discovery-manager
+        walCompression: true
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - prometheus.${CLUSTER_DOMAIN}

@@ -1,81 +1,3 @@
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: kube-prometheus-stack
-  namespace: monitoring
-spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 62.7.0
-      sourceRef:
-        kind: HelmRepository
-        name: prometheus-community
-        namespace: flux-system
-      interval: 1m
-  values:
-    alertmanager:
-      alertmanagerSpec:
-        useExistingSecret: true
-        configSecret: alertmanager-config
-        externalUrl: https://alertmanager.taild1477.ts.net
-      ingress:
-        enabled: true
-        ingressClassName: tailscale
-        hosts: []
-        tls:
-          - hosts:
-              - alertmanager
-    grafana:
-      enabled: false
-    kubeControllerManager:
-      endpoints:
-        - 192.168.254.42
-        - 192.168.254.43
-        - 192.168.254.44
-    kubeEtcd:
-      endpoints:
-        - 192.168.254.42
-        - 192.168.254.43
-        - 192.168.254.44
-    kubeScheduler:
-      endpoints:
-        - 192.168.254.42
-        - 192.168.254.43
-        - 192.168.254.44
-    kubeProxy:
-      enabled: false
-    prometheus:
-      prometheusSpec:
-        ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelectorNilUsesHelmValues: false
-        probeSelectorNilUsesHelmValues: false
-        scrapeConfigSelectorNilUsesHelmValues: false
-        retention: 30d
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: ceph-block
-              resources:
-                requests:
-                  storage: 256Gi
-        enableRemoteWriteReceiver: true
-        externalUrl: https://prometheus.taild1477.ts.net
-        enableFeatures:
-          - auto-gomemlimit
-          - memory-snapshot-on-shutdown
-          - new-service-discovery-manager
-        walCompression: true
-      ingress:
-        enabled: true
-        ingressClassName: tailscale
-        hosts: []
-        tls:
-          - hosts:
-              - prometheus
-    cleanPrometheusOperatorObjectNames: true
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -141,14 +63,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/kubernetes
-          - name: ceph
-            orgId: 1
-            folder: Ceph
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/ceph
           - name: flux
             orgId: 1
             folder: Flux
@@ -185,19 +99,6 @@ spec:
         k8s-views-pods:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
           datasource: Prometheus
-      ceph:
-        ceph-cluster:
-          gnetId: 2842
-          revision: 17
-          datasource: Prometheus
-        ceph-osd:
-          gnetId: 5336
-          revision: 9
-          datasource: Prometheus
-        ceph-pools:
-          gnetId: 5342
-          revision: 9
-          datasource: Prometheus
       flux:
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
@@ -214,10 +115,8 @@ spec:
           datasource: Prometheus
     ingress:
       enabled: true
-      ingressClassName: tailscale
-      hosts: []
-      tls:
-        - hosts:
-            - grafana
+      ingressClassName: nginx
+      hosts:
+        - grafana.${CLUSTER_DOMAIN}
     serviceMonitor:
       enabled: true
