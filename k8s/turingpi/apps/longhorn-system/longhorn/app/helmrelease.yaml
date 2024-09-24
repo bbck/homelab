@@ -14,8 +14,16 @@ spec:
         name: longhorn
         namespace: flux-system
   values:
+    csi:
+      attacherReplicaCount: &replicas 1
+      provisionerReplicaCount: *replicas
+      resizerReplicaCount: *replicas
+      snapshotterReplicaCount: *replicas
+    persistence:
+      defaultClassReplicaCount: 3
+      defaultDataLocality: best-effort
     defaultSettings:
-      createDefaultDiskLabeledNodes: true
+      defaultDataLocality: best-effort
     ingress:
       enabled: true
       ingressClassName: nginx

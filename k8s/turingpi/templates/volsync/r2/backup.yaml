@@ -16,9 +16,9 @@ spec:
       daily: 7
       weekly: 4
     copyMethod: Snapshot
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-longhorn}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-longhorn-cache}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn-cache}"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-longhorn}"
     moverSecurityContext:
       runAsUser: 65534
