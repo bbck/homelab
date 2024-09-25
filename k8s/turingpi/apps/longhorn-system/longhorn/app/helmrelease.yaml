@@ -28,6 +28,8 @@ spec:
       enabled: true
       ingressClassName: nginx
       host: longhorn.${CLUSTER_DOMAIN}
+      annotations:
+        external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
     metrics:
       serviceMonitor:
         enabled: true

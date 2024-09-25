@@ -118,5 +118,7 @@ spec:
       ingressClassName: nginx
       hosts:
         - grafana.${CLUSTER_DOMAIN}
+      annotations:
+        external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
     serviceMonitor:
       enabled: true
