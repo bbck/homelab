@@ -1,6 +1,6 @@
 prometheus.remote_write "turingpi" {
   endpoint {
-    url = "http://prometheus.bbck.dev/api/v1/push"
+    url = "http://prometheus.tailscale/api/v1/push"
   }
 }
 
