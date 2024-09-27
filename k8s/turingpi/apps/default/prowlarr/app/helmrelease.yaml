@@ -33,7 +33,7 @@ spec:
           prowlarr:
             image:
               repository: ghcr.io/onedr0p/prowlarr
-              tag: "1.23.1.4708@sha256:2d612eb8c4316921a7d3928537fe7cb73f80522255d93e2b607513bbc9368724"
+              tag: "1.24.3.4754@sha256:dcfed4b6b397decad1186c24289a4584ef73b7c035bb945a6642a96c1035fc08"
               pullPolicy: IfNotPresent
             resources:
               limits:
