@@ -58,6 +58,12 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
+        podMonitorSelector: &selector
+          matchLabels: null
+        probeSelector: *selector
+        ruleSelector: *selector
+        scrapeConfigSelector: *selector
+        serviceMonitorSelector: *selector
         retention: 30d
         storageSpec:
           volumeClaimTemplate:
