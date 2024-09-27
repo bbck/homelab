@@ -94,25 +94,25 @@ spec:
         existingClaim: plex
         advancedMounts:
           plex:
-            app:
+            plex:
               - path: /config
       cache:
         existingClaim: plex-cache
         advancedMounts:
           plex:
-            app:
+            plex:
               - path: /config/Library/Application Support/Plex Media Server/Cache
       logs:
         type: emptyDir
         advancedMounts:
           plex:
-            app:
+            plex:
               - path: /config/Library/Application Support/Plex Media Server/Logs
       transcode:
         type: emptyDir
         advancedMounts:
           plex:
-            app:
+            plex:
               - path: /transcode
       media:
         type: nfs
@@ -120,5 +120,5 @@ spec:
         path: /mnt/nas/media
         advancedMounts:
           plex:
-            app:
+            plex:
               - path: /media
