@@ -11,7 +11,7 @@ spec:
   ref:
     branch: master
   secretRef:
-    name: flux-system
+    name: github-token
   ignore: |
     # exclude all
     /*
