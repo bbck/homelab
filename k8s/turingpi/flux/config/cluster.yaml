@@ -31,11 +31,11 @@ spec:
   wait: false
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: homelab
   decryption:
     provider: sops
     secretRef:
-      name: sops-age
+      name: sops-gpg
   postBuild:
     substituteFrom:
       - kind: ConfigMap
