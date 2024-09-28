@@ -14,7 +14,7 @@ spec:
   prune: false
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: homelab
   wait: false
   interval: 30m
   retryInterval: 1m
