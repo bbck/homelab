@@ -11,6 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./k8s/turingpi/apps/default/prowlarr/app
+  dependsOn:
+    - name: volsync
   prune: true
   sourceRef:
     kind: GitRepository
