@@ -38,6 +38,7 @@ nodes:
       customization:
         systemExtensions:
           officialExtensions:
+            - siderolabs/i915-ucode
             - siderolabs/iscsi-tools
             - siderolabs/tailscale
             - siderolabs/util-linux-tools
