@@ -26,6 +26,9 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
+      nodeSelector:
+        # Pin to arm64 since we also pin the container sha256
+        kubernetes.io/arch: arm64
     controllers:
       prowlarr:
         replicas: 1
