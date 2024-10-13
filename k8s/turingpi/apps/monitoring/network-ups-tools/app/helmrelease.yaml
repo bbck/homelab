@@ -1,0 +1,74 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: network-ups-tools
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 1m
+  values:
+    defaultPodOptions:
+      nodeSelector:
+        apc.feature.node.kubernetes.io/ups: "true"
+    controllers:
+      network-ups-tools:
+        replicas: 1
+        containers:
+          network-ups-tools:
+            image:
+              repository: ghcr.io/jr0dd/network-ups-tools
+              tag: v2.8.1@sha256:2a6e47d431cbb901482ad6692f089a7541524fd3538e42857b39663bb331ba25
+              pullPolicy: IfNotPresent
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 25m
+                memory: 128Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              privileged: true
+    service:
+      network-ups-tools:
+        controller: network-ups-tools
+        ports:
+          http:
+            port: 3493
+            protocol: TCP
+    persistence:
+      config:
+        type: configMap
+        name: network-ups-tools-config
+        defaultMode: 0400
+        globalMounts:
+          - path: /etc/nut
+    configMaps:
+      config:
+        data:
+          nut.conf: |-
+            MODE=netserver
+          upsd.conf: |-
+            LISTEN 0.0.0.0 3493
+          upsd.users: |-
+          #   [upsmon]
+          #   password = badpassword
+          #   upsmon primary
+          ups.conf: |-
+            [kubernetes]
+            driver = usbhid-ups
+            port = auto
+            desc = "American Power Conversion Back-UPS BE900G3"
