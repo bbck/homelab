@@ -87,9 +87,21 @@ controlPlane:
               nfsvers=4.2
               hard=True
               nconnect=8
+    - &longhornPatch |-
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/lib/longhorn
+              type: bind
+              source: /var/lib/longhorn
+              options:
+                - bind
+                - rshared
+                - rw
 worker:
   extensionServices: *extensionServices
   patches:
     - *metricsSererPatch
     - *ciliumPatch
     - *nfsPatch
+    - *longhornPatch
