@@ -24,6 +24,10 @@ spec:
         reporting_enabled: false
         check_for_updates: false
         check_for_plugin_updates: false
+      auth.anonymous:
+        enabled: true
+        org_name: Main Org.
+        org_role: Viewer
     sidecar:
       dashboards:
         enabled: true
