@@ -24,6 +24,7 @@ spec:
       defaultDataLocality: best-effort
     defaultSettings:
       defaultDataLocality: best-effort
+      concurrentAutomaticEngineUpgradePerNodeLimit: 1
     ingress:
       enabled: true
       ingressClassName: nginx
