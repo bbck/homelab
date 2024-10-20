@@ -124,6 +124,11 @@ spec:
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
             - { name: VAR_REPLICATIONDESTNAME, value: .*-dst }
+        mikrotik:
+          gnetId: 13679
+          revision: 22
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
     ingress:
       enabled: true
       ingressClassName: nginx
