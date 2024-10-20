@@ -75,6 +75,7 @@ spec:
           mktxp.conf: |-
             [CRS310]
               hostname = 192.168.254.253
+              poe = False
 
             [default]
               username = ${NET_MONITORING_USER}
