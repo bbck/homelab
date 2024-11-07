@@ -80,6 +80,7 @@ spec:
               wireless_clients = False
               capsman = False
               capsman_clients = False
+              switch_port = True
 
             [default]
               username = ${NET_MONITORING_USER}
