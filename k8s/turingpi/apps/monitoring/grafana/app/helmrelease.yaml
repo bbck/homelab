@@ -130,10 +130,6 @@ spec:
           revision: 22
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-        coredns:
-          gnetId: 15762
-          revision: 18
-          datasource: Prometheus
     ingress:
       enabled: true
       ingressClassName: nginx
