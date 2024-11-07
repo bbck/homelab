@@ -76,6 +76,10 @@ spec:
             [CRS310]
               hostname = 192.168.254.253
               poe = False
+              wireless = False
+              wireless_clients = False
+              capsman = False
+              capsman_clients = False
 
             [default]
               username = ${NET_MONITORING_USER}
