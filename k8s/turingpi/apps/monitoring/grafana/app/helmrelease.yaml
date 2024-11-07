@@ -28,6 +28,8 @@ spec:
         enabled: true
         org_name: Main Org.
         org_role: Viewer
+      users:
+        viewers_can_edit: true
     sidecar:
       dashboards:
         enabled: true
