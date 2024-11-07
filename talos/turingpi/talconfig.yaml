@@ -64,17 +64,22 @@ controlPlane:
         etcd:
           extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
+    # Disable CoreDNS
+    - |-
+      cluster:
+        coreDNS:
+          disabled: true
+    # Disable kube-proxy in favor of Cilium
+    - |-
+      cluster:
+        proxy:
+          disabled: true
     # Enable kubelet certificate rotation for metrics-server
     - &metricsSererPatch |-
       machine:
         kubelet:
           extraArgs:
             rotate-server-certificates: true
-    # Disable kube-proxy in favor of Cilium
-    - &ciliumPatch |-
-      cluster:
-        proxy:
-          disabled: true
     # NFS mount options
     - &nfsPatch |-
       machine:
@@ -102,6 +107,5 @@ worker:
   extensionServices: *extensionServices
   patches:
     - *metricsSererPatch
-    - *ciliumPatch
     - *nfsPatch
     - *longhornPatch
