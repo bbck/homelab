@@ -18,3 +18,5 @@ spec:
     operatorConfig:
       hostname: turingpi
       logging: debug
+    proxyConfig:
+      defaultProxyClass: tun-request
