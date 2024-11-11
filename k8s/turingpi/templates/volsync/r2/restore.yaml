@@ -16,6 +16,8 @@ spec:
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-longhorn}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     capacity: "${VOLSYNC_CAPACITY:-1Gi}"
+    cleanupTempPVC: true
+    cleanupCachePVC: true
     moverSecurityContext:
       runAsUser: 65534
       runAsGroup: 65534
