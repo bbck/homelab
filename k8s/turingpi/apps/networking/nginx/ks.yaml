@@ -36,6 +36,7 @@ spec:
   path: ./k8s/turingpi/apps/networking/nginx/app
   dependsOn:
     - name: nginx-certificates
+    - name: tailscale-config
   prune: true
   sourceRef:
     kind: GitRepository

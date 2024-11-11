@@ -11,8 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./k8s/turingpi/apps/kube-system/generic-device-plugin/app
-  dependsOn:
-    - name: node-feature-discovery
   prune: true
   sourceRef:
     kind: GitRepository
