@@ -22,6 +22,8 @@ spec:
       hostRoot: /sys/fs/cgroup
     dashboards:
       enabled: true
+    envoy:
+      enabled: false
     ipam:
       mode: kubernetes
     k8sServiceHost: localhost
