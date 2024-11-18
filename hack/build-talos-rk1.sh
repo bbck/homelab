@@ -1,7 +1,7 @@
 #!/bin/bash
 set -exo pipefail
 
-TALOS_VERSION="v1.8.2"
+TALOS_VERSION="v1.8.3"
 TALOS_EXTENSIONS="tailscale iscsi-tools util-linux-tools"
 
 WORK_DIR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
@@ -14,7 +14,7 @@ _get_extension_images() {
 
 build_image() {
   docker run --rm -t -v "${WORK_DIR}/_out:/out" -v /dev:/dev --privileged "ghcr.io/nberlee/imager:${TALOS_VERSION}" \
-    metal \
+    installer \
     --arch arm64 \
     --overlay-name turingrk1 \
     --overlay-image ghcr.io/nberlee/sbc-turingrk1:$TALOS_VERSION \
@@ -27,6 +27,7 @@ upload_image() {
   # https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-with-a-personal-access-token-classic
   # gh auth token | crane auth login ghcr.io -u bbck --password-stdin
   crane push "${WORK_DIR}/_out/installer-arm64.tar" "ghcr.io/bbck/talos-rk1:${TALOS_VERSION}"
+  crane tag "ghcr.io/bbck/talos-rk1:${TALOS_VERSION}" "latest"
 }
 
 main() {
