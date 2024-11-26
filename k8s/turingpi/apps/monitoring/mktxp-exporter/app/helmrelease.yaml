@@ -136,14 +136,14 @@ spec:
               user = True                     # Active Users metrics
               queue = True                    # Queues metrics
 
-              bgp = False                     # BGP sessions metrics
+              bgp = True                      # BGP sessions metrics
               certificate = False             # Certificates metrics
 
               remote_dhcp_entry = None        # An MKTXP entry to provide for remote DHCP info / resolution
               remote_capsman_entry = None     # An MKTXP entry to provide for remote capsman info 
 
               use_comments_over_names = True  # when available, forces using comments over the interfaces names
-              check_for_updates = False       # check for available ROS updates
+              check_for_updates = True        # check for available ROS updates
           _mktxp.conf: |-
             ## Copyright (c) 2020 Arseniy Kuznetsov
             ##
