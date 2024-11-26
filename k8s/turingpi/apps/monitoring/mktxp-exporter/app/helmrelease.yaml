@@ -73,6 +73,9 @@ spec:
       config:
         stringData:
           mktxp.conf: |-
+            [RB5009]
+              hostname = 192.168.254.254
+
             [CRS310]
               hostname = 192.168.254.253
               poe = False
