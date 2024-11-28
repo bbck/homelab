@@ -16,7 +16,6 @@ spec:
         name: cilium
         namespace: flux-system
   values:
-    autoDirectNodeRoutes: true
     cgroup:
       autoMount:
         enabled: false
@@ -27,7 +26,6 @@ spec:
       enabled: false
     ipam:
       mode: kubernetes
-    ipv4NativeRoutingCIDR: 10.244.0.0/16
     k8sServiceHost: localhost
     k8sServicePort: 7445
     kubeProxyReplacement: true
@@ -45,7 +43,6 @@ spec:
         enabled: true
         trustCRDsExist: true
     rollOutCiliumPods: true
-    routingMode: native
     securityContext:
       capabilities:
         ciliumAgent:
