@@ -91,7 +91,7 @@ spec:
 
               enabled = True                  # turns metrics collection for this RouterOS device on / off
               hostname = localhost            # RouterOS IP address
-              port = 8728                     # RouterOS IP Port
+              port = 8729                     # RouterOS IP Port
 
               use_ssl = True                  # enables connection via API-SSL servis
               no_ssl_certificate = True       # enables API_SSL connect without router SSL certificate
