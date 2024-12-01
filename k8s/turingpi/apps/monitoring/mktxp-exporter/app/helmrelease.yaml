@@ -94,7 +94,7 @@ spec:
               port = 8729                     # RouterOS IP Port
 
               use_ssl = True                  # enables connection via API-SSL servis
-              no_ssl_certificate = True       # enables API_SSL connect without router SSL certificate
+              no_ssl_certificate = False      # enables API_SSL connect without router SSL certificate
               ssl_certificate_verify = False  # turns SSL certificate verification on / off   
               plaintext_login = True          # for legacy RouterOS versions below 6.43 use False
 
@@ -169,7 +169,7 @@ spec:
                 bandwidth_test_interval = 600    # Interval for collecting bandwidth metrics
                 minimal_collect_interval = 5     # Minimal metric collection interval
 
-                verbose_mode = False             # Set it on for troubleshooting
+                verbose_mode = True              # Set it on for troubleshooting
 
                 fetch_routers_in_parallel = False   # Fetch metrics from multiple routers in parallel / sequentially 
                 max_worker_threads = 5              # Max number of worker threads that can fetch routers (parallel fetch only)
