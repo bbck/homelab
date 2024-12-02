@@ -16,6 +16,8 @@ spec:
         name: cilium
         namespace: flux-system
   values:
+    bgpControlPlane:
+      enabled: true
     cgroup:
       autoMount:
         enabled: false
