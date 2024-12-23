@@ -1,5 +1,5 @@
 clusterName: turingpi
-talosVersion: v1.8.3
+talosVersion: v1.9.0
 endpoint: https://192.168.254.41:6443
 cniConfig:
   name: none
@@ -8,45 +8,52 @@ nodes:
     ipAddress: 192.168.254.41
     installDisk: /dev/nvme0n1
     controlPlane: true
-    talosImageURL: ghcr.io/bbck/talos-rk1
-    kernelModules:
-      - name: rockchip-cpufreq
+    schematic:
+      overlay: &rk1
+        image: siderolabs/sbc-rockchip
+        name: turingrk1
+      customization:
+        systemExtensions:
+          officialExtensions: &extensions
+            - siderolabs/i915
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
   - hostname: rk1-2
     ipAddress: 192.168.254.42
     installDisk: /dev/nvme0n1
     controlPlane: true
-    talosImageURL: ghcr.io/bbck/talos-rk1
-    kernelModules:
-      - name: rockchip-cpufreq
+    schematic:
+      overlay: *rk1
+      customization:
+        systemExtensions:
+          officialExtensions: *extensions
   - hostname: rk1-3
     ipAddress: 192.168.254.43
     installDisk: /dev/nvme0n1
     controlPlane: true
-    talosImageURL: ghcr.io/bbck/talos-rk1
-    kernelModules:
-      - name: rockchip-cpufreq
+    schematic:
+      overlay: *rk1
+      customization:
+        systemExtensions:
+          officialExtensions: *extensions
   - hostname: rk1-4
     ipAddress: 192.168.254.44
     installDisk: /dev/nvme0n1
-    talosImageURL: ghcr.io/bbck/talos-rk1
-    kernelModules:
-      - name: rockchip-cpufreq
+    schematic:
+      overlay: *rk1
+      customization:
+        systemExtensions:
+          officialExtensions: *extensions
   - hostname: eq12
     ipAddress: 192.168.254.45
     installDisk: /dev/sda
+    nodeLabels:
+      feature.node.kubernetes.io/2.5GbE: "true"
     schematic:
       customization:
         systemExtensions:
-          officialExtensions:
-            - siderolabs/i915-ucode
-            - siderolabs/iscsi-tools
-            - siderolabs/tailscale
-            - siderolabs/util-linux-tools
+          officialExtensions: *extensions
 controlPlane:
-  extensionServices: &extensionServices
-    - name: tailscale
-      environment:
-        - TS_AUTHKEY=${TS_AUTHKEY}
   patches:
     # Schedule on all nodes
     - |-
@@ -104,7 +111,6 @@ controlPlane:
                 - rshared
                 - rw
 worker:
-  extensionServices: *extensionServices
   patches:
     - *metricsSererPatch
     - *nfsPatch
