@@ -36,7 +36,7 @@ spec:
           sonarr:
             image:
               repository: ghcr.io/onedr0p/sonarr
-              tag: "4.0.11.2680@sha256:534597c2bdbdf4284f784727c363fd28fef9c01494c22aa0bc94db122d3e69e0"
+              tag: "4.0.11.2680@sha256:6d86fba05681ec03ebbeeae003e8fc863e3b4b42bdd45b5a3a3a369c1b616e61"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
