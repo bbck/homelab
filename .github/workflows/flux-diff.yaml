@@ -16,7 +16,6 @@ jobs:
     strategy:
       matrix:
         cluster_path:
-          - k8s/cm3588
           - k8s/turingpi
         resource:
           - helmrelease
