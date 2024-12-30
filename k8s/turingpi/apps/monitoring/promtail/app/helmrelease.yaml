@@ -21,34 +21,5 @@ spec:
       clients:
         - url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
           tenant_id: 1
-      snippets:
-        extraScrapeConfigs: |-
-          - job_name: syslog
-            syslog:
-              listen_address: 0.0.0.0:1514
-              label_structured_data: true
-            relabel_configs:
-              - source_labels: ["__syslog_message_hostname"]
-                target_label: "host"
-            pipeline_stages:
-              - match:
-                  selector: '{job="syslog"}'
-                  stages:
-                    - json:
-                        expressions:
-                          message: msg
-                          detected_level: '"talos-level"'
-                          service_name: '"talos-service"'
-                          timestamp: '"talos-time"'
-                    - timestamp:
-                        source: timestamp
-                        format: RFC3339Nano
-    extraPorts:
-      syslog:
-        name: syslog
-        containerPort: 1514
-        service:
-          type: NodePort
-          nodePort: 31514
     serviceMonitor:
       enabled: true
