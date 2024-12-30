@@ -110,8 +110,19 @@ controlPlane:
                 - bind
                 - rshared
                 - rw
+    - &loggingPatch |-
+      machine:
+        logging:
+          destinations:
+            - endpoint: "tcp://127.0.0.1:31514/"
+              format: "json_lines"
+        install:
+          extraKernelArgs:
+            - talos.logging.kernel=tcp://127.0.0.1:31514/
+
 worker:
   patches:
     - *metricsSererPatch
     - *nfsPatch
     - *longhornPatch
+    - *loggingPatch
