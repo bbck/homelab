@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -19,15 +20,9 @@ spec:
     fullnameOverride: smartctl-exporter
     image:
       repository: ghcr.io/joryirving/smartctl_exporter
-      tag: 0.13.0@sha256:a31f74f50c0e3a22cc1bb474ea8ff0d5d4c4ca3be5409eaf24d8894ff74b0921
+      tag: 0.13.0
     config:
       devices:
         - /dev/nvme0n1
-    # extraInstances:
-    #   - config:
-    #       devices:
-    #         - /dev/sda
-    #     nodeSelector:
-    #       type: kubernetes.io/hostname=eq12
     serviceMonitor:
       enabled: true
