@@ -17,15 +17,6 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        fsGroup: 65534
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile:
-          type: RuntimeDefault
     controllers:
       hoarder:
         replicas: 1
@@ -36,12 +27,11 @@ spec:
               tag: "0.20.0"
               pullPolicy: IfNotPresent
             env:
-              MEILI_ADDR: http://hoarder-meilisearch:7700
-              BROWSER_WEB_URL: http://hoarder-chrome:9222
+              MEILI_ADDR: http://hoarder-meilisearch.default.svc.cluster.local:7700
+              BROWSER_WEB_URL: http://hoarder-chrome.default.svc.cluster.local:9222
               DATA_DIR: /data
               NEXTAUTH_URL: https://hoarder.${CLUSTER_DOMAIN}
-              # Workaround for s6-overlay on read only filesystem
-              S6_READ_ONLY_ROOT: "1"
+              DISABLE_SIGNUPS: "true"
             envFrom:
               - secretRef:
                   name: hoarder
@@ -59,12 +49,6 @@ spec:
               startup:
                 enabled: true
             securityContext:
-              # Unfortuantly the container currently cannot run as non-root
-              # https://github.com/hoarder-app/hoarder/issues/606
-              runAsUser: 0
-              runAsGroup: 0
-              runAsNonRoot: false
-              allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
           chrome:
@@ -95,7 +79,6 @@ spec:
               startup:
                 enabled: true
             securityContext:
-              allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
           meilisearch:
@@ -122,7 +105,6 @@ spec:
               startup:
                 enabled: true
             securityContext:
-              allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
     service:
