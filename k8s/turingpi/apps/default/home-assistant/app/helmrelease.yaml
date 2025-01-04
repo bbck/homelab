@@ -61,6 +61,9 @@ spec:
         ports:
           http:
             port: 8123
+          mdns:
+            port: 5353
+            protocol: UDP
           homekit:
             port: 21063
     ingress:
