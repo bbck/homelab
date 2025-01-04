@@ -53,6 +53,7 @@ spec:
     service:
       home-assistant:
         controller: home-assistant
+        type: LoadBalancer
         ports:
           http:
             port: 8123

@@ -72,10 +72,9 @@ spec:
     service:
       plex:
         controller: plex
-        type: NodePort
+        type: LoadBalancer
         ports:
           http:
-            nodePort: 32400
             port: 32400
     ingress:
       plex:
