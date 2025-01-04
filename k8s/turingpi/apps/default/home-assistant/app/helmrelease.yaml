@@ -43,10 +43,13 @@ spec:
             probes:
               liveness:
                 enabled: true
+                port: 8123
               readiness:
                 enabled: true
+                port: 8123
               startup:
                 enabled: true
+                port: 8123
             securityContext:
               capabilities:
                 drop: ["ALL"]
