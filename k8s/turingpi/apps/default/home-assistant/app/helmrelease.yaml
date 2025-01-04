@@ -54,9 +54,12 @@ spec:
       home-assistant:
         controller: home-assistant
         type: LoadBalancer
+        externalTrafficPolicy: Local
         ports:
           http:
             port: 8123
+          homekit:
+            port: 21063
     ingress:
       home-assistant:
         className: nginx
