@@ -74,16 +74,13 @@ spec:
         stringData:
           mktxp.conf: |-
             [RB5009]
-              hostname = 192.168.254.254
+              hostname = 192.168.88.2
+
+            [cAP ax]
+              hostname = 192.168.88.3
 
             [CRS310]
-              hostname = 192.168.254.253
-              poe = False
-              wireless = False
-              wireless_clients = False
-              capsman = False
-              capsman_clients = False
-              switch_port = True
+              hostname = 192.168.88.4
 
             [default]
               username = ${NET_MONITORING_USER}
