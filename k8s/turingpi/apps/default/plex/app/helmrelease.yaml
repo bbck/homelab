@@ -30,7 +30,6 @@ spec:
         feature.node.kubernetes.io/i915-gpu: "true"
     controllers:
       plex:
-        replicas: 1
         containers:
           plex:
             image:
@@ -42,7 +41,7 @@ spec:
               PLEX_ADVERTISE_URL: https://plex.${CLUSTER_DOMAIN}
             resources:
               limits:
-                gpu.intel.com/i915: 3
+                gpu.intel.com/i915: 1
                 memory: 4096Mi
               requests:
                 cpu: 100m
