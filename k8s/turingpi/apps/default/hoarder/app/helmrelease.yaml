@@ -24,7 +24,7 @@ spec:
           web:
             image:
               repository: ghcr.io/hoarder-app/hoarder
-              tag: "0.20.0"
+              tag: "0.21.0"
               pullPolicy: IfNotPresent
             env:
               MEILI_ADDR: http://hoarder-meilisearch.default.svc.cluster.local:7700
