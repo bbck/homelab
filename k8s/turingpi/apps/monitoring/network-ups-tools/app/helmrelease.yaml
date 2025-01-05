@@ -19,7 +19,7 @@ spec:
   values:
     defaultPodOptions:
       nodeSelector:
-        apc.feature.node.kubernetes.io/ups: "true"
+        feature.node.kubernetes.io/ups: "true"
     controllers:
       network-ups-tools:
         replicas: 1

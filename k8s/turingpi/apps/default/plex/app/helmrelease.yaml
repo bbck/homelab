@@ -27,7 +27,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
+        feature.node.kubernetes.io/i915-gpu: "true"
     controllers:
       plex:
         replicas: 1

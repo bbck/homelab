@@ -47,8 +47,6 @@ nodes:
   - hostname: eq12
     ipAddress: 192.168.254.45
     installDisk: /dev/nvme0n1
-    nodeLabels:
-      feature.node.kubernetes.io/2.5GbE: "true"
     schematic:
       customization:
         systemExtensions:
