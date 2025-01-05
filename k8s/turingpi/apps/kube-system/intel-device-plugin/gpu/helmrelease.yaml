@@ -20,4 +20,5 @@ spec:
     sharedDevNum: 3
     nodeFeatureRule: false
     nodeSelector:
+      intel.feature.node.kubernetes.io/gpu: null
       feature.node.kubernetes.io/i915-gpu: "true"
