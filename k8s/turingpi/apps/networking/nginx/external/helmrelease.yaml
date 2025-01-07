@@ -29,10 +29,7 @@ spec:
       extraArgs:
         default-ssl-certificate: networking/${CLUSTER_DOMAIN/./-}-tls
       service:
-        type: LoadBalancer
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: external.${CLUSTER_DOMAIN}
-        externalTrafficPolicy: Local
+        type: ClusterIP
       ingressClassResource:
         name: external
         default: false
