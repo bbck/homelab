@@ -26,11 +26,11 @@ spec:
         externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: internal
         hosts:
           - alertmanager.${CLUSTER_DOMAIN}
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     grafana:
       enabled: false
     kubeApiServer:
@@ -83,8 +83,8 @@ spec:
         walCompression: true
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: internal
         hosts:
           - prometheus.${CLUSTER_DOMAIN}
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}

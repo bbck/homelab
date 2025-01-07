@@ -71,7 +71,7 @@ spec:
             port: 5055
     ingress:
       overseerr:
-        className: nginx
+        className: external
         hosts:
           - host: requests.${CLUSTER_DOMAIN}
             paths:
@@ -80,7 +80,7 @@ spec:
                   identifier: overseerr
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
     persistence:
       config:
         existingClaim: overseerr

@@ -132,7 +132,7 @@ spec:
             port: 7700
     ingress:
       hoarder:
-        className: nginx
+        className: internal
         hosts:
           - host: hoarder.${CLUSTER_DOMAIN}
             paths:
@@ -141,7 +141,7 @@ spec:
                   identifier: hoarder
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     persistence:
       data:
         existingClaim: hoarder

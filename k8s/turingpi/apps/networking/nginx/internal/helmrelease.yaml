@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nginx
+  name: ingress-nginx-internal
 spec:
   interval: 30m
   chart:
@@ -14,21 +14,30 @@ spec:
         name: ingress-nginx
         namespace: flux-system
   values:
+    fullnameOverride: ingress-nginx-internal
     controller:
       config:
         ssl-redirect: "true"
         force-ssl-redirect: "true"
-      replicaCount: 1
+      admissionWebhooks:
+        objectSelector:
+          matchExpressions:
+            - key: ingress-class
+              operator: In
+              values: ["internal"]
+      replicaCount: 2
       extraArgs:
         default-ssl-certificate: networking/${CLUSTER_DOMAIN/./-}-tls
       service:
         type: LoadBalancer
         loadBalancerClass: tailscale
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: internal.${CLUSTER_DOMAIN}
+          tailscale.com/hostname: k8s-nginx
       ingressClassResource:
-        default: false
-      watchIngressWithoutClass: false
+        name: internal
+        default: true
+        controllerValue: k8s.io/internal
       metrics:
         enabled: true
         serviceMonitor:

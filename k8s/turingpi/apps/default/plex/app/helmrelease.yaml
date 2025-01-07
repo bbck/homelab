@@ -78,7 +78,7 @@ spec:
             port: 32400
     ingress:
       plex:
-        className: nginx
+        className: internal
         hosts:
           - host: plex.${CLUSTER_DOMAIN}
             paths:
@@ -87,7 +87,7 @@ spec:
                   identifier: plex
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     persistence:
       config:
         existingClaim: plex

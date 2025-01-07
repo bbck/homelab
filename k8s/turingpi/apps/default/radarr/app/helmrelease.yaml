@@ -68,7 +68,7 @@ spec:
             port: 7878
     ingress:
       radarr:
-        className: nginx
+        className: internal
         hosts:
           - host: radarr.${CLUSTER_DOMAIN}
             paths:
@@ -77,7 +77,7 @@ spec:
                   identifier: radarr
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     persistence:
       config:
         existingClaim: radarr

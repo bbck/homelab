@@ -68,7 +68,7 @@ spec:
             port: 8989
     ingress:
       sonarr:
-        className: nginx
+        className: internal
         hosts:
           - host: sonarr.${CLUSTER_DOMAIN}
             paths:
@@ -77,7 +77,7 @@ spec:
                   identifier: sonarr
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     persistence:
       config:
         existingClaim: sonarr

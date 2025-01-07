@@ -71,7 +71,7 @@ spec:
             port: 8080
     ingress:
       sabnzbd:
-        className: nginx
+        className: internal
         hosts:
           - host: sabnzbd.${CLUSTER_DOMAIN}
             paths:
@@ -80,7 +80,7 @@ spec:
                   identifier: sabnzbd
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     persistence:
       config:
         existingClaim: sabnzbd

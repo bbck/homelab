@@ -66,7 +66,7 @@ spec:
             port: 9696
     ingress:
       prowlarr:
-        className: nginx
+        className: internal
         hosts:
           - host: prowlarr.${CLUSTER_DOMAIN}
             paths:
@@ -75,7 +75,7 @@ spec:
                   identifier: prowlarr
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     persistence:
       config:
         existingClaim: prowlarr

@@ -27,10 +27,10 @@ spec:
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
     ingress:
       enabled: true
-      ingressClassName: nginx
+      ingressClassName: internal
       host: longhorn.${CLUSTER_DOMAIN}
       annotations:
-        external-dns.alpha.kubernetes.io/target: nginx.${CLUSTER_DOMAIN}
+        external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     metrics:
       serviceMonitor:
         enabled: true
