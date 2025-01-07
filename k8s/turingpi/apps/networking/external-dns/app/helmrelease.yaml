@@ -17,6 +17,9 @@ spec:
     provider: cloudflare
     domainFilters:
       - ${CLUSTER_DOMAIN}
+    sources:
+      - crd
+      - ingress
     env:
       - name: CF_API_TOKEN
         valueFrom:
