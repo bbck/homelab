@@ -8,3 +8,6 @@ spec:
     - dnsName: "external.${CLUSTER_DOMAIN}"
       recordType: CNAME
       targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
+      providerSpecific:
+        - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
+          value: "true"
