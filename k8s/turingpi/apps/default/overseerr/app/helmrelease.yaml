@@ -81,6 +81,7 @@ spec:
                   port: http
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     persistence:
       config:
         existingClaim: overseerr
