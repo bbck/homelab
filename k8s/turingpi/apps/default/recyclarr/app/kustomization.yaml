@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./secret.enc.yaml
+  - ../../../../templates/volsync
 configMapGenerator:
   - name: recyclarr-configmap
     namespace: default
