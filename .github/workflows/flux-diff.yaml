@@ -21,7 +21,7 @@ jobs:
         with:
           live-branch: master
           path: k8s/turingpi
-          resource: kustomization
+          resource: helmrelease
       - name: PR Comments
         uses: mshick/add-pr-comment@v2
         if: ${{ steps.diff.outputs.diff != '' }}
