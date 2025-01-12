@@ -2,6 +2,8 @@
 sonarr:
   sonarr:
     base_url: http://sonarr.default.svc.cluster.local:8989
+    delete_old_custom_formats: true
+    replace_existing_custom_formats: true
     include:
       - template: sonarr-quality-definition-series
       - template: sonarr-v4-custom-formats-web-1080p
@@ -39,6 +41,8 @@ sonarr:
           - name: WEB-1080p
 radarr:
   radarr:
+    delete_old_custom_formats: true
+    replace_existing_custom_formats: true
     base_url: http://radarr.default.svc.cluster.local:7878
     include:
       - template: radarr-quality-definition-movie

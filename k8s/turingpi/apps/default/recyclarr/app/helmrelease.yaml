@@ -53,11 +53,7 @@ spec:
                 drop: ["ALL"]
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 100Mi
-        globalMounts:
-          - path: /config
+        existingClaim: recyclarr
       config-file:
         type: configMap
         name: recyclarr-configmap
