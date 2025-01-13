@@ -11,8 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./k8s/turingpi/apps/networking/tailscale/app
-  dependsOn:
-    - name: generic-device-plugin
   prune: true
   sourceRef:
     kind: GitRepository
