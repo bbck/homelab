@@ -19,4 +19,4 @@ spec:
       hostname: turingpi
       logging: debug
     proxyConfig:
-      defaultProxyClass: tun-request
+      defaultProxyClass: default
