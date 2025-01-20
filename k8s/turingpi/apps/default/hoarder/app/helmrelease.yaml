@@ -86,7 +86,7 @@ spec:
           app:
             image:
               repository: getmeili/meilisearch
-              tag: "v1.11.1"
+              tag: "v1.12.5"
               pullPolicy: IfNotPresent
             env:
               MEILI_NO_ANALYTICS: "true"
