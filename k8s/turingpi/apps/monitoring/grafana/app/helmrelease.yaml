@@ -85,8 +85,8 @@ spec:
           revision: 37
           datasource: Prometheus
         smart:
-          gnetId: 20204
-          revision: 1
+          gnetId: 22604
+          revision: 2
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
         k8s-system-api-server:
