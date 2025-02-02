@@ -1,16 +1,40 @@
 {
-  "extends": ["config:recommended"],
-  "kubernetes": {"fileMatch": ["k8s/.+\\.yaml$"]},
-  "flux": {"fileMatch": ["k8s/.+\\.yaml$"]},
-  "helm-values": {"fileMatch": ["k8s/.+\\.yaml$"]},
+  "extends": [
+    "config:recommended",
+    ":disableDependencyDashboard",
+    ":disableRateLimiting"
+  ],
+  "kubernetes": {
+    "fileMatch": [
+      "k8s/.+\\.yaml$"
+    ]
+  },
+  "flux": {
+    "fileMatch": [
+      "k8s/.+\\.yaml$"
+    ]
+  },
+  "helm-values": {
+    "fileMatch": [
+      "k8s/.+\\.yaml$"
+    ]
+  },
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
-      "excludePackagePatterns": ["^ghcr\\.io/fluxcd/.*"]
+      "matchDatasources": [
+        "docker"
+      ],
+      "excludePackagePatterns": [
+        "^ghcr\\.io/fluxcd/.*"
+      ]
     },
     {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["ghcr.io/onedr0p/plex"],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/onedr0p/plex"
+      ],
       "versioning": "loose"
     }
   ]
