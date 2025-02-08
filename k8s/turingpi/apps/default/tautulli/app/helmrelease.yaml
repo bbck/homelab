@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/tautulli
-              tag: 2.15.1@sha256:91d25de1744cd8582f6c64dc028a8efcbb40cbb06e4be386959104c347d57574
+              tag: 2.15.1@sha256:e40f2d00cc202f7e5f17758d849e6dbb11df8e7ff60ab42a88b100517124ae5d
             resources:
               limits:
                 memory: 512Mi
