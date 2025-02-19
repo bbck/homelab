@@ -26,9 +26,6 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
-      nodeSelector:
-        # Pin to arm64 since we also pin the container sha256
-        kubernetes.io/arch: arm64
     controllers:
       radarr:
         replicas: 1
@@ -36,7 +33,7 @@ spec:
           radarr:
             image:
               repository: ghcr.io/onedr0p/radarr
-              tag: "5.18.4.9674@sha256:b15a57ce1e5473b3861365ff12a89e5ea2a08dc726c2346156e82264b5da1a12"
+              tag: "5.18.4.9674@sha256:59be618047f755c3f39acd5638229fcc6605bbf47b548a66ad1b6a81478e7847"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles

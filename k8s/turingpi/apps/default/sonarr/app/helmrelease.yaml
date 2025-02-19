@@ -26,9 +26,6 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
-      nodeSelector:
-        # Pin to arm64 since we also pin the container sha256
-        kubernetes.io/arch: arm64
     controllers:
       sonarr:
         replicas: 1
@@ -36,7 +33,7 @@ spec:
           sonarr:
             image:
               repository: ghcr.io/onedr0p/sonarr
-              tag: "4.0.13.2932@sha256:ada951982555c7f7083fb95228d2e4528a1eadd5159b2959841bb8c690bc281f"
+              tag: "4.0.13.2932@sha256:b9f76d8f542f9783c24cec4d26dc5fffcb2fca8eae1bc3170eadc0cf9d74120e"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
