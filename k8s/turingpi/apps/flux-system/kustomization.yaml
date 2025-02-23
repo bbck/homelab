@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./podmonitor.yaml
   - ./webhooks/ks.yaml
+  - ./tofu-controller/ks.yaml

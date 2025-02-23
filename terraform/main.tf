@@ -1,11 +1,6 @@
 terraform {
-  backend "remote" {
-    hostname     = "app.terraform.io"
-    organization = "bbck"
-
-    workspaces {
-      name = "homelab"
-    }
+  backend "local" {
+    path = "./.terraform/terraform.tfstate"
   }
 }
 

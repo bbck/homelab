@@ -18,3 +18,4 @@ resources:
   - ./postfinance.yaml
   - ./prometheus-community.yaml
   - ./tailscale.yaml
+  - ./tofu-controller.yaml
