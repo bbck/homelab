@@ -45,9 +45,9 @@ spec:
                 sabnzbd.bbck.dev
             resources:
               limits:
-                memory: 4096Mi
+                memory: 2048Mi
               requests:
-                cpu: 100m
+                cpu: 10m
                 memory: 256Mi
             probes:
               liveness:
