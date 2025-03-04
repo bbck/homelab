@@ -78,7 +78,15 @@ spec:
     persistence:
       config:
         existingClaim: sonarr
-      data:
+      media:
         type: nfs
         server: 192.168.254.47
-        path: /mnt/nas
+        path: /mnt/nas/media
+        globalMounts:
+          - path: /data/media
+      downloads:
+        type: nfs
+        server: 192.168.254.47
+        path: /mnt/nas/downloads
+        globalMounts:
+          - path: /data/downloads

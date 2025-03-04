@@ -87,6 +87,6 @@ spec:
       data:
         type: nfs
         server: 192.168.254.47
-        path: /mnt/nas/usenet
+        path: /mnt/nas/downloads/usenet
         globalMounts:
-          - path: /data/usenet
+          - path: /data/downloads/usenet

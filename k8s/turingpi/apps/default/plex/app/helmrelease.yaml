@@ -111,4 +111,3 @@ spec:
         path: /mnt/nas/media
         globalMounts:
           - path: /media
-            readOnly: true
