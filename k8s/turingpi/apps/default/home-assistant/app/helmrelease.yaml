@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/home-assistant
-              tag: "2025.2.5@sha256:0e6dfed23d79e76e9bf0d65afbecb0483534fa9ba4a242141362037d3607524a"
+              tag: "2025.3.0@sha256:5b2d594d5d7fdf961b1245b8cfc6185690a4538ad961747dca808e2191176c9c"
             resources:
               limits:
                 memory: 2Gi
