@@ -95,6 +95,7 @@ spec:
               ssl_certificate_verify = False  # turns SSL certificate verification on / off   
               plaintext_login = True          # for legacy RouterOS versions below 6.43 use False
 
+              health = True                   # System Health metrics
               installed_packages = True       # Installed packages
               dhcp = True                     # DHCP general metrics
               dhcp_lease = True               # DHCP lease metrics
@@ -137,6 +138,7 @@ spec:
               user = True                     # Active Users metrics
               queue = True                    # Queues metrics
 
+              bfd = False                     # BFD sessions metrics
               bgp = True                      # BGP sessions metrics
               routing_stats = False           # Routing process stats
               certificate = False             # Certificates metrics
