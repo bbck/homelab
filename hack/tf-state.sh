@@ -28,7 +28,7 @@ push_tf_state() {
         | yq e '.metadata.annotations["encoding"]="gzip"' - \
         > /tmp/tfstate-default-${PROJECT}.yaml
 
-    kubectl -n flux-system apply -f tfstate-default-${PROJECT}.yaml
+    kubectl -n flux-system apply -f /tmp/tfstate-default-${PROJECT}.yaml
 
     rm /tmp/tfstate-default-${PROJECT}.yaml
 }
