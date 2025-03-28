@@ -8,13 +8,14 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 1.15.2
+      version: 1.16.0
       sourceRef:
         kind: HelmRepository
         name: external-dns
         namespace: flux-system
   values:
-    provider: cloudflare
+    provider:
+      name: cloudflare
     domainFilters:
       - ${CLUSTER_DOMAIN}
     sources:
