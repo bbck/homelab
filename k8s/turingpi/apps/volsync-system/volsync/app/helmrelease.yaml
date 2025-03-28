@@ -17,8 +17,8 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: ghcr.io/onedr0p/volsync
+      repository: ghcr.io/home-operations/volsync
     metrics:
       disableAuth: true
     restic:
-      repository: ghcr.io/onedr0p/volsync
+      repository: ghcr.io/home-operations/volsync
