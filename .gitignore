@@ -1,4 +1,10 @@
-# Decrypted secrest
+# Decrypted secrets
 k8s/**/flux/vars/cluster-secrets.yaml
 k8s/**/apps/**/secret.yaml
 
+# Manual terraform runs
+**/.terraform/*
+*.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfvars

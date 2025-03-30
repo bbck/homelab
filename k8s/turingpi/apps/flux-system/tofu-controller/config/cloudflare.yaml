@@ -1,0 +1,17 @@
+---
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: cloudflare
+  namespace: flux-system
+spec:
+  interval: 1h
+  approvePlan: auto
+  path: ./terraform/cloudflare
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+    namespace: flux-system
+  varsFrom:
+    - kind: Secret
+      name: terraform-secrets

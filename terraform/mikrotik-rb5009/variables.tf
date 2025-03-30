@@ -4,5 +4,5 @@ variable "routeros_username" {
 }
 
 variable "routeros_password" {
-  type    = string
+  type = string
 }
