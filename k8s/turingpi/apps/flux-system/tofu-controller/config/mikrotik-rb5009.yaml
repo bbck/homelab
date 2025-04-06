@@ -12,6 +12,8 @@ spec:
     kind: GitRepository
     name: homelab
     namespace: flux-system
+  branchPlanner:
+    enablePathScope: true
   varsFrom:
     - kind: Secret
       name: terraform-secrets
