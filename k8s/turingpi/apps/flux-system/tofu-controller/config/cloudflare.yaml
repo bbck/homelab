@@ -18,10 +18,6 @@ spec:
       varsKeys:
         - cloudflare_api_token
         - cloudflare_account_id
-    - kind: ConfigMap
-      name: terraform-vars
-      varsKeys:
-        - domains
   vars:
     - name: domains
       value:
