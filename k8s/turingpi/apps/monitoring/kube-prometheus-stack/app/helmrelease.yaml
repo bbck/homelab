@@ -62,6 +62,7 @@ spec:
               - helm.toolkit.fluxcd.io
               - notification.toolkit.fluxcd.io
               - image.toolkit.fluxcd.io
+              - infra.contrib.fluxcd.io
             resources:
               - gitrepositories
               - buckets
@@ -76,6 +77,7 @@ spec:
               - imagerepositories
               - imagepolicies
               - imageupdateautomations
+              - terraforms
             verbs: ["list", "watch"]
       customResourceState:
         enabled: true
@@ -323,6 +325,25 @@ spec:
                       exported_namespace: [metadata, namespace]
                       ready: [status, conditions, "[type=Ready]", status]
                       suspended: [spec, suspend]
+                      source_name: [spec, sourceRef, name]
+              - groupVersionKind:
+                  group: infra.contrib.fluxcd.io
+                  version: v1alpha2
+                  kind: Terraform
+                metricNamePrefix: gotk
+                metrics:
+                  - name: "resource_info"
+                    help: "The current state of a Flux Terraform resource."
+                    each:
+                      type: Info
+                      info:
+                        labelsFromPath:
+                          name: [metadata, name]
+                    labelsFromPath:
+                      exported_namespace: [metadata, namespace]
+                      ready: [status, conditions, "[type=Ready]", status]
+                      suspended: [spec, suspend]
+                      revision: [status, lastAppliedRevision]
                       source_name: [spec, sourceRef, name]
     prometheus:
       prometheusSpec:
