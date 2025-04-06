@@ -6,8 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  approvePlan: "" 
-  suspend: true
+  approvePlan: auto
   path: ./terraform/cloudflare
   sourceRef:
     kind: GitRepository
@@ -16,3 +15,29 @@ spec:
   varsFrom:
     - kind: Secret
       name: terraform-secrets
+      varsKeys:
+        - cloudflare_api_token
+        - cloudflare_account_id
+    - kind: ConfigMap
+      name: terraform-vars
+      varsKeys:
+        - domains
+  vars:
+    - name: domains
+      value:
+        bbck.dev:
+          email: true
+          route_id: 2f61f0b589234ff48fe1e3c122dae718
+          rua: null@bbck.dev
+        bbck.net:
+          email: true
+          route_id: 904da511b9044bb6abe5e0ac5c6e6133
+          rua: 478fff8e@in.mailhardener.com
+        cheatycheetahs.com:
+          email: true
+          route_id: d372603f53a842829fb5938f79953281
+          rua: null@cheatycheetahs.com
+        lookitupongoogle.com:
+          email: false
+          route_id: ''
+          rua: ''

@@ -15,3 +15,5 @@ spec:
   varsFrom:
     - kind: Secret
       name: terraform-secrets
+      varsKeys:
+        - routeros_password
