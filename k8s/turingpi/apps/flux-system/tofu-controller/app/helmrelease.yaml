@@ -16,6 +16,8 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
+    branchPlanner:
+      enabled: true
     awsPackage:
       install: false
     metrics:
