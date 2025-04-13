@@ -38,7 +38,6 @@ spec:
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
-              PLEX_ADVERTISE_URL: https://plex.${CLUSTER_DOMAIN}:443,http://192.168.40.129:32400
             resources:
               limits:
                 gpu.intel.com/i915: 1
