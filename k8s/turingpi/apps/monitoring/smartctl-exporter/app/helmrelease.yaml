@@ -20,7 +20,7 @@ spec:
     fullnameOverride: smartctl-exporter
     image:
       repository: ghcr.io/joryirving/smartctl_exporter
-      tag: 0.13.0
+      tag: 0.14.0
     config:
       devices:
         - /dev/nvme0n1
