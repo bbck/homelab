@@ -1,0 +1,6 @@
+---
+- name: cm3588-nas
+  hosts: cm3588-nas
+  become: true
+  roles:
+    - common
