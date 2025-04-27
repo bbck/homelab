@@ -30,6 +30,7 @@ spec:
               DATA_DIR: /data
               NEXTAUTH_URL: https://hoarder.${CLUSTER_DOMAIN}
               DISABLE_SIGNUPS: "true"
+              DISABLE_NEW_RELEASE_CHECK: "true"
             envFrom:
               - secretRef:
                   name: hoarder
@@ -37,8 +38,8 @@ spec:
               limits:
                 memory: 1Gi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
             probes:
               liveness:
                 enabled: true
@@ -69,8 +70,8 @@ spec:
               limits:
                 memory: 500Mi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
             probes:
               liveness:
                 enabled: true
@@ -92,13 +93,19 @@ spec:
                         operator: In
                         values:
                           - hoarder
+                      - key: app.kubernetes.io/component
+                        operator: In
+                        values:
+                          - hoarder
                   topologyKey: kubernetes.io/hostname
         containers:
           app:
             image:
               repository: getmeili/meilisearch
-              tag: "v1.14.0"
-              pullPolicy: IfNotPresent
+              tag: v1.14.0
+            args:
+              - /bin/meilisearch
+              - --experimental-dumpless-upgrade
             env:
               MEILI_NO_ANALYTICS: "true"
             envFrom:
@@ -108,8 +115,8 @@ spec:
               limits:
                 memory: 256Mi
               requests:
-                cpu: 50m
-                memory: 64Mi
+                cpu: 10m
+                memory: 32Mi
             probes:
               liveness:
                 enabled: true
