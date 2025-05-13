@@ -78,8 +78,8 @@ spec:
       default:
         prometheus:
           # renovate: depName="Prometheus"
-          gnetId: 19105
-          revision: 5
+          gnetId: 19107
+          revision: 7
           datasource: Prometheus
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
