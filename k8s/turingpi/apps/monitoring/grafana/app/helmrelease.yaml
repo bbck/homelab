@@ -77,14 +77,17 @@ spec:
     dashboards:
       default:
         prometheus:
+          # renovate: depName="Prometheus"
           gnetId: 19105
           revision: 5
           datasource: Prometheus
         node-exporter-full:
+          # renovate: depName="Node Exporter Full"
           gnetId: 1860
           revision: 37
           datasource: Prometheus
         smart:
+          # renovate: depName="SMARTctl Exporter Dashboard"
           gnetId: 22604
           revision: 2
           datasource:
@@ -108,6 +111,7 @@ spec:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
           datasource: Prometheus
         cert-manager:
+          # renovate: depName="Cert-manager-Kubernetes"
           gnetId: 20842
           revision: 2
           datasource: Prometheus
@@ -118,16 +122,19 @@ spec:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
           datasource: Prometheus
         longhorn:
+          # renovate: depName="Longhorn"
           gnetId: 16888
           revision: 9
           datasource: Prometheus
         volsync:
+          # renovate: depName="VolSync Dashboard"
           gnetId: 21356
           revision: 3
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
             - { name: VAR_REPLICATIONDESTNAME, value: .*-dst }
         mikrotik:
+          # renovate: depName="Mikrotik MKTXP Exporter"
           gnetId: 13679
           revision: 22
           datasource:
