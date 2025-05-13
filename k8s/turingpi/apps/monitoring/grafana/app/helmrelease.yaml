@@ -79,12 +79,12 @@ spec:
         prometheus:
           # renovate: depName="Prometheus"
           gnetId: 19105
-          revision: 5
+          revision: 7
           datasource: Prometheus
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
-          revision: 37
+          revision: 40
           datasource: Prometheus
         smart:
           # renovate: depName="SMARTctl Exporter Dashboard"
@@ -113,7 +113,7 @@ spec:
         cert-manager:
           # renovate: depName="Cert-manager-Kubernetes"
           gnetId: 20842
-          revision: 2
+          revision: 3
           datasource: Prometheus
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
