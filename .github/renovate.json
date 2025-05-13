@@ -36,6 +36,33 @@
         "ghcr.io/onedr0p/plex"
       ],
       "versioning": "loose"
+    },
+    {
+      "matchDatasources": [
+        "custom.grafana-dashboards"
+      ]
     }
-  ]
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "k8s/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "depName=\"(?<depName>.*)\"\\n(?<indentation>\\s+)gnetId: (?<packageName>\\d+)\\n.+revision: (?<currentValue>\\d+)"
+      ],
+      "datasourceTemplate": "custom.grafana-dashboards",
+      "versioningTemplate": "regex:^(?<major>\\d+)$"
+    }
+  ],
+  "customDatasources": {
+    "grafana-dashboards": {
+      "defaultRegistryUrlTemplate": "https://grafana.com/api/dashboards/{{packageName}}",
+      "format": "json",
+      "transformTemplates": [
+        "{\"releases\":[{\"version\": $string(revision)}]}"
+      ]
+    }
+  }
 }
