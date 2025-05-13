@@ -40,7 +40,8 @@
     {
       "matchDatasources": [
         "custom.grafana-dashboards"
-      ]
+      ],
+      "commitMessageTopic": "dashboard {{depName}}",
     }
   ],
   "customManagers": [
