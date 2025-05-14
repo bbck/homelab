@@ -366,13 +366,13 @@ spec:
               resources:
                 requests:
                   storage: 256Gi
-        enableRemoteWriteReceiver: true
-        externalUrl: https://prometheus.${CLUSTER_DOMAIN}
         enableFeatures:
           - auto-gomemlimit
           - memory-snapshot-on-shutdown
           - new-service-discovery-manager
         walCompression: true
+        externalLabels:
+          cluster: main
       ingress:
         enabled: true
         ingressClassName: internal
