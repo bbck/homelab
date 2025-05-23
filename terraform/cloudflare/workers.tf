@@ -44,7 +44,4 @@ resource "cloudflare_workers_route" "mta_sts" {
   zone_id = cloudflare_zone.this[each.key].id
   pattern = "mta-sts.${each.key}/.well-known/mta-sts.txt"
   script  = cloudflare_workers_script.mta_sts[each.key].script_name
-
-  # https://github.com/cloudflare/terraform-provider-cloudflare/issues/5134
-  route_id = each.value.route_id
 }
