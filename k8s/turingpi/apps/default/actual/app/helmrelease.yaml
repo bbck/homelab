@@ -54,7 +54,7 @@ spec:
           http:
             port: 5006
     ingress:
-      hoarder:
+      actual:
         className: internal
         hosts:
           - host: actual.${CLUSTER_DOMAIN}
