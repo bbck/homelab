@@ -4,3 +4,4 @@ resources:
   - ./secret.enc.yaml
   - ./cloudflare.yaml
   - ./mikrotik-rb5009.yaml
+  - ./minio.yaml

@@ -1,0 +1,20 @@
+---
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: minio
+  namespace: flux-system
+spec:
+  interval: 1h
+  approvePlan: auto
+  path: ./terraform/minio
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+    namespace: flux-system
+  varsFrom:
+    - kind: Secret
+      name: terraform-secrets
+      varsKeys:
+        - minio_username
+        - minio_password
