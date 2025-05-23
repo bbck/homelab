@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  approvePlan: auto
+  approvePlan: ""
   path: ./terraform/cloudflare
   sourceRef:
     kind: GitRepository
