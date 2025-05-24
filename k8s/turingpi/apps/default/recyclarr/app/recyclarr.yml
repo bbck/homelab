@@ -36,8 +36,6 @@ sonarr:
           - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
-          - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
-          - e2315f990da2e2cbfc9fa5b7a6fcfe48 # LQ (Release Title)
         assign_scores_to:
           - name: WEB-1080p
 radarr:
@@ -83,8 +81,6 @@ radarr:
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
-          - 90a6f9a284dff5103f6346090e6280c8 # LQ
-          - e204b80c87be9497a8a6eaff48f72905 # LQ (Release Title)
         assign_scores_to:
           - name: UHD Bluray + WEB
           - name: HD Bluray + WEB
