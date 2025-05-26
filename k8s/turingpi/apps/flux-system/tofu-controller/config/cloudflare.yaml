@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
+  suspend: true
   approvePlan: ""
   path: ./terraform/cloudflare
   sourceRef:
