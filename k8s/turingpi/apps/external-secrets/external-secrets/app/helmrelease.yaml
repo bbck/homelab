@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: external-secrets
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: external-secrets
+      version: 0.17.0
+      sourceRef:
+        kind: HelmRepository
+        name: external-secrets
+        namespace: flux-system
+  values:
+    certController:
+      serviceMonitor:
+        enabled: true
+    grafanaDashboard:
+      enabled: true
+    installCRDs: true
+    serviceMonitor:
+      enabled: true
+    webhook:
+      serviceMonitor:
+        enabled: true
