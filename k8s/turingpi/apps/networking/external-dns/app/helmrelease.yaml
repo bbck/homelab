@@ -25,7 +25,7 @@ spec:
       - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: external-dns
-            key: CF_API_TOKEN
+            name: cloudflare-api-token
+            key: api-token
     serviceMonitor:
       enabled: true
