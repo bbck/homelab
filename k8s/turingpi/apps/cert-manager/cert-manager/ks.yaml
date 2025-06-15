@@ -34,6 +34,7 @@ spec:
   path: ./k8s/turingpi/apps/cert-manager/cert-manager/issuers
   dependsOn:
     - name: cert-manager
+    - name: external-secrets
   prune: false
   sourceRef:
     kind: GitRepository
