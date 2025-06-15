@@ -15,14 +15,16 @@ spec:
         name: external-secrets
         namespace: flux-system
   values:
-    certController:
-      serviceMonitor:
-        enabled: true
     grafanaDashboard:
       enabled: true
     installCRDs: true
     serviceMonitor:
       enabled: true
     webhook:
-      serviceMonitor:
+      certManager:
         enabled: true
+        cert:
+          create: true
+          issuerRef:
+            kind: Issuer
+            name: external-secrets-selfsigned-issuer
