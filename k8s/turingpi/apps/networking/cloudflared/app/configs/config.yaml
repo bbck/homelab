@@ -1,10 +1,10 @@
 ---
 originRequest:
-  originServerName: external.bbck.dev
+  originServerName: "external.${CLUSTER_DOMAIN}"
 
 ingress:
-  - hostname: "bbck.dev"
+  - hostname: "${CLUSTER_DOMAIN}"
     service: https://ingress-nginx-external-controller.networking.svc.cluster.local:443
-  - hostname: "*.bbck.dev"
+  - hostname: "*.${CLUSTER_DOMAIN}"
     service: https://ingress-nginx-external-controller.networking.svc.cluster.local:443
   - service: http_status:404

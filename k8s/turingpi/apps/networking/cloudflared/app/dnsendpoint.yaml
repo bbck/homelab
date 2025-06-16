@@ -5,9 +5,9 @@ metadata:
   name: cloudflared
 spec:
   endpoints:
-    - dnsName: external.bbck.dev
+    - dnsName: "external.${CLUSTER_DOMAIN}"
       recordType: CNAME
-      targets: ["${TUNNEL_ID}.cfargotunnel.com"]
+      targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
       providerSpecific:
         - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
           value: "true"

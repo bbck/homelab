@@ -19,5 +19,9 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  dependsOn:
-    - name: external-secrets
+  postBuild:
+    substitute:
+      APP: *app
+    substituteFrom:
+      - kind: Secret
+        name: cluster-secrets

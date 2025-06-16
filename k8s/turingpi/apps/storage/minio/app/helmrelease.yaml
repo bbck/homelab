@@ -33,17 +33,17 @@ spec:
             env:
               TZ: America/Los_Angeles
               MINIO_UPDATE: off
-              MINIO_BROWSER_REDIRECT_URL: https://minio.bbck.dev
-              MINIO_SERVER_URL: https://s3.bbck.dev
+              MINIO_BROWSER_REDIRECT_URL: https://minio.${CLUSTER_DOMAIN}
+              MINIO_SERVER_URL: https://s3.${CLUSTER_DOMAIN}
               MINIO_PROMETHEUS_AUTH_TYPE: public
               MINIO_PROMETHEUS_JOB_ID: minio
               MINIO_PROMETHEUS_URL: http://prometheus-operated.monitoring.svc.cluster.local:9090
             envFrom:
               - secretRef:
-                  name: minio-root
+                  name: minio-secret
             args:
               - server
-              - /data
+              - /data 
               - --console-address
               - :9001
             probes:
@@ -80,20 +80,20 @@ spec:
       app:
         className: internal
         hosts:
-          - host: minio.bbck.dev
+          - host: minio.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-          - host: s3.bbck.dev
+          - host: s3.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: s3
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
     serviceMonitor:
       app:
         serviceName: minio
