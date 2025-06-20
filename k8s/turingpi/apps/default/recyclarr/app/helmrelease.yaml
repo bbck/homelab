@@ -41,6 +41,9 @@ spec:
               - "sync"
             env:
               TZ: America/Los_Angeles
+            envFrom:
+              - secretRef:
+                  name: recyclarr
             resources:
               limits:
                 memory: 128Mi
@@ -56,15 +59,8 @@ spec:
         existingClaim: recyclarr
       config-file:
         type: configMap
-        name: recyclarr-configmap
+        name: recyclarr
         globalMounts:
           - path: /config/recyclarr.yml
             subPath: recyclarr.yml
-            readOnly: true
-      secrets-file:
-        type: secret
-        name: recyclarr-secrets
-        globalMounts:
-          - path: /config/secrets.yml
-            subPath: secrets.yml
             readOnly: true

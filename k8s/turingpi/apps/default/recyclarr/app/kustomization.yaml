@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./secret.enc.yaml
   - ../../../../templates/volsync
 configMapGenerator:
-  - name: recyclarr-configmap
+  - name: recyclarr
     namespace: default
     files:
-      - recyclarr.yml=./recyclarr.yml
+      - config/recyclarr.yml
 generatorOptions:
   disableNameSuffixHash: true
