@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./secret.enc.yaml
-  - ./cloudflare.yaml
-  - ./mikrotik-rb5009.yaml
+  - ./externalsecret.yaml
+  # - ./cloudflare.yaml
+  # - ./mikrotik-rb5009.yaml
   - ./minio.yaml

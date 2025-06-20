@@ -12,13 +12,23 @@ resource "minio_s3_bucket" "this" {
 resource "random_password" "this" {
   for_each = var.buckets
 
-  length   = 32
+  length = 32
+}
+
+resource "onepassword_item" "this" {
+  for_each = var.buckets
+
+  vault    = data.onepassword_vault.homelab.uuid
+  title    = "${each.key}-bucket"
+  category = "login"
+  username = each.key
+  password = random_password.this[each.key].result
 }
 
 resource "minio_iam_user" "this" {
   for_each = var.buckets
 
-  name = each.key
+  name   = each.key
   secret = random_password.this[each.key].result
 }
 
@@ -39,7 +49,7 @@ data "minio_iam_policy_document" "this" {
 resource "minio_iam_policy" "this" {
   for_each = var.buckets
 
-  name   = "${each.key}"
+  name   = each.key
   policy = data.minio_iam_policy_document.this[each.key].json
 }
 
