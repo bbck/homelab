@@ -2,14 +2,14 @@
 apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Receiver
 metadata:
-  name: github-receiver
+  name: github
 spec:
   type: github
   events:
     - ping
     - push
   secretRef:
-    name: github-webhook-token-secret
+    name: github-webhook-token
   resources:
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository
