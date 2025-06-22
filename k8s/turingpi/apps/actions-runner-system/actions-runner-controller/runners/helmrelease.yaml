@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: gha-runner-scale-set
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.12.0
+  url: oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: actions-runner
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: gha-runner-scale-set
+  values:
+    githubConfigUrl: https://github.com/bbck/homelab
+    githubConfigSecret:
+    minRunners: 1
+    maxRunners: 3
+    containerMode:
+      type: kubernetes
+      kubernetesModeWorkVolumeClaim:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn-cache
+        resources:
+          requests:
+            storage: 25Gi
+    template:
+      spec:
+        containers:
+          - name: runner
+            image: ghcr.io/home-operations/actions-runner:2.325.0@sha256:8345f634bbaaedbbdff1abb212649b1821baf295e5bcddf420f07847d7f35a87
+            command: ["/home/runner/run.sh"]
+            env:
+              - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+                value: "false"
