@@ -25,7 +25,7 @@ spec:
     name: gha-runner-scale-set
   values:
     githubConfigUrl: https://github.com/bbck/homelab
-    githubConfigSecret:
+    githubConfigSecret: actions-runner
     minRunners: 1
     maxRunners: 3
     containerMode:
