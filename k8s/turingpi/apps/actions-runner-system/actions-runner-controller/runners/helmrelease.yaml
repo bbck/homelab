@@ -45,3 +45,7 @@ spec:
             env:
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
                 value: "false"
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 123
+          fsGroup: 123
