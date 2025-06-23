@@ -2,7 +2,7 @@ resource "cloudflare_zone" "this" {
   for_each = var.domains
 
   account = {
-    id = var.cloudflare_account_id
+    id = local.account_id
   }
   name = each.key
 }

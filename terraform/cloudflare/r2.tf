@@ -1,7 +1,7 @@
 resource "cloudflare_r2_bucket" "k8s_backups" {
-  account_id    = var.cloudflare_account_id
+  account_id    = local.account_id
   name          = "k8s-backups"
-  location      = "wnam"
+  location      = "WNAM"
   storage_class = "Standard"
 
   lifecycle {
