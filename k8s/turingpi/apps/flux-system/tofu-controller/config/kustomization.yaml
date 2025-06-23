@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   # - ./cloudflare.yaml
-  # - ./mikrotik-rb5009.yaml
+  - ./mikrotik-rb5009.yaml
   - ./minio.yaml
