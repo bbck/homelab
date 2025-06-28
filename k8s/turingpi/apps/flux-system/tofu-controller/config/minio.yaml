@@ -26,7 +26,7 @@ spec:
   backendConfigsFrom:
     - kind: Secret
       name: terraform-backend-secret
-  interval: 1h
+  interval: 12h
   path: ./terraform/minio
   sourceRef:
     kind: GitRepository
