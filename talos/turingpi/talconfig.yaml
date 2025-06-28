@@ -51,6 +51,13 @@ nodes:
       customization:
         systemExtensions:
           officialExtensions: *extensions
+  - hostname: eq14
+    ipAddress: 192.168.254.46
+    installDisk: /dev/nvme0n1
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions: *extensions
 controlPlane:
   patches:
     # Schedule on all nodes
