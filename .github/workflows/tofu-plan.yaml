@@ -9,7 +9,9 @@ on:
       - "terraform/**"
 jobs:
   changed-files:
-    runs-on: ubuntu-latest
+    runs-on: [actions-runner]
+    permissions:
+      contents: read
     outputs:
       matrix: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
