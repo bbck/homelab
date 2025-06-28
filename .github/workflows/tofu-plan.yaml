@@ -48,12 +48,6 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: op://Homelab/terraform-bucket/username
           AWS_SECRET_ACCESS_KEY: op://Homelab/terraform-bucket/password
-      - name: Create GitHub App token
-        uses: actions/create-github-app-token@v2
-        id: app-token
-        with:
-          app-id: ${{ secrets.BOT_APP_ID }}
-          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -79,7 +73,7 @@ jobs:
       - name: Post PR comment
         uses: borchero/terraform-plan-comment@v2
         with:
-          token: ${{ steps.app-token.outputs.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           planfile: .planfile
           terraform-cmd: tofu
           working-directory: ${{ matrix.files }}
