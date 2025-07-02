@@ -10,7 +10,7 @@ on:
 jobs:
   diffs:
     name: Compute diffs
-    runs-on: [actions-runner]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
