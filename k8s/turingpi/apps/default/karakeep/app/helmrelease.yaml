@@ -27,7 +27,7 @@ spec:
               MEILI_ADDR: http://karakeep-meilisearch.default.svc.cluster.local:7700
               BROWSER_WEB_URL: http://karakeep-chrome.default.svc.cluster.local:9222
               DATA_DIR: /data
-              NEXTAUTH_URL: https://karakeep.${CLUSTER_DOMAIN}
+              NEXTAUTH_URL: https://karakeep.bbck.dev
               DISABLE_SIGNUPS: "true"
               DISABLE_NEW_RELEASE_CHECK: "true"
             envFrom:
@@ -152,14 +152,14 @@ spec:
       karakeep:
         className: internal
         hosts:
-          - host: karakeep.${CLUSTER_DOMAIN}
+          - host: karakeep.bbck.dev
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     persistence:
       data:
         existingClaim: karakeep
@@ -178,9 +178,3 @@ spec:
           karakeep:
             app:
               - path: /app/apps/web/.next/cache
-    secrets:
-      karakeep:
-        stringData:
-          NEXTAUTH_SECRET: ${KARAKEEP_NEXTAUTH_SECRET}
-          OPENAI_API_KEY: ${KARAKEEP_OPENAI_API_KEY}
-          MEILI_MASTER_KEY: ${KARAKEEP_MEILI_MASTER_KEY}
