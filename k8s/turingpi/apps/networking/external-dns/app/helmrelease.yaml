@@ -17,7 +17,7 @@ spec:
     provider:
       name: cloudflare
     domainFilters:
-      - ${CLUSTER_DOMAIN}
+      - bbck.dev
     sources:
       - crd
       - ingress

@@ -67,14 +67,14 @@ spec:
       radarr:
         className: internal
         hosts:
-          - host: radarr.${CLUSTER_DOMAIN}
+          - host: radarr.bbck.dev
             paths:
               - path: /
                 service:
                   identifier: radarr
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     persistence:
       config:
         existingClaim: radarr

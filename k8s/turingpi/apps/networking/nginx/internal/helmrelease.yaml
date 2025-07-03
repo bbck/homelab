@@ -32,7 +32,7 @@ spec:
         type: LoadBalancer
         loadBalancerClass: tailscale
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: internal.bbck.dev
           tailscale.com/hostname: k8s-nginx
       ingressClassResource:
         name: internal

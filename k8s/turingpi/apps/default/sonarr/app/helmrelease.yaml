@@ -67,14 +67,14 @@ spec:
       sonarr:
         className: internal
         hosts:
-          - host: sonarr.${CLUSTER_DOMAIN}
+          - host: sonarr.bbck.dev
             paths:
               - path: /
                 service:
                   identifier: sonarr
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     persistence:
       config:
         existingClaim: sonarr

@@ -162,8 +162,8 @@ spec:
       enabled: true
       ingressClassName: internal
       hosts:
-        - grafana.${CLUSTER_DOMAIN}
+        - grafana.bbck.dev
       annotations:
-        external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+        external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     serviceMonitor:
       enabled: true

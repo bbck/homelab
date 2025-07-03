@@ -57,14 +57,14 @@ spec:
       actual:
         className: internal
         hosts:
-          - host: actual.${CLUSTER_DOMAIN}
+          - host: actual.bbck.dev
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     persistence:
       data:
         existingClaim: actual

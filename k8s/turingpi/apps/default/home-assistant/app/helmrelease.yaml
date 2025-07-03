@@ -70,14 +70,14 @@ spec:
       home-assistant:
         className: internal
         hosts:
-          - host: hass.${CLUSTER_DOMAIN}
+          - host: hass.bbck.dev
             paths:
               - path: /
                 service:
                   identifier: home-assistant
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     persistence:
       config:
         existingClaim: home-assistant

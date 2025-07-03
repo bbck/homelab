@@ -63,14 +63,14 @@ spec:
       app:
         className: internal
         hosts:
-          - host: tautulli.${CLUSTER_DOMAIN}
+          - host: tautulli.bbck.dev
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     persistence:
       config:
         existingClaim: tautulli

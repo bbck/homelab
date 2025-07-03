@@ -4,12 +4,12 @@ kind: Ingress
 metadata:
   name: flux-webhook
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: external.bbck.dev
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
 spec:
   ingressClassName: external
   rules:
-    - host: "flux-webhook.${CLUSTER_DOMAIN}"
+    - host: "flux-webhook.bbck.dev"
       http:
         paths:
           - path: /hook/

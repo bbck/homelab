@@ -73,14 +73,14 @@ spec:
       overseerr:
         className: external
         hosts:
-          - host: requests.${CLUSTER_DOMAIN}
+          - host: requests.bbck.dev
             paths:
               - path: /
                 service:
                   identifier: overseerr
                   port: http
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.bbck.dev
           external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     persistence:
       config:
