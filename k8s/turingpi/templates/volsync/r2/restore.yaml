@@ -4,6 +4,8 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
   name: "${APP}-bootstrap"
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   trigger:
     manual: restore-once

@@ -4,6 +4,8 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: "${APP}-r2"
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   sourcePVC: "${APP}"
   trigger:
