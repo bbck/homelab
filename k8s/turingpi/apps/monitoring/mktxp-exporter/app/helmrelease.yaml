@@ -33,7 +33,8 @@ spec:
           app:
             image:
               repository: ghcr.io/akpw/mktxp
-              tag: 1.2.10
+              # temporarily target main until credentials file PR is in a release
+              tag: main@sha256:5cdd14b41fe16b54639184a9ff7df79928c5b9cacb103e11c3b17d1ca7c423f2
               pullPolicy: IfNotPresent
             resources:
               limits:
@@ -64,14 +65,24 @@ spec:
           - port: metrics
     persistence:
       config:
-        type: secret
-        name: mktxp-exporter-config
+        type: configMap
+        name: mktxp-exporter
         defaultMode: 0400
         globalMounts:
-          - path: /mktxp
-    secrets:
+          - path: /mktxp/mktxp.conf
+            subPath: mktxp.conf
+          - path: /mktxp/_mktxp.conf
+            subPath: _mktxp.conf
+      credentials:
+        type: secret
+        name: mktxp-exporter
+        defaultMode: 0400
+        globalMounts:
+          - path: /mktxp/credentials
+            subPath: credentials
+    configMaps:
       config:
-        stringData:
+        data:
           mktxp.conf: |-
             [RB5009]
               hostname = 192.168.88.2
@@ -83,8 +94,7 @@ spec:
               hostname = 192.168.88.4
 
             [default]
-              username = ${NET_MONITORING_USER}
-              password = ${NET_MONITORING_PASS}
+              credentials_file = /mktxp/credentials
 
               enabled = True                  # turns metrics collection for this RouterOS device on / off
               hostname = localhost            # RouterOS IP address
