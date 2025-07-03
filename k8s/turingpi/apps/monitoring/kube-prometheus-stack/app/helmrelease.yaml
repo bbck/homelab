@@ -21,16 +21,16 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       alertmanagerSpec:
-        useExistingSecret: true
-        configSecret: alertmanager-config
-        externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
+        alertmanagerConfiguration:
+          name: alertmanager
+        externalUrl: https://alertmanager.bbck.dev
       ingress:
         enabled: true
         ingressClassName: internal
         hosts:
-          - alertmanager.${CLUSTER_DOMAIN}
+          - alertmanager.bbck.dev
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -377,6 +377,6 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - prometheus.${CLUSTER_DOMAIN}
+          - prometheus.bbck.dev
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
