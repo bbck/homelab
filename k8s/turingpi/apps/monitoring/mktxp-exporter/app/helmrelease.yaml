@@ -33,8 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/akpw/mktxp
-              # temporarily target main until credentials file PR is in a release
-              tag: main@sha256:5cdd14b41fe16b54639184a9ff7df79928c5b9cacb103e11c3b17d1ca7c423f2
+              tag: 1.2.11
               pullPolicy: IfNotPresent
             resources:
               limits:
