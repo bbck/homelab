@@ -21,7 +21,7 @@ jobs:
         id: diff
         with:
           live-branch: master
-          path: k8s/
+          path: k8s
           resource: helmrelease
       - name: PR Comments
         uses: mshick/add-pr-comment@v2
