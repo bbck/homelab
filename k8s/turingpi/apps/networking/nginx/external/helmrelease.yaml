@@ -27,7 +27,7 @@ spec:
               values: ["external"]
       replicaCount: 2
       extraArgs:
-        default-ssl-certificate: networking/${CLUSTER_DOMAIN/./-}-tls
+        default-ssl-certificate: networking/bbck-dev-tls
       service:
         type: LoadBalancer
         annotations:
