@@ -2,9 +2,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${CLUSTER_DOMAIN/./-}"
+  name: bbck-dev
 spec:
-  secretName: "${CLUSTER_DOMAIN/./-}-tls"
+  secretName: bbck-dev-tls"
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

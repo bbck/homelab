@@ -21,7 +21,3 @@ spec:
   timeout: 5m
   dependsOn:
     - name: external-secrets
-  postBuild:
-    substituteFrom:
-      - kind: Secret
-        name: cloudflared
