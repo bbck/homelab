@@ -1,7 +1,9 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./externalsecret.yaml
   # - ./cloudflare.yaml
+  - ./externalsecret.yaml
   - ./mikrotik-rb5009.yaml
   - ./minio.yaml
