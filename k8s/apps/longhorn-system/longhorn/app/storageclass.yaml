@@ -1,12 +1,15 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/storageclass.json
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: longhorn-cache
 provisioner: driver.longhorn.io
-allowVolumeExpansion: true
 reclaimPolicy: Delete
+allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
 parameters:
-  dataLocality: best-effort
+  dataLocality: disabled
   numberOfReplicas: "1"
+  replicaAutoBalance: best-effort
+  staleReplicaTimeout: "30"
