@@ -1,69 +1,136 @@
-clusterName: turingpi
-talosVersion: v1.9.6
-endpoint: https://192.168.254.41:6443
+---
+clusterName: homelab
+talosVersion: v1.10.5
+endpoint: https://192.168.254.40:6443
 cniConfig:
   name: none
+allowSchedulingOnControlPlanes: true
 nodes:
   - hostname: rk1-1
     ipAddress: 192.168.254.41
-    installDisk: /dev/nvme0n1
     controlPlane: true
+    installDisk: /dev/nvme0n1
+    networkInterfaces:
+      - interface: end0
+        addresses:
+          - 192.168.254.41/24
+        routes: &routes
+          - network: 0.0.0.0/0
+            gateway: 192.168.254.2
+            metric: 1024
+        vip: &vip
+          ip: 192.168.254.40
+    nameservers: &nameservers
+      - 1.1.1.1
+      - 1.0.0.1
+    certSANs:
+      - 192.168.254.41
+      - 192.168.254.40
+    nodeLabels:
+      topology.kubernetes.io/zone: "ether4"
     schematic:
       overlay: &rk1
         image: siderolabs/sbc-rockchip
         name: turingrk1
-      customization:
+      customization: &customization
+        extraKernelArgs:
+          - cpufreq.default_governor=performance
+          - mitigations=off
+          - -selinux
+          - i915.enable_guc=3
         systemExtensions:
-          officialExtensions: &extensions
+          officialExtensions:
             - siderolabs/i915
             - siderolabs/iscsi-tools
             - siderolabs/util-linux-tools
   - hostname: rk1-2
     ipAddress: 192.168.254.42
-    installDisk: /dev/nvme0n1
     controlPlane: true
+    installDisk: /dev/nvme0n1
+    networkInterfaces:
+      - interface: end0
+        addresses:
+          - 192.168.254.42/24
+        routes: *routes
+        vip: *vip
+    nameservers: *nameservers
+    certSANs:
+      - 192.168.254.42
+      - 192.168.254.40
+    nodeLabels:
+      topology.kubernetes.io/zone: "ether4"
     schematic:
       overlay: *rk1
-      customization:
-        systemExtensions:
-          officialExtensions: *extensions
+      customization: *customization
   - hostname: rk1-3
     ipAddress: 192.168.254.43
-    installDisk: /dev/nvme0n1
     controlPlane: true
+    installDisk: /dev/nvme0n1
+    networkInterfaces:
+      - interface: end0
+        addresses:
+          - 192.168.254.43/24
+        routes: *routes
+        vip: *vip
+    nameservers: *nameservers
+    certSANs:
+      - 192.168.254.43
+      - 192.168.254.40
+    nodeLabels:
+      topology.kubernetes.io/zone: "ether4"
     schematic:
       overlay: *rk1
-      customization:
-        systemExtensions:
-          officialExtensions: *extensions
+      customization: *customization
   - hostname: rk1-4
     ipAddress: 192.168.254.44
     installDisk: /dev/nvme0n1
+    networkInterfaces:
+      - interface: end0
+        addresses:
+          - 192.168.254.44/24
+        routes: *routes
+    nameservers: *nameservers
+    nodeLabels:
+      topology.kubernetes.io/zone: "ether4"
     schematic:
       overlay: *rk1
-      customization:
-        systemExtensions:
-          officialExtensions: *extensions
+      customization: *customization
   - hostname: eq12
     ipAddress: 192.168.254.45
     installDisk: /dev/nvme0n1
+    networkInterfaces:
+      - interface: enp1s0
+        addresses:
+          - 192.168.254.45/24
+        routes: *routes
+    nameservers: *nameservers
+    nodeLabels:
+      topology.kubernetes.io/zone: "ether6"
     schematic:
-      customization:
-        systemExtensions:
-          officialExtensions: *extensions
+      customization: *customization
   - hostname: eq14
     ipAddress: 192.168.254.46
     installDisk: /dev/nvme0n1
+    networkInterfaces:
+      - interface: enp1s0
+        addresses:
+          - 192.168.254.46/24
+        routes: *routes
+    nameservers: *nameservers
+    nodeLabels:
+      topology.kubernetes.io/zone: "ether5"
     schematic:
-      customization:
-        systemExtensions:
-          officialExtensions: *extensions
+      customization: *customization
 controlPlane:
   patches:
-    # Schedule on all nodes
+    # Disable Pod Security Admission
     - |-
       cluster:
-        allowSchedulingOnControlPlanes: true
+        apiServer:
+          disablePodSecurityPolicy: true
+    - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
     # Allow metric collection
     - |-
       cluster:
@@ -86,12 +153,6 @@ controlPlane:
       cluster:
         proxy:
           disabled: true
-    # Enable kubelet certificate rotation for metrics-server
-    - &metricsSererPatch |-
-      machine:
-        kubelet:
-          extraArgs:
-            rotate-server-certificates: true
     # NFS mount options
     - &nfsPatch |-
       machine:
@@ -104,6 +165,7 @@ controlPlane:
               nfsvers=4.2
               hard=True
               nconnect=8
+    # Setup mount for longhorn
     - &longhornPatch |-
       machine:
         kubelet:
@@ -117,6 +179,5 @@ controlPlane:
                 - rw
 worker:
   patches:
-    - *metricsSererPatch
     - *nfsPatch
     - *longhornPatch
