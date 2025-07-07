@@ -4,42 +4,47 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app external-secrets
-  namespace: flux-system
+  namespace: &namespace external-secrets
 spec:
-  targetNamespace: external-secrets
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
+      namespace: *namespace
+  interval: 1h
   path: ./k8s/apps/external-secrets/external-secrets/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: homelab
-  wait: true
-  interval: 30m
+    namespace: flux-system
+  targetNamespace: *namespace
   timeout: 5m
-  dependsOn:
-    - name: cert-manager
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app onepassword-store
-  namespace: flux-system
+  name: &app external-secrets-config
+  namespace: &namespace external-secrets
 spec:
-  targetNamespace: external-secrets
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./k8s/apps/external-secrets/external-secrets/stores/onepassword
+  dependsOn:
+    - name: external-secrets
+      namespace: *namespace
+    - name: onepassword-connect
+      namespace: *namespace
+  interval: 1h
+  path: ./k8s/apps/external-secrets/external-secrets/config
   prune: true
   sourceRef:
     kind: GitRepository
     name: homelab
-  wait: true
-  interval: 30m
+    namespace: flux-system
+  targetNamespace: *namespace
   timeout: 5m
-  dependsOn:
-    - name: external-secrets
-    - name: onepassword-connect
