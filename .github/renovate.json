@@ -49,21 +49,30 @@
         "/flux-operator/",
         "/flux-instance/"
       ]
+    },
+    {
+      "groupName": "fluxcd/flux2",
+      "matchPackageNames": [
+        "fluxcd/flux2",
+        "controlplaneio-fluxcd//distribution"
+      ]
     }
   ],
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "k8s/.+\\.yaml$"
+      "managerFilePatterns": [
+        "/.yaml$/"
       ],
       "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\n.*?\"(?<currentValue>.*)\"\n"
-      ]
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)",
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
     },
     {
       "customType": "regex",
-      "fileMatch": [
+      "managerFilePatterns": [
         "k8s/.+\\.yaml$"
       ],
       "matchStrings": [
