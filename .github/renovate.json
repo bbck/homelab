@@ -42,9 +42,25 @@
         "custom.grafana-dashboards"
       ],
       "commitMessageTopic": "dashboard {{depName}}"
+    },
+    {
+      "groupName": "flux-operator",
+      "matchPackageNames": [
+        "/flux-operator/",
+        "/flux-instance/"
+      ]
     }
   ],
   "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "k8s/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\n.*?\"(?<currentValue>.*)\"\n"
+      ]
+    },
     {
       "customType": "regex",
       "fileMatch": [
