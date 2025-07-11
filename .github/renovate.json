@@ -73,7 +73,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^k8s\/.+\.yaml$/"
+        "/^k8s\\/.+\\.yaml$/"
       ],
       "matchStrings": [
         "depName=\"(?<depName>.*)\"\\n(?<indentation>\\s+)gnetId: (?<packageName>\\d+)\\n.+revision: (?<currentValue>\\d+)"
