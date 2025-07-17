@@ -16,6 +16,11 @@ spec:
       - receiver: "null"
         matchers:
           - name: alertname
+            value: InfoInhibitor
+            matchType: =
+      - receiver: "null"
+        matchers:
+          - name: alertname
             value: Watchdog
             matchType: =
   inhibitRules:
