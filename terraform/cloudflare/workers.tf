@@ -1,11 +1,11 @@
 resource "cloudflare_workers_script" "lookitupongoogle" {
-  account_id  = var.cloudflare_account_id
+  account_id  = local.account_id
   script_name = "lookitupongoogle"
   content     = file("${path.module}/workers/lookitupongoogle.js")
 }
 
 resource "cloudflare_workers_custom_domain" "lookitupongoogle_root" {
-  account_id  = var.cloudflare_account_id
+  account_id  = local.account_id
   environment = "production"
   hostname    = "lookitupongoogle.com"
   service     = cloudflare_workers_script.lookitupongoogle.script_name
@@ -13,7 +13,7 @@ resource "cloudflare_workers_custom_domain" "lookitupongoogle_root" {
 }
 
 resource "cloudflare_workers_custom_domain" "lookitupongoogle_www" {
-  account_id  = var.cloudflare_account_id
+  account_id  = local.account_id
   environment = "production"
   hostname    = "www.lookitupongoogle.com"
   service     = cloudflare_workers_script.lookitupongoogle.script_name
@@ -23,7 +23,7 @@ resource "cloudflare_workers_custom_domain" "lookitupongoogle_www" {
 resource "cloudflare_workers_script" "mta_sts" {
   for_each = local.enable_email
 
-  account_id  = var.cloudflare_account_id
+  account_id  = local.account_id
   script_name = "mta-sts-${replace(each.key, ".", "-")}"
   content     = file("${path.module}/workers/mta-sts.js")
 }
@@ -31,7 +31,7 @@ resource "cloudflare_workers_script" "mta_sts" {
 resource "cloudflare_workers_custom_domain" "mta_sts" {
   for_each = local.enable_email
 
-  account_id  = var.cloudflare_account_id
+  account_id  = local.account_id
   environment = "production"
   hostname    = "mta-sts.${each.key}"
   service     = cloudflare_workers_script.mta_sts[each.key].script_name

@@ -5,9 +5,28 @@ metadata:
   name: cloudflare
   namespace: flux-system
 spec:
+  approvePlan: auto
+  backendConfig:
+    customConfiguration: |
+      backend "s3" {
+        bucket = "terraform"
+        key    = "cloudflare/cloudflare.tfstate"
+        region = "homelab"
+
+        endpoints = {
+          s3 = "https://s3.bbck.dev"
+        }
+
+        skip_credentials_validation = true
+        skip_requesting_account_id  = true
+        skip_metadata_api_check     = true
+        skip_region_validation      = true
+        use_path_style              = true
+      }
+  backendConfigsFrom:
+    - kind: Secret
+      name: terraform-backend-secret
   interval: 1h
-  suspend: true
-  approvePlan: ""
   path: ./terraform/cloudflare
   sourceRef:
     kind: GitRepository
@@ -15,22 +34,4 @@ spec:
     namespace: flux-system
   varsFrom:
     - kind: Secret
-      name: terraform-secrets
-      varsKeys:
-        - cloudflare_api_token
-        - cloudflare_account_id
-  vars:
-    - name: domains
-      value:
-        bbck.dev:
-          email: true
-          rua: null@bbck.dev
-        bbck.net:
-          email: true
-          rua: 478fff8e@in.mailhardener.com
-        cheatycheetahs.com:
-          email: true
-          rua: null@cheatycheetahs.com
-        lookitupongoogle.com:
-          email: false
-          rua: ''
+      name: terraform-secret
