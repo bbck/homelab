@@ -10,8 +10,6 @@ sonarr:
       - template: sonarr-quality-definition-series
       - template: sonarr-v4-quality-profile-web-1080p
       - template: sonarr-v4-custom-formats-web-1080p
-    media_naming:
-      series: plex
     custom_formats:
       # Optional
       - trash_ids:
@@ -33,8 +31,6 @@ radarr:
       - template: radarr-quality-profile-hd-bluray-web
       - template: radarr-custom-formats-uhd-bluray-web
       - template: radarr-custom-formats-hd-bluray-web
-    media_naming:
-      folder: plex
     custom_formats:
       # Audio
       - trash_ids:
