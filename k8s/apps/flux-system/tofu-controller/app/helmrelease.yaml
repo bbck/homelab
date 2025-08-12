@@ -34,7 +34,7 @@ spec:
     runner:
       image:
         repository: ghcr.io/home-operations/opentofu-runner
-        tag: 1.10.3@sha256:739b2e0673ed1d76fc0c6571781fc71544b6c28eaabc7831e5b7254433f81262
+        tag: 1.10.5@sha256:c190192a9e661f855b176ac126927b98ab96344198acf55deccf9eb72e797106
     awsPackage:
       install: false
     metrics:
