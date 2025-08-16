@@ -56,6 +56,13 @@
         "fluxcd/flux2",
         "controlplaneio-fluxcd//distribution"
       ]
+    },
+    {
+      "groupName": "1password",
+      "matchPackageNames": [
+        "docker.io/1password/*",
+        "docker.io/1password/*"
+      ]
     }
   ],
   "customManagers": [
