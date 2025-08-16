@@ -16,7 +16,7 @@ jobs:
       matrix: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Get changed terraform files
@@ -52,7 +52,7 @@ jobs:
           AWS_ACCESS_KEY_ID: op://Homelab/terraform-bucket/username
           AWS_SECRET_ACCESS_KEY: op://Homelab/terraform-bucket/password
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Install OpenTofu
