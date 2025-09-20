@@ -63,6 +63,12 @@
         "docker.io/1password/*",
         "docker.io/1password/*"
       ]
+    },
+    {
+      "groupName": "intel-device-plugins",
+      "matchPackageNames": [
+        "intel-device-plugins-*"
+      ]
     }
   ],
   "customManagers": [
