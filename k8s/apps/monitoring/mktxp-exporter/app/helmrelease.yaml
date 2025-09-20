@@ -104,7 +104,7 @@ spec:
               port = 8729                     # RouterOS IP Port
 
               use_ssl = True                  # enables connection via API-SSL servis
-              no_ssl_certificate = True       # enables API_SSL connect without router SSL certificate
+              no_ssl_certificate = False      # enables API_SSL connect without router SSL certificate
               ssl_certificate_verify = False  # turns SSL certificate verification on / off   
               ssl_check_hostname = False      # check if the hostname matches the peer cert’s hostname
               ssl_ca_file = ""                # path to the certificate authority file to validate against, leave empty to use system store
