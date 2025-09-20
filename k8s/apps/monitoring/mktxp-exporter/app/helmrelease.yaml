@@ -97,6 +97,8 @@ spec:
               password = password
               credentials_file = /mktxp/credentials
 
+              custom_labels = None    # Custom labels to be injected to all device metrics, comma-separated key:value (or key=value) pairs
+
               enabled = True                  # turns metrics collection for this RouterOS device on / off
               hostname = localhost            # RouterOS IP address
               port = 8729                     # RouterOS IP Port
@@ -104,6 +106,7 @@ spec:
               use_ssl = True                  # enables connection via API-SSL servis
               no_ssl_certificate = True       # enables API_SSL connect without router SSL certificate
               ssl_certificate_verify = False  # turns SSL certificate verification on / off   
+              ssl_check_hostname = False      # check if the hostname matches the peer cert’s hostname
               ssl_ca_file = ""                # path to the certificate authority file to validate against, leave empty to use system store
               plaintext_login = True          # for legacy RouterOS versions below 6.43 use False
 
@@ -121,12 +124,14 @@ spec:
               pool = True                     # IPv4 Pool metrics
               firewall = True                 # IPv4 Firewall rules traffic metrics
               neighbor = True                 # IPv4 Reachable Neighbors
+              address_list = None             # Firewall Address List metrics, a comma-separated list of names
               dns = False                     # DNS stats
 
               ipv6_route = False              # IPv6 Routes metrics    
               ipv6_pool = False               # IPv6 Pool metrics
               ipv6_firewall = False           # IPv6 Firewall rules traffic metrics
               ipv6_neighbor = False           # IPv6 Reachable Neighbors
+              ipv6_address_list = None        # IPv6 Firewall Address List metrics, a comma-separated list of names
 
               poe = True                      # POE metrics
               monitor = True                  # Interface monitor metrics
@@ -154,6 +159,8 @@ spec:
               bgp = True                      # BGP sessions metrics
               routing_stats = False           # Routing process stats
               certificate = False             # Certificates metrics
+
+              container = False               # Containers metrics
 
               remote_dhcp_entry = None        # An MKTXP entry to provide for remote DHCP info / resolution
               remote_capsman_entry = None     # An MKTXP entry to provide for remote capsman info 
@@ -192,4 +199,7 @@ spec:
                 max_scrape_duration = 30            # Max duration of individual routers' metrics collection (parallel fetch only)
                 total_max_scrape_duration = 90      # Max overall duration of all metrics collection (parallel fetch only)
 
-                compact_default_conf_values = False  # Compact mktxp.conf, so only specific values are kept on the individual routers' level
+                persistent_router_connection_pool = True  # Use a persistent router connections pool between scrapes
+                persistent_dhcp_cache = True              # Persist DHCP cache between metric collections
+                compact_default_conf_values = False       # Compact mktxp.conf, so only specific values are kept on the individual routers' level
+                prometheus_headers_deduplication = False  # Deduplicate Prometheus HELP / TYPE headers in the metrics output
