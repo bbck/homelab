@@ -36,11 +36,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cilium
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: *app
-      namespace: *namespace
   interval: 1h
   path: ./k8s/apps/kube-system/cilium/config
   prune: true
