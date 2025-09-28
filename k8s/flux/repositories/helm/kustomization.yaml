@@ -3,16 +3,11 @@ kind: Kustomization
 resources:
   - ./backube.yaml
   - ./bjw-s.yaml
-  - ./cilium.yaml
-  - ./coredns.yaml
   - ./csi-driver-nfs.yaml
   - ./external-dns.yaml
   - ./grafana.yaml
   - ./ingress-nginx.yaml
-  - ./intel.yaml
   - ./longhorn.yaml
-  - ./metrics-server.yaml
-  - ./node-feature-discovery.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml
