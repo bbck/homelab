@@ -1,6 +1,6 @@
 ---
 clusterName: homelab
-talosVersion: v1.11.1
+talosVersion: v1.11.2
 endpoint: https://192.168.254.40:6443
 cniConfig:
   name: none
