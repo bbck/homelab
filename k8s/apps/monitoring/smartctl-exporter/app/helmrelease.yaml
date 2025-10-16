@@ -26,3 +26,5 @@ spec:
         - /dev/nvme0n1
     serviceMonitor:
       enabled: true
+      attachMetadata:
+        node: true
