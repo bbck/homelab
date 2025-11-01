@@ -121,7 +121,7 @@ spec:
         kubernetes-pods:
           # renovate: depName="Kubernetes / Views / Pods"
           gnetId: 15760
-          revision: 36
+          revision: 37
           datasource: Prometheus
         cert-manager:
           # renovate: depName="Cert-manager-Kubernetes"
