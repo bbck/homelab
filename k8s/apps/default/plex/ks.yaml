@@ -29,3 +29,4 @@ spec:
       APP_UID: "65534"
       APP_GID: "65534"
       VOLSYNC_CAPACITY: 25Gi
+      VOLSYNC_CACHE_CAPACITY: 5Gi
