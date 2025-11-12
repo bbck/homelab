@@ -137,7 +137,7 @@ spec:
         longhorn:
           # renovate: depName="Longhorn"
           gnetId: 16888
-          revision: 9
+          revision: 11
           datasource: Prometheus
         volsync:
           # renovate: depName="VolSync Dashboard"
