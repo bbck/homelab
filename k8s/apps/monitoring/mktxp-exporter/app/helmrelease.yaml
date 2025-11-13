@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/akpw/mktxp
-              tag: 1.2.14
+              tag: 1.2.15
               pullPolicy: IfNotPresent
             resources:
               limits:
