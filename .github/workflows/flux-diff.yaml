@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Setup Flux CLI
         uses: fluxcd/flux2/action@v2.7.3
-      - uses: allenporter/flux-local/action/diff@7.11.0
+      - uses: allenporter/flux-local/action/diff@8.0.1
         id: diff
         with:
           live-branch: master
