@@ -18,8 +18,8 @@ terraform {
 }
 
 provider "onepassword" {
-  url   = var.op_connect_host
-  token = var.op_connect_token
+  connect_url   = var.op_connect_host
+  connect_token = var.op_connect_token
 }
 
 data "onepassword_vault" "homelab" {
