@@ -33,7 +33,7 @@ spec:
         retention_period: 14d
       schemaConfig:
         configs:
-          - from: "2024-01-01"
+          - from: "2024-04-01"
             store: tsdb
             index:
               prefix: loki_index_
@@ -42,6 +42,14 @@ spec:
             schema: v13
       storage:
         type: filesystem
+      structuredConfig:
+        ruler:
+          alertmanager_url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+          storage:
+            type: local
+            local:
+              directory: /rules
+          rule_path: /tmp/scratch
     singleBinary:
       replicas: 1
     read:
