@@ -7,7 +7,7 @@ terraform {
 
     minio = {
       source  = "aminueza/minio"
-      version = "3.15.0"
+      version = "3.16.0"
     }
 
     random = {
