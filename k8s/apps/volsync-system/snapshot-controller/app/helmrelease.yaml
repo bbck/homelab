@@ -18,13 +18,6 @@ spec:
     controller:
       serviceMonitor:
         create: true
-    volumeSnapshotClasses:
-      - name: longhorn
-        annotations:
-          snapshot.storage.kubernetes.io/is-default-class: "true"
-        driver: driver.longhorn.io
-        deletionPolicy: Delete
-        parameters:
-          type: snap
+    installCRDs: true
     webhook:
       enabled: false
