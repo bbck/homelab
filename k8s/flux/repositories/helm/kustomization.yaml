@@ -6,7 +6,6 @@ resources:
   - ./bjw-s.yaml
   - ./csi-driver-nfs.yaml
   - ./grafana.yaml
-  - ./ingress-nginx.yaml
   - ./longhorn.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
