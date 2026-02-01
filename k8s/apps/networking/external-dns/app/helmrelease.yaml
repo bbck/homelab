@@ -37,6 +37,7 @@ spec:
       - bbck.dev
     sources:
       - crd
+      - gateway-httproute
       - ingress
     env:
       - name: CF_API_TOKEN
