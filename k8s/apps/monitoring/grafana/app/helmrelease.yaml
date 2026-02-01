@@ -86,13 +86,13 @@ spec:
           gnetId: 1860
           revision: 42
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         smart:
           # renovate: depName="SMARTctl Exporter Dashboard"
           gnetId: 22604
           revision: 2
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         kubernetes-api-server:
           # renovate: depName="Kubernetes / System / API Server"
           gnetId: 15761
@@ -144,26 +144,19 @@ spec:
           gnetId: 21356
           revision: 3
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
-            - { name: VAR_REPLICATIONDESTNAME, value: .*-dst }
+            - {name: DS_PROMETHEUS, value: Prometheus}
+            - {name: VAR_REPLICATIONDESTNAME, value: .*-dst}
         mikrotik:
           # renovate: depName="Mikrotik MKTXP Exporter"
           gnetId: 13679
           revision: 23
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         minio:
           # renovate: depName="MinIO Dashboard"
           gnetId: 13502
           revision: 26
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      hosts:
-        - grafana.bbck.dev
-      annotations:
-        external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+            - {name: DS_PROMETHEUS, value: Prometheus}
     serviceMonitor:
       enabled: true

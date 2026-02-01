@@ -20,17 +20,17 @@ spec:
       enabled: false
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
+      route:
+        main:
+          enabled: true
+          hostnames: ["alertmanager.bbck.dev"]
+          parentRefs:
+            - name: envoy-internal
+              namespace: networking
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
         externalUrl: https://alertmanager.bbck.dev
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts:
-          - alertmanager.bbck.dev
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -49,7 +49,7 @@ spec:
         selector:
           k8s-app: kube-controller-manager
     kubeEtcd:
-      <<: *kubeControllerManager # etcd runs on control plane nodes
+      !!merge <<: *kubeControllerManager # etcd runs on control plane nodes
     prometheus-node-exporter:
       fullnameOverride: node-exporter
     kube-state-metrics:
@@ -347,6 +347,7 @@ spec:
                       source_name: [spec, sourceRef, name]
     prometheus:
       prometheusSpec:
+        externalUrl: prometheus.bbck.dev
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
@@ -371,10 +372,10 @@ spec:
         walCompression: true
         externalLabels:
           cluster: main
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts:
-          - prometheus.bbck.dev
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+      route:
+        main:
+          enabled: true
+          hostnames: ["prometheus.bbck.dev"]
+          parentRefs:
+            - name: envoy-internal
+              namespace: networking
