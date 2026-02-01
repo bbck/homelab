@@ -10,8 +10,8 @@ spec:
   hostnames:
     - flux-webhook.bbck.dev
   parentRefs:
-    - name: external
-      namespace: network
+    - name: envoy-external
+      namespace: networking
   rules:
     - backendRefs:
         - name: webhook-receiver

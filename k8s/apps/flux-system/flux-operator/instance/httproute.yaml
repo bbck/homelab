@@ -8,8 +8,8 @@ spec:
   hostnames:
     - fluxcd.bbck.dev
   parentRefs:
-    - name: internal
-      namespace: network
+    - name: envoy-internal
+      namespace: networking
   rules:
     - backendRefs:
         - name: flux-operator
