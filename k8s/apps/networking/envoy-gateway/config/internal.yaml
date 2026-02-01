@@ -21,7 +21,7 @@ spec:
             limits:
               memory: 1Gi
       envoyService:
-        loadBalancerClass: tailscale
+        loadBalancerClass: "tailscale"
   shutdown:
     drainTimeout: 180s
   telemetry:
