@@ -49,7 +49,7 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname external.bbck.dev
 spec:
-  gatewayClassName: envoy
+  gatewayClassName: envoy-external
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname

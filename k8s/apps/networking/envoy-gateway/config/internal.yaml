@@ -21,7 +21,7 @@ spec:
             limits:
               memory: 1Gi
       envoyService:
-        loadBalancerClass: "tailscale"
+        loadBalancerClass: tailscale
   shutdown:
     drainTimeout: 180s
   telemetry:
@@ -51,7 +51,7 @@ metadata:
   annotations:
     internal-dns.alpha.kubernetes.io/target: &hostname internal.bbck.dev
 spec:
-  gatewayClassName: envoy
+  gatewayClassName: envoy-internal
   infrastructure:
     annotations:
       internal-dns.alpha.kubernetes.io/hostname: *hostname
