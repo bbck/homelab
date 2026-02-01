@@ -3,7 +3,7 @@
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy
 metadata:
-  name: envoy
+  name: external
 spec:
   logging:
     level:
@@ -32,22 +32,22 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
-  name: envoy
+  name: external
 spec:
   controllerName: gateway.envoyproxy.io/gatewayclass-controller
   parametersRef:
     group: gateway.envoyproxy.io
     kind: EnvoyProxy
-    name: envoy
+    name: external
     namespace: network
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/gateway.networking.k8s.io/gateway_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: envoy-external
+  name: external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname external-envoy.bbck.dev
+    external-dns.alpha.kubernetes.io/target: &hostname external.bbck.dev
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -75,7 +75,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: envoy-internal
+  name: internal
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname internal-envoy.bbck.dev
 spec:
@@ -151,10 +151,10 @@ metadata:
     external-dns.alpha.kubernetes.io/controller: none
 spec:
   parentRefs:
-    - name: envoy-external
+    - name: external
       namespace: network
       sectionName: http
-    - name: envoy-internal
+    - name: internal
       namespace: network
       sectionName: http
   rules:

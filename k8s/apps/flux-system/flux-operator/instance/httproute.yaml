@@ -8,7 +8,7 @@ spec:
   hostnames:
     - fluxcd.bbck.dev
   parentRefs:
-    - name: envoy-internal
+    - name: internal
       namespace: network
   rules:
     - backendRefs:
