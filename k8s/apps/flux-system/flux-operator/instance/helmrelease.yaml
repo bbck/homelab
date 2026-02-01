@@ -46,7 +46,7 @@ spec:
         kind: GitRepository
         name: homelab
         url: https://github.com/bbck/homelab
-        ref: refs/heads/feature/envoy-gateway
+        ref: refs/heads/master
         path: k8s/flux
         interval: 1h
       kustomize:
