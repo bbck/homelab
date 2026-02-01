@@ -81,7 +81,7 @@ spec:
         hostnames: ["minio.bbck.dev"]
         parentRefs:
           - name: envoy-internal
-            namespace: network
+            namespace: networking
         rules:
           - backendRefs:
               - name: minio
@@ -90,7 +90,7 @@ spec:
         hostnames: ["s3.bbck.dev"]
         parentRefs:
           - name: envoy-internal
-            namespace: network
+            namespace: networking
         rules:
           - backendRefs:
               - name: minio
