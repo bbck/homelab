@@ -69,19 +69,16 @@ spec:
         ports:
           http:
             port: 5055
-    ingress:
-      overseerr:
-        className: external
-        hosts:
-          - host: requests.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: overseerr
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.bbck.dev
-          external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    route:
+      app:
+        hostnames: ["requests.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: overseerr
+                port: http
     persistence:
       config:
         existingClaim: overseerr

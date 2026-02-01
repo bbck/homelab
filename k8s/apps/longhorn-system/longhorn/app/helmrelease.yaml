@@ -25,12 +25,12 @@ spec:
     defaultSettings:
       defaultDataLocality: best-effort
       concurrentAutomaticEngineUpgradePerNodeLimit: "1"
-    ingress:
+    httproute:
       enabled: true
-      ingressClassName: internal
-      host: longhorn.bbck.dev
-      annotations:
-        external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+      hostnames: ["longhorn.bbck.dev"]
+      parentRefs:
+        - name: envoy-internal
+          namespace: networking
     metrics:
       serviceMonitor:
         enabled: true

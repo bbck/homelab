@@ -66,18 +66,16 @@ spec:
             protocol: UDP
           homekit:
             port: 21063
-    ingress:
-      home-assistant:
-        className: internal
-        hosts:
-          - host: hass.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: home-assistant
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+    route:
+      app:
+        hostnames: ["hass.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: home-assistant
+                port: http
     persistence:
       config:
         existingClaim: home-assistant

@@ -148,18 +148,16 @@ spec:
         ports:
           http:
             port: 7700
-    ingress:
-      karakeep:
-        className: internal
-        hosts:
-          - host: karakeep.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+    route:
+      app:
+        hostnames: ["karakeep.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       data:
         existingClaim: karakeep

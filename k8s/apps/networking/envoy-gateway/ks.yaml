@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app tailscale
+  name: &app envoy-gateway
   namespace: &namespace networking
 spec:
   commonMetadata:
@@ -15,7 +15,7 @@ spec:
       name: *app
       namespace: *namespace
   interval: 1h
-  path: ./k8s/apps/networking/tailscale/app
+  path: ./k8s/apps/networking/envoy-gateway/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -28,17 +28,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app tailscale-config
+  name: &app envoy-gateway-config
   namespace: &namespace networking
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: tailscale
+    - name: cert-manager
+      namespace: cert-manager
+    - name: envoy-gateway
       namespace: *namespace
   interval: 1h
-  path: ./k8s/apps/networking/tailscale/config
+  path: ./k8s/apps/networking/envoy-gateway/config
   prune: true
   sourceRef:
     kind: GitRepository

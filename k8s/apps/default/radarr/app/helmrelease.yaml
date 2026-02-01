@@ -63,18 +63,16 @@ spec:
         ports:
           http:
             port: 7878
-    ingress:
-      radarr:
-        className: internal
-        hosts:
-          - host: radarr.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: radarr
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+    route:
+      app:
+        hostnames: ["radarr.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: radarr
+                port: http
     persistence:
       config:
         existingClaim: radarr

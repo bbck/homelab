@@ -21,7 +21,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
         runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
     controllers:
       minio:
         replicas: 1
@@ -62,7 +62,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -76,24 +76,25 @@ spec:
             port: 9001
           s3:
             port: 9000
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: minio.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-          - host: s3.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: s3
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+    route:
+      ui:
+        hostnames: ["minio.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: minio
+                port: 9001
+      s3:
+        hostnames: ["s3.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: minio
+                port: 9000
     serviceMonitor:
       app:
         serviceName: minio

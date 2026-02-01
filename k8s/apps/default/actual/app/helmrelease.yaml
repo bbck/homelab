@@ -23,7 +23,7 @@ spec:
         runAsGroup: 65534
         fsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
     controllers:
       actual:
         containers:
@@ -53,18 +53,16 @@ spec:
         ports:
           http:
             port: 5006
-    ingress:
-      actual:
-        className: internal
-        hosts:
-          - host: actual.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+    route:
+      app:
+        hostnames: ["budget.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       data:
         existingClaim: actual

@@ -61,18 +61,16 @@ spec:
         ports:
           http:
             port: 9696
-    ingress:
-      prowlarr:
-        className: internal
-        hosts:
-          - host: prowlarr.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: prowlarr
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+    route:
+      app:
+        hostnames: ["prowlarr.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: prowlarr
+                port: http
     persistence:
       config:
         existingClaim: prowlarr

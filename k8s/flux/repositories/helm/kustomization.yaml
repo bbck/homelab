@@ -1,14 +1,12 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./csi-driver-nfs.yaml
-  - ./external-dns.yaml
   - ./grafana.yaml
-  - ./ingress-nginx.yaml
   - ./longhorn.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml
-  - ./tailscale.yaml
