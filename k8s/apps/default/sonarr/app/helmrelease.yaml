@@ -63,18 +63,16 @@ spec:
         ports:
           http:
             port: 8989
-    ingress:
-      sonarr:
-        className: internal
-        hosts:
-          - host: sonarr.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: sonarr
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+    route:
+      app:
+        hostnames: ["sonarr.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: sonarr
+                port: http
     persistence:
       config:
         existingClaim: sonarr

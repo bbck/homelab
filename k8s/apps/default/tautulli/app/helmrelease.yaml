@@ -23,7 +23,7 @@ spec:
         runAsGroup: 65534
         fsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
     controllers:
       tautulli:
         containers:
@@ -52,25 +52,23 @@ spec:
               readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
     service:
       app:
         controller: tautulli
         ports:
           http:
             port: 8181
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: tautulli.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+        hostnames: ["tautulli.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       config:
         existingClaim: tautulli

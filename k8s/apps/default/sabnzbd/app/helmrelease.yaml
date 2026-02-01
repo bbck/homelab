@@ -37,12 +37,7 @@ spec:
               pullPolicy: IfNotPresent
             env:
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
-                sabnzbd,
-                sabnzbd.default,
-                sabnzbd.default.svc,
-                sabnzbd.default.svc.cluster,
-                sabnzbd.default.svc.cluster.local,
-                sabnzbd.bbck.dev
+                sabnzbd, sabnzbd.default, sabnzbd.default.svc, sabnzbd.default.svc.cluster, sabnzbd.default.svc.cluster.local, sabnzbd.bbck.dev
             resources:
               limits:
                 memory: 4Gi
@@ -69,18 +64,16 @@ spec:
         ports:
           http:
             port: 8080
-    ingress:
-      sabnzbd:
-        className: internal
-        hosts:
-          - host: sabnzbd.bbck.dev
-            paths:
-              - path: /
-                service:
-                  identifier: sabnzbd
-                  port: http
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.bbck.dev
+    route:
+      app:
+        hostnames: ["sabnzbd.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: sabnzbd
+                port: http
     persistence:
       config:
         existingClaim: sabnzbd
