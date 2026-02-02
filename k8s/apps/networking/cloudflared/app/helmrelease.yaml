@@ -35,9 +35,6 @@ spec:
             env:
               NO_AUTOUPDATE: true
               TUNNEL_METRICS: 0.0.0.0:8080
-              TUNNEL_ORIGIN_ENABLE_HTTP2: true
-              TUNNEL_TRANSPORT_PROTOCOL: quic
-              TUNNEL_POST_QUANTUM: true
             envFrom:
               - secretRef:
                   name: cloudflared
@@ -81,11 +78,23 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    persistence:
+    configMaps:
       config:
+        data:
+          config.yaml: |-
+            ingress:
+              - hostname: "*.bbck.dev"
+                originRequest:
+                  http2Origin: true
+                  keepAliveTimeout: 3600s
+                  originServerName: external.bbck.dev
+                  tcpKeepAlive: 7200s
+                service: https://envoy-external.networking.svc.cluster.local:443
+              - service: http_status:404
+    persistence:
+      config-file:
         type: configMap
-        name: cloudflared-configmap
+        identifier: config
         globalMounts:
           - path: /etc/cloudflared/config.yaml
             subPath: config.yaml
-            readOnly: true
