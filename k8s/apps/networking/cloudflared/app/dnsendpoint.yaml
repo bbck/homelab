@@ -8,7 +8,7 @@ spec:
   endpoints:
     - dnsName: "external.bbck.dev"
       recordType: CNAME
-      targets: ["46d340f1-29dd-4a4d-899c-7bcc1dee9da5.cfargotunnel.com"]
+      targets: ["259fe0db-ebf2-4372-b840-e52aab8b205f.cfargotunnel.com"]
       providerSpecific:
         - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
           value: "true"
