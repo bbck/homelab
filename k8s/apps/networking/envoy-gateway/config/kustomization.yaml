@@ -7,4 +7,6 @@ resources:
   - ./external.yaml
   - ./httproute.yaml
   - ./internal.yaml
+  - ./podmonitor.yaml
   - ./policies.yaml
+  - ./servicemonitor.yaml
