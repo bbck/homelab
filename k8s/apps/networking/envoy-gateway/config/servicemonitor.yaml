@@ -12,7 +12,7 @@ spec:
   jobLabel: envoy-gateway
   namespaceSelector:
     matchNames:
-      - network
+      - networking
   selector:
     matchLabels:
       control-plane: envoy-gateway
