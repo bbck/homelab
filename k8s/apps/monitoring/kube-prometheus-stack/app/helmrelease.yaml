@@ -347,18 +347,18 @@ spec:
                       source_name: [spec, sourceRef, name]
     prometheus:
       prometheusSpec:
-        externalUrl: prometheus.bbck.dev
+        externalUrl: https://prometheus.bbck.dev
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
-        podMonitorSelector: &selector
-          matchLabels: null
-        probeSelector: *selector
-        ruleSelector: *selector
-        scrapeConfigSelector: *selector
-        serviceMonitorSelector: *selector
+        ruleSelector:
+          matchExpressions:
+            - key: loki
+              operator: NotIn
+              values:
+                - "true"
         retention: 30d
         storageSpec:
           volumeClaimTemplate:
@@ -369,7 +369,6 @@ spec:
                   storage: 256Gi
         enableFeatures:
           - memory-snapshot-on-shutdown
-        walCompression: true
         externalLabels:
           cluster: main
       route:
