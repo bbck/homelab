@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0
       - name: Get changed terraform files
         id: changed-files
-        uses: tj-actions/changed-files@v47.0.2
+        uses: tj-actions/changed-files@v47.0.4
         with:
           files: terraform/**
           dir_names: true
