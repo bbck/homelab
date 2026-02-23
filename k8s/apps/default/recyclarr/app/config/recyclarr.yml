@@ -7,6 +7,13 @@ sonarr:
     delete_old_custom_formats: true
     media_management:
       propers_and_repacks: do_not_prefer
+    media_naming:
+      episodes:
+        daily: default
+        rename: true
+        standard: default
+      season: default
+      series: plex-imdb
     quality_definition:
       type: series
     quality_profiles:
@@ -41,9 +48,12 @@ radarr:
         rename: true
         standard: plex-imdb
     quality_definition:
-      type: HD Bluray + WEB
+      type: movie
     quality_profiles:
       - trash_id: d1d67249d3890e49bc12e275d989a7e9 # HD Bluray + WEB
+        reset_unmatched_scores:
+          enabled: true
+      - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
         reset_unmatched_scores:
           enabled: true
     custom_formats:
@@ -58,3 +68,4 @@ radarr:
           - f537cf427b64c38c8e36298f657e4828 # Scene
         assign_scores_to:
           - name: HD Bluray + WEB
+          - name: UHD Bluray + WEB

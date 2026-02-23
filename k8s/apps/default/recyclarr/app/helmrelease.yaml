@@ -37,8 +37,7 @@ spec:
               repository: ghcr.io/recyclarr/recyclarr
               tag: "8.2.1"
               pullPolicy: IfNotPresent
-            args:
-              - "sync"
+            args: ["sync", "--log", "debug"]
             env:
               TZ: America/Los_Angeles
             envFrom:
