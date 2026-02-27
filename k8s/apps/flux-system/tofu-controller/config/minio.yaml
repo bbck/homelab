@@ -5,7 +5,7 @@ metadata:
   name: minio
   namespace: flux-system
 spec:
-  approvePlan: ""
+  approvePlan: auto
   backendConfig:
     customConfiguration: |
       backend "s3" {
