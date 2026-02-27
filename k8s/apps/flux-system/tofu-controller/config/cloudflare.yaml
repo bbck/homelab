@@ -5,7 +5,7 @@ metadata:
   name: cloudflare
   namespace: flux-system
 spec:
-  approvePlan: auto
+  approvePlan: ""
   backendConfig:
     customConfiguration: |
       backend "s3" {

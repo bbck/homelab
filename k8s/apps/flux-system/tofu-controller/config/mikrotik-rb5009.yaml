@@ -5,7 +5,7 @@ metadata:
   name: mikrotik-rb5009
   namespace: flux-system
 spec:
-  approvePlan: auto
+  approvePlan: ""
   backendConfig:
     customConfiguration: |
       backend "s3" {
