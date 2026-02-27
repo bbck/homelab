@@ -35,7 +35,7 @@ spec:
           recyclarr:
             image:
               repository: ghcr.io/recyclarr/recyclarr
-              tag: "8.2.1"
+              tag: "8.3.2"
               pullPolicy: IfNotPresent
             args: ["sync", "--log", "debug"]
             env:
