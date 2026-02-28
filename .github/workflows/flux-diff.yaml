@@ -16,7 +16,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Setup Flux CLI
-        uses: fluxcd/flux2/action@v2.8.0
+        uses: fluxcd/flux2/action@v2.8.1
       - uses: allenporter/flux-local/action/diff@8.1.0
         id: diff
         with:
