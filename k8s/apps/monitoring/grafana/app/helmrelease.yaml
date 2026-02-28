@@ -149,7 +149,7 @@ spec:
         mikrotik:
           # renovate: depName="Mikrotik MKTXP Exporter"
           gnetId: 13679
-          revision: 23
+          revision: 24
           datasource:
             - {name: DS_PROMETHEUS, value: Prometheus}
         minio:
