@@ -91,6 +91,7 @@ spec:
 
             [CRS310]
               hostname = 192.168.88.4
+              poe = False
 
             [default]
               username = username     # RouterOS user, needs to have 'read' and 'api' permissions
@@ -99,13 +100,14 @@ spec:
 
               custom_labels = None    # Custom labels to be injected to all device metrics, comma-separated key:value (or key=value) pairs
 
-              enabled = True                  # turns metrics collection for this RouterOS device on / off
-              hostname = localhost            # RouterOS IP address
-              port = 8729                     # RouterOS IP Port
+              enabled = True          # turns metrics collection for this RouterOS device on / off
+              module_only = False     # use this entry only as a probe module (skip /metrics collection)
+              hostname = localhost    # RouterOS IP address
+              port = 8728             # RouterOS IP Port
 
               use_ssl = True                  # enables connection via API-SSL servis
               no_ssl_certificate = False      # enables API_SSL connect without router SSL certificate
-              ssl_certificate_verify = False  # turns SSL certificate verification on / off   
+              ssl_certificate_verify = False  # turns SSL certificate verification on / off
               ssl_check_hostname = False      # check if the hostname matches the peer cert’s hostname
               ssl_ca_file = ""                # path to the certificate authority file to validate against, leave empty to use system store
               plaintext_login = True          # for legacy RouterOS versions below 6.43 use False
@@ -127,7 +129,7 @@ spec:
               address_list = None             # Firewall Address List metrics, a comma-separated list of names
               dns = False                     # DNS stats
 
-              ipv6_route = False              # IPv6 Routes metrics    
+              ipv6_route = False              # IPv6 Routes metrics
               ipv6_pool = False               # IPv6 Pool metrics
               ipv6_firewall = False           # IPv6 Firewall rules traffic metrics
               ipv6_neighbor = False           # IPv6 Reachable Neighbors
@@ -141,6 +143,7 @@ spec:
               wireless_clients = True         # WLAN clients metrics
               capsman = True                  # CAPsMAN general metrics
               capsman_clients = True          # CAPsMAN clients metrics
+              w60g = False                    # W60G metrics
 
               eoip = False                    # EoIP status metrics
               gre = False                     # GRE status metrics
@@ -188,7 +191,8 @@ spec:
                 max_delay_on_failure = 900
                 delay_inc_div = 5
 
-                bandwidth = False                # Turns metrics bandwidth metrics collection on / off    
+                bandwidth = False                # Turns metrics bandwidth metrics collection on / off
+                bandwidth_test_dns_server = 8.8.8.8 # The DNS server to be used for the bandwidth test connectivity check
                 bandwidth_test_interval = 600    # Interval for collecting bandwidth metrics
                 minimal_collect_interval = 5     # Minimal metric collection interval
 
@@ -198,8 +202,13 @@ spec:
                 max_worker_threads = 5              # Max number of worker threads that can fetch routers (parallel fetch only)
                 max_scrape_duration = 30            # Max duration of individual routers' metrics collection (parallel fetch only)
                 total_max_scrape_duration = 90      # Max overall duration of all metrics collection (parallel fetch only)
+                http_server_threads = 16            # Number of worker threads for the HTTP server
 
                 persistent_router_connection_pool = True  # Use a persistent router connections pool between scrapes
                 persistent_dhcp_cache = True              # Persist DHCP cache between metric collections
                 compact_default_conf_values = False       # Compact mktxp.conf, so only specific values are kept on the individual routers' level
                 prometheus_headers_deduplication = False  # Deduplicate Prometheus HELP / TYPE headers in the metrics output
+
+                probe_connection_pool = False             # Enable probe-only connection reuse keyed by module+target
+                probe_connection_pool_ttl = 300           # Probe connection TTL in seconds
+                probe_connection_pool_max_size = 128      # Max number of probe connections to keep
