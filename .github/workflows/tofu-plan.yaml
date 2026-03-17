@@ -74,7 +74,7 @@ jobs:
         working-directory: ${{ matrix.files }}
         continue-on-error: true
       - name: Post PR comment
-        uses: borchero/terraform-plan-comment@v2
+        uses: borchero/terraform-plan-comment@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           planfile: .planfile
