@@ -14,14 +14,6 @@ spec:
         name: longhorn
         namespace: flux-system
   values:
-    image:
-      longhorn:
-        manager:
-          # https://github.com/longhorn/longhorn/issues/12573
-          tag: v1.11.0-hotfix-1
-        instanceManager:
-          # https://github.com/longhorn/longhorn/issues/12573
-          tag: v1.11.0-hotfix-1
     csi:
       attacherReplicaCount: &replicas 1
       provisionerReplicaCount: *replicas
