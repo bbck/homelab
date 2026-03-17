@@ -56,7 +56,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install OpenTofu
-        uses: opentofu/setup-opentofu@v1
+        uses: opentofu/setup-opentofu@v2
         with:
           tofu_wrapper: false
       - name: OpenTofu fmt
