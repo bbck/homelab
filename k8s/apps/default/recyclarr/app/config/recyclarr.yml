@@ -20,12 +20,17 @@ sonarr:
       - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
         reset_unmatched_scores:
           enabled: true
+      - trash_id: 9d142234e45d6143785ac55f5a9e8dc9 # WEB-1080p (Alternative)
+        reset_unmatched_scores:
+          enabled: true
     custom_formats:
       - # FLUX trumps REPACKS
         trash_ids:
           - 5d9fd1b1e06cd8a475462f40214b7df6 # FLUX
         assign_scores_to:
           - name: WEB-1080p
+            score: 100
+          - name: WEB-1080p (Alternative)
             score: 100
       # Optional
       - trash_ids:
@@ -35,6 +40,7 @@ sonarr:
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
         assign_scores_to:
           - name: WEB-1080p
+          - name: WEB-1080p (Alternative)
 radarr:
   movies:
     base_url: http://radarr.default.svc.cluster.local:7878
