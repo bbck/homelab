@@ -5,6 +5,7 @@ metadata:
   name: cloudflare
   namespace: flux-system
 spec:
+  suspend: true
   approvePlan: auto
   backendConfig:
     customConfiguration: |
