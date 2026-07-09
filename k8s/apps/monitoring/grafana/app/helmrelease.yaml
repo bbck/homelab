@@ -90,7 +90,7 @@ spec:
         smart:
           # renovate: depName="SMARTctl Exporter Dashboard"
           gnetId: 22604
-          revision: 2
+          revision: 3
           datasource:
             - {name: DS_PROMETHEUS, value: Prometheus}
         kubernetes-api-server:
