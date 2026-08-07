@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/home-assistant
-              tag: "2026.4.4@sha256:589e4c1c93025d01320c14329427197c8b52d4f2e241a6bc1d6207837e07b4a7"
+              tag: "2026.8.1@sha256:e1f54eb0306d7ded8b3cdee70c21178413cd175aa3e526452af0e086a39ecc51"
             resources:
               limits:
                 memory: 2Gi
