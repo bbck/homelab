@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: "${APP}"
+  name: "${APP}-db"
 spec:
   instances: 1
   storage:

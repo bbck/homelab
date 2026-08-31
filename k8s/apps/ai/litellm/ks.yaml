@@ -21,7 +21,7 @@ spec:
       namespace: *namespace
     - apiVersion: postgresql.cnpg.io/v1
       kind: Cluster
-      name: *app
+      name: litellm-db
       namespace: *namespace
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly
