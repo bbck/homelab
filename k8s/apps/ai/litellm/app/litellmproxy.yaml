@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/litellm.home-operations.com/litellmproxy_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMProxy
+metadata:
+  name: litellm
+spec:
+  env:
+    - name: DATABASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: litellm-app
+          key: uri
+    - name: LITELLM_MASTER_KEY
+      valueFrom:
+        secretKeyRef:
+          name: litellm-secrets
+          key: LITELLM_MASTER_KEY
+    - name: REDIS_HOST
+      value: litellm-dragonfly
+    - name: REDIS_PORT
+      value: "6379"
+  route:
+    hostnames:
+      - litellm.bbck.dev
+    parentRefs:
+      - name: envoy-internal
+        namespace: networking
