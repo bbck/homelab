@@ -16,10 +16,9 @@ spec:
         secretKeyRef:
           name: litellm-secrets
           key: LITELLM_MASTER_KEY
-    - name: REDIS_HOST
-      value: litellm-dragonfly
-    - name: REDIS_PORT
-      value: "6379"
+  routerSettings:
+    redis_host: litellm-dragonfly
+    redis_port: 6379
   route:
     hostnames:
       - litellm.bbck.dev
