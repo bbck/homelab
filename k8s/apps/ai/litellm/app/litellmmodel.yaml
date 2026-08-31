@@ -21,3 +21,39 @@ spec:
     extra:
       input_cost_per_token: 0.000002
       output_cost_per_token: 0.00001
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: claude-haiku-4-5
+spec:
+  modelName: claude-haiku-4-5
+  params:
+    model: anthropic/claude-haiku-4-5
+    apiKeyRef:
+      name: litellm-secrets
+      key: ANTHROPIC_API_KEY
+    dropParams: true
+  info:
+    maxInputTokens: 200000
+    maxOutputTokens: 64000
+    supportsFunctionCalling: true
+    supportsPromptCaching: true
+    supportsVision: true
+    extra:
+      input_cost_per_token: 0.000001
+      output_cost_per_token: 0.000005
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: voyage-4-lite
+spec:
+  modelName: voyage-4-lite
+  params:
+    model: voyage/voyage-4-lite
+    apiKeyRef:
+      name: litellm-secrets
+      key: VOYAGE_API_KEY
+  info:
+    mode: embedding

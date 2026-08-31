@@ -16,6 +16,10 @@ spec:
         secretKeyRef:
           name: litellm-secrets
           key: LITELLM_MASTER_KEY
+  apiAccess:
+    masterKeyRef:
+      name: litellm-secrets
+      key: LITELLM_MASTER_KEY
   routerSettings:
     redis_host: litellm-dragonfly
     redis_port: 6379
