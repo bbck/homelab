@@ -6,3 +6,4 @@ resources:
   - ./externalsecret.yaml
   - ./litellmmodel.yaml
   - ./litellmproxy.yaml
+  - ./litellmvirtualkey.yaml
