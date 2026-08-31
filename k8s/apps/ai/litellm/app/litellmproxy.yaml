@@ -23,6 +23,10 @@ spec:
   routerSettings:
     redis_host: litellm-dragonfly
     redis_port: 6379
+    retry_policy:
+      RateLimitErrorRetries: 5
+    allowed_fails: 10
+    cooldown_time: 15
   route:
     hostnames:
       - litellm.bbck.dev

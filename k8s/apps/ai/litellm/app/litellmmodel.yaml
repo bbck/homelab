@@ -55,5 +55,7 @@ spec:
     apiKeyRef:
       name: litellm-secrets
       key: VOYAGE_API_KEY
+    rpm: 3
+    tpm: 10000
   info:
     mode: embedding
