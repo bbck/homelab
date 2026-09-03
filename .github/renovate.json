@@ -69,6 +69,13 @@
       "matchPackageNames": [
         "intel-device-plugins-*"
       ]
+    },
+    {
+      "matchFileNames": [
+        "k8s/apps/default/**"
+      ],
+      "automerge": true,
+      "minimumReleaseAge": "3 days"
     }
   ],
   "customManagers": [
