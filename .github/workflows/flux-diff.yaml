@@ -14,15 +14,41 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+    env:
+      FLATE_CACHE_DIR: ${{ runner.temp }}/flate-cache
     steps:
-      - name: Setup Flux CLI
-        uses: fluxcd/flux2/action@v2.9.5
-      - uses: allenporter/flux-local/action/diff@8.4.0
-        id: diff
+      - name: Checkout
+        uses: actions/checkout@v7
         with:
-          live-branch: master
-          path: k8s
-          resource: helmrelease
+          fetch-depth: 0
+      - name: Setup mise
+        uses: jdx/mise-action@v4.3.0
+      - name: Restore flate cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.FLATE_CACHE_DIR }}
+          key: flate-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
+          restore-keys: |
+            flate-${{ runner.os }}-${{ runner.arch }}-
+      - name: Compute diff
+        id: diff
+        env:
+          FLATE_BASE: ${{ github.event.pull_request.base.sha }}
+          FLATE_OUTPUT: github
+        run: |
+          mise run --quiet flux-diff > "${RUNNER_TEMP}/diff.txt"
+          # A PR comment caps out at 65536 characters, so leave room for the
+          # fences and the truncation notice.
+          if [[ $(wc -c < "${RUNNER_TEMP}/diff.txt") -gt 60000 ]]; then
+            head -c 60000 "${RUNNER_TEMP}/diff.txt" > "${RUNNER_TEMP}/diff.trunc"
+            printf '\n... diff truncated, run `mise run flux-diff` locally for the rest\n' >> "${RUNNER_TEMP}/diff.trunc"
+            mv "${RUNNER_TEMP}/diff.trunc" "${RUNNER_TEMP}/diff.txt"
+          fi
+          {
+            echo 'diff<<FLUX_DIFF_EOF'
+            cat "${RUNNER_TEMP}/diff.txt"
+            echo 'FLUX_DIFF_EOF'
+          } >> "$GITHUB_OUTPUT"
       - name: PR Comments
         uses: mshick/add-pr-comment@v3
         if: ${{ steps.diff.outputs.diff != '' }}

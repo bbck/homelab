@@ -1,0 +1,21 @@
+#:schema https://mise.jdx.dev/schema/mise.json
+
+min_version = "2025.1.0"
+
+[tools]
+"github:home-operations/flate" = "0.6.5"
+
+[env]
+FLATE_PATH = "{{ config_root }}/k8s"
+
+[tasks.flux-diff]
+description = "Diff rendered Flux manifests against a baseline git rev (default: master)"
+run = 'flate diff all --base "${FLATE_BASE:-master}" --no-progress'
+
+[tasks.flux-build]
+description = "Render a named Flux Kustomization to YAML"
+run = "flate build ks --no-progress"
+
+[tasks.flux-test]
+description = "Validate that every Flux Kustomization and HelmRelease renders"
+run = "flate test all --no-progress"
