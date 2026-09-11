@@ -1,169 +1,44 @@
 ---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: grafana-operator
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 5.25.0
+  url: oci://ghcr.io/grafana/helm-charts/grafana-operator
+---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: grafana
+  name: grafana-operator
   namespace: monitoring
 spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: grafana
-      version: 10.5.15
-      sourceRef:
-        kind: HelmRepository
-        name: grafana
-        namespace: flux-system
-      interval: 1m
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: grafana-operator
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
-    grafana.ini:
-      news:
-        news_feed_enabled: false
-      analytics:
-        enabled: false
-        reporting_enabled: false
-        check_for_updates: false
-        check_for_plugin_updates: false
-      auth.anonymous:
-        enabled: true
-        org_name: Main Org.
-        org_role: Viewer
-      users:
-        viewers_can_edit: true
-    sidecar:
-      dashboards:
-        enabled: true
-        searchNamespace: ALL
-        defaultFolderName: default
-        provider:
-          foldersFromFilesStructure: true
-    datasources:
-      datasources.yaml:
-        apiVersion: 1
-        datasources:
-          - name: Prometheus
-            type: prometheus
-            url: http://prometheus-operated.monitoring.svc.cluster.local:9090
-            access: proxy
-            isDefault: true
-            jsonData:
-              manageAlerts: true
-              prometheusType: Prometheus
-              cacheLevel: "High"
-          - name: Alertmanager
-            type: alertmanager
-            url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
-            access: proxy
-            jsonData:
-              implementation: prometheus
-          - name: Loki
-            type: loki
-            url: http://loki-headless.monitoring.svc.cluster.local:3100
-            access: proxy
-            jsonData:
-              maxLines: 250
-    dashboardProviders:
-      dashboardproviders.yaml:
-        apiVersion: 1
-        providers:
-          - name: default
-            orgId: 1
-            folder: ""
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/default
-    dashboards:
-      default:
-        prometheus:
-          # renovate: depName="Prometheus"
-          gnetId: 19105
-          revision: 9
-          datasource: Prometheus
-        node-exporter-full:
-          # renovate: depName="Node Exporter Full"
-          gnetId: 1860
-          revision: 45
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-        smart:
-          # renovate: depName="SMARTctl Exporter Dashboard"
-          gnetId: 22604
-          revision: 3
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-        kubernetes-api-server:
-          # renovate: depName="Kubernetes / System / API Server"
-          gnetId: 15761
-          revision: 21
-          datasource: Prometheus
-        kubernetes-coredns:
-          # renovate: depName="Kubernetes / System / CoreDNS"
-          gnetId: 15762
-          revision: 22
-          datasource: Prometheus
-        kubernetes-global:
-          # renovate: depName="Kubernetes / Views / Global"
-          gnetId: 15757
-          revision: 43
-          datasource: Prometheus
-        kubernetes-namespaces:
-          # renovate: depName="Kubernetes / Views / Namespaces"
-          gnetId: 15758
-          revision: 46
-          datasource: Prometheus
-        kubernetes-nodes:
-          # renovate: depName="Kubernetes / Views / Nodes"
-          gnetId: 15759
-          revision: 40
-          datasource: Prometheus
-        kubernetes-pods:
-          # renovate: depName="Kubernetes / Views / Pods"
-          gnetId: 15760
-          revision: 39
-          datasource: Prometheus
-        cert-manager:
-          # renovate: depName="Cert-manager-Kubernetes"
-          gnetId: 20842
-          revision: 3
-          datasource: Prometheus
-        flux-control-plane:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
-          datasource: Prometheus
-        flux-cluster:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
-          datasource: Prometheus
-        longhorn:
-          # renovate: depName="Longhorn"
-          gnetId: 16888
-          revision: 14
-          datasource: Prometheus
-        volsync:
-          # renovate: depName="VolSync Dashboard"
-          gnetId: 21356
-          revision: 3
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-            - {name: VAR_REPLICATIONDESTNAME, value: .*-dst}
-        mikrotik:
-          # renovate: depName="Mikrotik MKTXP Exporter"
-          gnetId: 13679
-          revision: 28
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-        minio:
-          # renovate: depName="MinIO Dashboard"
-          gnetId: 13502
-          revision: 26
-          datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-        envoy-gateway:
-          url: https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-addons-helm/dashboards/envoy-gateway-global.json
-          datasource: Prometheus
-        envoy-proxy:
-          url: https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-addons-helm/dashboards/envoy-proxy-global.json
-          datasource: Prometheus
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
     serviceMonitor:
+      enabled: true
+    dashboard:
       enabled: true
