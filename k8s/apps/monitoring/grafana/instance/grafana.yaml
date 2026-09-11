@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/grafana.integreatly.org/grafana_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    dashboards: grafana
+spec:
+  # renovate: datasource=docker depName=docker.io/grafana/grafana
+  version: 12.3.1
+  config:
+    log:
+      mode: console
+    server:
+      root_url: https://grafana.bbck.dev
+    news:
+      news_feed_enabled: "false"
+    analytics:
+      enabled: "false"
+      reporting_enabled: "false"
+      check_for_updates: "false"
+      check_for_plugin_updates: "false"
+    auth.anonymous:
+      enabled: "true"
+      org_name: Main Org.
+      org_role: Viewer
+    users:
+      viewers_can_edit: "true"
+  service:
+    metadata:
+      labels:
+        app.kubernetes.io/name: grafana
