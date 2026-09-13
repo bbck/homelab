@@ -33,6 +33,7 @@ spec:
   values:
     provider:
       name: cloudflare
+    policy: upsert-only
     domainFilters:
       - bbck.dev
     sources:
