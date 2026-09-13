@@ -46,6 +46,7 @@ spec:
               - --disable-write
             env:
               GRAFANA_URL: http://grafana-service.monitoring.svc.cluster.local:3000
+              GRAFANA_ORG_ID: "1"
               GRAFANA_LOKI_GUARDRAIL_MODE: enforce
               GRAFANA_SERVICE_ACCOUNT_TOKEN:
                 valueFrom:
