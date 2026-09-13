@@ -1,0 +1,96 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mcp-grafana
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 5.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 1m
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+    controllers:
+      mcp-grafana:
+        replicas: 1
+        containers:
+          app:
+            image:
+              repository: docker.io/grafana/mcp-grafana
+              tag: 1.4.1
+              pullPolicy: IfNotPresent
+            command: ["/app/mcp-grafana"]
+            args:
+              - --transport=streamable-http
+              - --address=0.0.0.0:8000
+              - --endpoint-path=/mcp
+              - --healthz-address=:8080
+              - --allowed-hosts=mcp-grafana.bbck.dev,mcp-grafana.monitoring.svc.cluster.local
+              - --disable-write
+            env:
+              GRAFANA_URL: http://grafana-service.monitoring.svc.cluster.local:3000
+              GRAFANA_LOKI_GUARDRAIL_MODE: enforce
+              GRAFANA_SERVICE_ACCOUNT_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: mcp-grafana-sa-token
+                    key: token
+            envFrom:
+              - secretRef:
+                  name: mcp-grafana
+            resources:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 10m
+                memory: 64Mi
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: 8080
+                  initialDelaySeconds: 5
+                  periodSeconds: 30
+                  failureThreshold: 3
+              readiness: *probe
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
+    service:
+      app:
+        controller: mcp-grafana
+        ports:
+          http:
+            port: 8000
+    route:
+      app:
+        hostnames: ["mcp-grafana.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
