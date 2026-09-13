@@ -104,11 +104,58 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 1Gi
+          mcp:
+            image:
+              repository: ghcr.io/bbck/mcpvault
+              tag: 0.16.0@sha256:712d0f4e2e8fac2c35c66faf3f8150a31001c7bc2d1f4dcefa08adf2b2958e3c
+            args: ["--host", "0.0.0.0", "--port", "8000", "--", "mcpvault", "/vault", "--read-only"]
+            probes:
+              liveness: &mcpProbe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /status
+                    port: 8000
+                  periodSeconds: 30
+                  failureThreshold: 3
+              readiness: *mcpProbe
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+    service:
+      app:
+        controller: obsidian
+        ports:
+          http:
+            port: 8000
+    route:
+      app:
+        hostnames: ["mcp-obsidian.bbck.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       data:
         existingClaim: obsidian
-        globalMounts:
-          - path: /data
+        advancedMounts:
+          obsidian:
+            setup:
+              - path: /data
+            sync:
+              - path: /data
+            mcp:
+              - path: /vault
+                subPath: vault
+                readOnly: true
       tmp:
         type: emptyDir
         globalMounts:
