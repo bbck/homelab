@@ -60,7 +60,7 @@ spec:
                       - -q
                       - -O
                       - /dev/null
-                      - http://localhost:8080/.well-known/openid-configuration
+                      - http://127.0.0.1:8080/.well-known/openid-configuration
                   periodSeconds: 30
                   timeoutSeconds: 5
                   failureThreshold: 3
@@ -75,7 +75,7 @@ spec:
                       - -q
                       - -O
                       - /dev/null
-                      - http://localhost:8080/.well-known/openid-configuration
+                      - http://127.0.0.1:8080/.well-known/openid-configuration
                   periodSeconds: 5
                   timeoutSeconds: 5
                   failureThreshold: 60
