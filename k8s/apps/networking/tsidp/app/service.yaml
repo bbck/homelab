@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/core/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: tsidp-egress
+  annotations:
+    tailscale.com/tailnet-fqdn: idp.taild1477.ts.net
+    # The operator rewrites externalName, don't fight it
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
+spec:
+  type: ExternalName
+  externalName: placeholder
+  ports:
+    - name: https
+      port: 443
+      protocol: TCP

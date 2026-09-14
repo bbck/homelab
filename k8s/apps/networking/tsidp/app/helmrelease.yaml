@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tsidp
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+    controllers:
+      tsidp:
+        strategy: Recreate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/tailscale/tsidp
+              tag: v0.0.15@sha256:cae91835375efcbf75ecb8f9520e3472cda946e3ca9af1df3bce9540902f289e
+            env:
+              # Required while tsidp is < v1.0.0
+              TAILSCALE_USE_WIP_CODE: "1"
+              TS_STATE_DIR: /data
+              TS_HOSTNAME: idp
+              TS_ADVERTISE_TAGS: tag:tsidp
+              HOME: /tmp
+              # Loopback listener for probes; opens only after tsnet is up
+              TSIDP_LOCAL_PORT: "8080"
+            # TODO: switch to a mounted TS_AUTHKEY_FILE once released (tailscale/tsidp#190, after v0.0.15)
+            envFrom:
+              - secretRef:
+                  name: tsidp
+            # The kubelet can't reach localhost with httpGet, so exec wget from busybox
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - wget
+                      - -q
+                      - -O
+                      - /dev/null
+                      - http://localhost:8080/.well-known/openid-configuration
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probe
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - wget
+                      - -q
+                      - -O
+                      - /dev/null
+                      - http://localhost:8080/.well-known/openid-configuration
+                  periodSeconds: 5
+                  timeoutSeconds: 5
+                  failureThreshold: 60
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
+    persistence:
+      data:
+        existingClaim: tsidp
+        globalMounts:
+          - path: /data
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

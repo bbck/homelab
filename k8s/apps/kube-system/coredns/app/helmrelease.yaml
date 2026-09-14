@@ -74,6 +74,18 @@ spec:
           - name: loop
           - name: reload
           - name: loadbalance
+      - zones:
+          - zone: taild1477.ts.net
+            scheme: dns://
+        port: 53
+        plugins:
+          - name: errors
+          - name: prometheus
+            parameters: 0.0.0.0:9153
+          - name: cache
+            parameters: 30
+          - name: forward
+            parameters: . 10.96.0.53
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
