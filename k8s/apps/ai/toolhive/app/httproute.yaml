@@ -13,6 +13,16 @@ spec:
     - name: envoy-external
       namespace: networking
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /mcp
+        - path:
+            type: PathPrefix
+            value: /oauth
+        - path:
+            type: PathPrefix
+            value: /.well-known
+      backendRefs:
         - name: vmcp-mcp-gateway
           port: 4483

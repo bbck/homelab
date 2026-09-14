@@ -8,6 +8,7 @@ spec:
   replicas: 1
   args:
     - --proactor_threads=1
+    - --default_lua_flags=allow-undeclared-keys
   authentication:
     passwordFromSecret:
       name: "${APP}-dragonfly"
