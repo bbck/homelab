@@ -44,4 +44,4 @@ spec:
     deep:
       schedule:
         cron: "H 5 1 * *"
-    successExpr: "stats.files > 0 && stats.errors == 0"
+    successExpr: "tier == 'quick' ? stats.errors == 0 : stats.files > 0 && stats.errors == 0"
