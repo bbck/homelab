@@ -10,3 +10,4 @@ resources:
   - ./envoy-gateway/ks.yaml
   - ./external-dns/ks.yaml
   - ./tailscale/ks.yaml
+  - ./tsidp/ks.yaml
