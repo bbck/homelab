@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: external-dns
+spec:
+  groups:
+    - name: external-dns.rules
+      rules:
+        - alert: ExternalDNSSyncFailing
+          expr: |-
+            external_dns_controller_consecutive_soft_errors > 0
+          annotations:
+            summary: >-
+              external-dns has failed {{ $value }} consecutive syncs with the DNS provider
+          for: 15m
+          labels:
+            severity: critical
