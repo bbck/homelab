@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kopiur.home-operations.com/snapshotpolicy_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: "${APP}"
+spec:
+  repository:
+    kind: ClusterRepository
+    name: r2
+  credentialProjection:
+    enabled: true
+  # Pinned so history survives namespace changes; the webhook rejects edits once snapshots exist
+  identity:
+    username: "${APP}"
+    hostname: homelab
+  sources:
+    - pvc:
+        name: "${APP}"
+  compression:
+    compressor: zstd
+  retention:
+    keepHourly: 24
+    keepDaily: 7
+    keepWeekly: 4
+  volumeSnapshotClassName: "${KOPIUR_SNAPSHOTCLASS:-longhorn}"
+  mover:
+    securityContext:
+      runAsUser: ${APP_UID:-65534}
+      runAsGroup: ${APP_GID:-65534}
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
+        type: RuntimeDefault
+    podSecurityContext: &podSecurityContext
+      fsGroup: ${APP_GID:-65534}
+      fsGroupChangePolicy: OnRootMismatch
+  verification:
+    quick:
+      schedule:
+        cron: "H 4 * * *"
+    deep:
+      schedule:
+        cron: "H 5 1 * *"
+    successExpr: "stats.files > 0 && stats.errors == 0"

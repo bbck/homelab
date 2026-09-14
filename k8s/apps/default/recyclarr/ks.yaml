@@ -20,10 +20,12 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
+    - ../../../../components/kopiur/backup
     - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
       APP_UID: "65534"
       APP_GID: "65534"
+      KOPIUR_CAPACITY: 1Gi
       VOLSYNC_CAPACITY: 1Gi
