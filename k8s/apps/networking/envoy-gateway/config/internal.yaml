@@ -48,13 +48,8 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: envoy-internal
-  annotations:
-    internal-dns.alpha.kubernetes.io/target: &hostname internal.bbck.dev
 spec:
   gatewayClassName: envoy-internal
-  infrastructure:
-    annotations:
-      internal-dns.alpha.kubernetes.io/hostname: *hostname
   listeners:
     - name: http
       protocol: HTTP
