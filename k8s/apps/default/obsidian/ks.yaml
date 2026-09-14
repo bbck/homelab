@@ -19,3 +19,11 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  components:
+    - ../../../../components/kopiur/backup
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "1000"
+      APP_GID: "1000"
+      KOPIUR_CAPACITY: 5Gi
