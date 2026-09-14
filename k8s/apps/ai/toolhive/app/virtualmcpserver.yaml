@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/toolhive.stacklok.dev/virtualmcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: VirtualMCPServer
+metadata:
+  name: mcp-gateway
+spec:
+  groupRef:
+    name: homelab
+  serviceType: ClusterIP
+  incomingAuth:
+    type: oidc
+    oidcConfigRef:
+      name: mcp-gateway
+      audience: https://mcp.bbck.dev/mcp
+      resourceUrl: https://mcp.bbck.dev/mcp
+      scopes:
+        - openid
+        - offline_access
+    authzConfig:
+      type: inline
+      inline:
+        # tsidp's access token is opaque, so Cedar evaluates the gateway token's claims,
+        # which copy the email tsidp asserted (<tailscale login>.<tsidp hostname>)
+        policies:
+          - |
+            permit(principal, action, resource)
+            when {
+              principal has claim_email &&
+              principal.claim_email == "bbck@github.idp.taild1477.ts.net"
+            };
+  authServerConfig:
+    issuer: https://mcp.bbck.dev
+    cimd:
+      enabled: true
+    upstreamProviders:
+      - name: tailscale
+        type: oidc
+        oidcConfig:
+          issuerUrl: https://idp.taild1477.ts.net
+          clientId: ab50b82628b7e3268c49dbf49e7e88ee
+          clientSecretRef:
+            name: toolhive
+            key: TSIDP_CLIENT_SECRET
+          redirectUri: https://mcp.bbck.dev/oauth/callback
+          scopes:
+            - openid
+            - email
+            - profile
+          allowPrivateIPs: true
+    storage:
+      type: redis
+      redis:
+        addr: toolhive-dragonfly.ai.svc.cluster.local:6379
+        aclUserConfig:
+          passwordSecretRef:
+            name: toolhive-dragonfly
+            key: password
+    signingKeySecretRefs:
+      - name: toolhive
+        key: SIGNING_KEY
+    hmacSecretRefs:
+      - name: toolhive
+        key: HMAC_KEY
+  outgoingAuth:
+    source: discovered
+  config:
+    aggregation:
+      conflictResolution: prefix

@@ -42,7 +42,7 @@ spec:
               - --address=0.0.0.0:8000
               - --endpoint-path=/mcp
               - --healthz-address=:8080
-              - --allowed-hosts=mcp-grafana.bbck.dev,mcp-grafana.monitoring.svc.cluster.local
+              - --allowed-hosts=mcp-grafana.monitoring.svc.cluster.local,mcp-grafana.monitoring.svc.cluster.local:8000
               - --disable-write
             env:
               GRAFANA_URL: http://grafana-service.monitoring.svc.cluster.local:3000
@@ -85,13 +85,3 @@ spec:
         ports:
           http:
             port: 8000
-    route:
-      app:
-        hostnames: ["mcp-grafana.bbck.dev"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: networking
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: http
