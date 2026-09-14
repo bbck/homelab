@@ -133,16 +133,6 @@ spec:
         ports:
           http:
             port: 8000
-    route:
-      app:
-        hostnames: ["mcp-obsidian.bbck.dev"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: networking
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: http
     persistence:
       data:
         existingClaim: obsidian

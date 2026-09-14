@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/toolhive.stacklok.dev/mcpserverentry_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServerEntry
+metadata:
+  name: obsidian
+spec:
+  groupRef:
+    name: homelab
+  remoteUrl: http://obsidian.default.svc.cluster.local:8000/mcp
+  transport: streamable-http
+  allowPrivateEndpoint: true
