@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: docker.io/grafana/mcp-grafana
-              tag: 1.4.1
+              tag: 1.4.2
               pullPolicy: IfNotPresent
             command: ["/app/mcp-grafana"]
             args:
