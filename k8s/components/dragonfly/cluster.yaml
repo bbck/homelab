@@ -13,6 +13,15 @@ spec:
     passwordFromSecret:
       name: "${APP}-dragonfly"
       key: password
+  snapshot:
+    cron: "*/5 * * * *"
+    persistentVolumeClaimSpec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: "${DRAGONFLY_SNAPSHOT_CAPACITY:-1Gi}"
   resources:
     requests:
       cpu: 10m
