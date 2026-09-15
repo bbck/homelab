@@ -165,3 +165,25 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app things-mcp
+  namespace: &namespace ai
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: toolhive
+  interval: 1h
+  path: ./k8s/apps/ai/toolhive/mcp-servers/things-mcp
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
