@@ -12,6 +12,11 @@ spec:
   mcpPort: 8080
   externalAuthConfigRef:
     name: things
+  env:
+    # ToolHive forces a read-only root filesystem and the server chmods its data dir,
+    # so it must create (and own) a subdirectory of the root-owned emptyDir
+    - name: DATA_DIR
+      value: /data/state
   resources:
     requests:
       cpu: 10m
@@ -29,6 +34,15 @@ spec:
       containers:
         - name: mcp
           securityContext:
+            # ToolHive defaults the container to uid/gid 1000 when unset
+            runAsUser: 65534
+            runAsGroup: 65534
             allowPrivilegeEscalation: false
             capabilities:
               drop: ["ALL"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          emptyDir: {}
