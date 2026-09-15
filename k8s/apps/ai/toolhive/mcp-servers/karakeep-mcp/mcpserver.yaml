@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/toolhive.stacklok.dev/mcpserver_v1beta1.json
+# karakeep-mcp only speaks stdio, so the operator's proxy runner exposes it as streamable-http
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: karakeep
+spec:
+  groupRef:
+    name: homelab
+  image: ghcr.io/karakeep-app/karakeep-mcp:0.33.2@sha256:7b6e5b3d0613a3c23f107f828bd0b367876148c63291d7ff55e23082d193b58a
+  transport: stdio
+  proxyMode: streamable-http
+  env:
+    - name: KARAKEEP_API_ADDR
+      value: http://karakeep.default.svc.cluster.local:3000
+  secrets:
+    - name: toolhive-karakeep
+      key: KARAKEEP_API_KEY
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      memory: 256Mi
+  podTemplateSpec:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: mcp
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
