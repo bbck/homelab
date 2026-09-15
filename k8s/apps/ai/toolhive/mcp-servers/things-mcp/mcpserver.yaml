@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: things
+spec:
+  groupRef:
+    name: homelab
+  image: ghcr.io/bbck/things-cloud-mcp:v1.4.4@sha256:d740c9ac43da5c1b815de2510357836a9d0c436b0e0c493fd952c4eca16f68ed
+  transport: streamable-http
+  mcpPort: 8080
+  externalAuthConfigRef:
+    name: things
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 256Mi
+  podTemplateSpec:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: mcp
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
