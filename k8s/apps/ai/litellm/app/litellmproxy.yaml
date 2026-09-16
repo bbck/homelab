@@ -21,12 +21,36 @@ spec:
         secretKeyRef:
           name: litellm-dragonfly
           key: password
+    - name: PROXY_BASE_URL
+      value: https://litellm.bbck.dev
+    - name: GENERIC_CLIENT_ID
+      value: 13e748b88b28fb33b21935d0d5fe3ede
+    - name: GENERIC_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: litellm-secrets
+          key: TSIDP_CLIENT_SECRET
+    - name: GENERIC_AUTHORIZATION_ENDPOINT
+      value: https://idp.taild1477.ts.net/authorize
+    - name: GENERIC_TOKEN_ENDPOINT
+      value: https://idp.taild1477.ts.net/token
+    - name: GENERIC_USERINFO_ENDPOINT
+      value: https://idp.taild1477.ts.net/userinfo
+    - name: GENERIC_SCOPE
+      value: openid email profile
+    - name: GENERIC_USER_ID_ATTRIBUTE
+      value: sub
+    - name: GENERIC_USER_DISPLAY_NAME_ATTRIBUTE
+      value: name
   apiAccess:
     masterKeyRef:
       name: litellm-secrets
       key: LITELLM_MASTER_KEY
   generalSettings:
     store_prompts_in_spend_logs: true
+  litellmSettings:
+    default_internal_user_params:
+      user_role: proxy_admin
   routerSettings:
     redis_host: litellm-dragonfly
     redis_port: 6379
