@@ -21,6 +21,8 @@ spec:
         secretKeyRef:
           name: litellm-dragonfly
           key: password
+    - name: AUTO_REDIRECT_UI_LOGIN_TO_SSO
+      value: "true"
     - name: PROXY_BASE_URL
       value: https://litellm.bbck.dev
     - name: GENERIC_CLIENT_ID
@@ -46,6 +48,14 @@ spec:
     masterKeyRef:
       name: litellm-secrets
       key: LITELLM_MASTER_KEY
+  livenessProbe:
+    httpGet:
+      path: /health/liveliness
+      port: 4000
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
   generalSettings:
     store_prompts_in_spend_logs: true
   litellmSettings:
