@@ -5,38 +5,21 @@
     ":disableRateLimiting"
   ],
   "kubernetes": {
-    "fileMatch": [
-      "k8s/.+\\.yaml$"
+    "managerFilePatterns": [
+      "/k8s/.+\\.yaml$/"
     ]
   },
   "flux": {
-    "fileMatch": [
-      "k8s/.+\\.yaml$"
+    "managerFilePatterns": [
+      "/k8s/.+\\.yaml$/"
     ]
   },
   "helm-values": {
-    "fileMatch": [
-      "k8s/.+\\.yaml$"
+    "managerFilePatterns": [
+      "/k8s/.+\\.yaml$/"
     ]
   },
   "packageRules": [
-    {
-      "matchDatasources": [
-        "docker"
-      ],
-      "excludePackagePatterns": [
-        "^ghcr\\.io/fluxcd/.*"
-      ]
-    },
-    {
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchPackageNames": [
-        "ghcr.io/onedr0p/plex"
-      ],
-      "versioning": "loose"
-    },
     {
       "matchDatasources": [
         "custom.grafana-dashboards"
@@ -51,25 +34,41 @@
       ]
     },
     {
-      "groupName": "fluxcd/flux2",
+      "groupName": "flux-distribution",
       "matchPackageNames": [
-        "fluxcd/flux2",
-        "controlplaneio-fluxcd//distribution"
+        "controlplaneio-fluxcd/distribution"
       ]
     },
     {
       "groupName": "1password",
       "matchPackageNames": [
-        "docker.io/1password/*",
         "docker.io/1password/*"
       ]
     },
     {
       "groupName": "intel-device-plugins",
       "matchPackageNames": [
-        "intel-device-plugins-*"
+        "/intel-device-plugins-/"
       ]
     },
+    {
+      "groupName": "actions-runner-controller",
+      "matchPackageNames": [
+        "/gha-runner-scale-set/"
+      ]
+    },
+    {
+      "groupName": "toolhive",
+      "matchPackageNames": [
+        "/toolhive-operator/"
+      ]
+    },
+    {
+      "groupName": "app-template",
+      "matchPackageNames": [
+        "/app-template/"
+      ]
+    }
   ],
   "customManagers": [
     {
