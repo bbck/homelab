@@ -8,7 +8,7 @@ metadata:
     dashboards: grafana
 spec:
   # renovate: datasource=docker depName=docker.io/grafana/grafana
-  version: 13.2.1
+  version: 13.2.2
   config:
     log:
       mode: console
