@@ -13,7 +13,7 @@ concurrency:
 jobs:
   diffs:
     name: Compute diffs
-    runs-on: ubuntu-latest
+    runs-on: [actions-runner]
     permissions:
       contents: read
       pull-requests: write
@@ -27,7 +27,6 @@ jobs:
         uses: home-operations/flate/action@v0.6.5
         with:
           base: ${{ github.event.pull_request.base.sha }}
-          cache: true
       - name: Compute diff
         id: diff
         run: |
