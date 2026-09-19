@@ -24,11 +24,45 @@ spec:
     plugins:
       preinstall_auto_update: "false"
     auth.anonymous:
+      enabled: "false"
+    auth.generic_oauth:
       enabled: "true"
-      org_name: Main Org.
-      org_role: Viewer
-    users:
-      viewers_can_edit: "true"
+      name: Tailscale
+      icon: signin
+      auto_login: "true"
+      allow_sign_up: "true"
+      use_pkce: "true"
+      client_id: $__env{TSIDP_CLIENT_ID}
+      client_secret: $__env{TSIDP_CLIENT_SECRET}
+      scopes: openid email profile
+      auth_url: https://idp.taild1477.ts.net/authorize
+      token_url: https://idp.taild1477.ts.net/token
+      api_url: https://idp.taild1477.ts.net/userinfo
+      login_attribute_path: email
+      email_attribute_path: email
+      name_attribute_path: name
+      role_attribute_path: >-
+        contains(to_array(not_null(homelab_roles, `[]`)), 'admin')
+        && 'GrafanaAdmin'
+      role_attribute_strict: "true"
+      allow_assign_grafana_admin: "true"
+  deployment:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: grafana
+              env:
+                - name: TSIDP_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-secrets
+                      key: TSIDP_CLIENT_ID
+                - name: TSIDP_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-secrets
+                      key: TSIDP_CLIENT_SECRET
   service:
     metadata:
       labels:
