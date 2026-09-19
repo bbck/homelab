@@ -58,6 +58,8 @@ jobs:
       - name: Install OpenTofu
         uses: opentofu/setup-opentofu@v2
         with:
+          # renovate: datasource=github-releases depName=opentofu/opentofu
+          tofu_version: 1.12.6
           tofu_wrapper: false
       - name: OpenTofu fmt
         id: fmt
