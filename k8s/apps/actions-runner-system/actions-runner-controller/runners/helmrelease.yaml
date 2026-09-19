@@ -35,14 +35,6 @@ spec:
     githubConfigSecret: actions-runner
     minRunners: 1
     maxRunners: 3
-    containerMode:
-      type: kubernetes
-      kubernetesModeWorkVolumeClaim:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: longhorn-cache
-        resources:
-          requests:
-            storage: 25Gi
     controllerServiceAccount:
       name: actions-runner-controller
       namespace: actions-runner-system
@@ -58,6 +50,7 @@ spec:
                 memory: 128Mi
     template:
       spec:
+        automountServiceAccountToken: false
         containers:
           - name: runner
             image: ghcr.io/home-operations/actions-runner:2.337.0@sha256:8b8e8326b5a08e658a0a41cfd2867afab69ca4194a152f986aa6fcd5430d09e7
@@ -71,7 +64,21 @@ spec:
                 memory: 256Mi
               limits:
                 memory: 2Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            volumeMounts:
+              - name: work
+                mountPath: /home/runner/_work
         securityContext:
+          runAsNonRoot: true
           runAsUser: 1001
           runAsGroup: 123
           fsGroup: 123
+          seccompProfile:
+            type: RuntimeDefault
+        volumes:
+          - name: work
+            emptyDir:
+              sizeLimit: 10Gi
