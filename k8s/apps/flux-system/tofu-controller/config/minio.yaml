@@ -33,6 +33,7 @@ spec:
     kind: GitRepository
     name: homelab
     namespace: flux-system
+  suspend: true
   varsFrom:
     - kind: Secret
       name: terraform-secret
