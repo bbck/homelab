@@ -7,6 +7,8 @@ on:
       - master
     paths:
       - "terraform/**"
+      # excluded until it is decommissioned - see files_ignore below
+      - "!terraform/minio/**"
 jobs:
   changed-files:
     runs-on: [actions-runner]
@@ -24,6 +26,9 @@ jobs:
         uses: tj-actions/changed-files@v47.0.6
         with:
           files: terraform/**
+          # minio keeps the old backend until it is decommissioned; it cannot
+          # plan with the R2 credentials this workflow now loads
+          files_ignore: terraform/minio/**
           dir_names: true
           dir_names_max_depth: 2
           matrix: true
@@ -49,8 +54,9 @@ jobs:
         with:
           export-env: true
         env:
-          AWS_ACCESS_KEY_ID: op://Homelab/terraform-bucket/username
-          AWS_SECRET_ACCESS_KEY: op://Homelab/terraform-bucket/password
+          AWS_ACCESS_KEY_ID: op://Homelab/terraform-r2/AWS_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: op://Homelab/terraform-r2/AWS_SECRET_ACCESS_KEY
+          AWS_ENDPOINT_URL_S3: op://Homelab/terraform-r2/endpoint
       - name: Checkout
         uses: actions/checkout@v7
         with:
