@@ -68,6 +68,28 @@
       "matchPackageNames": [
         "/app-template/"
       ]
+    },
+    {
+      "groupName": "opentofu",
+      "matchPackageNames": [
+        "opentofu/opentofu",
+        "ghcr.io/home-operations/opentofu-runner"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "github-releases"
+      ],
+      "matchPackageNames": [
+        "opentofu/opentofu"
+      ],
+      "extractVersion": "^v(?<version>.*)$"
+    },
+    {
+      "matchPackageNames": [
+        "hashicorp/terraform"
+      ],
+      "enabled": false
     }
   ],
   "customManagers": [
