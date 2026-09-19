@@ -8,3 +8,14 @@ resource "cloudflare_r2_bucket" "k8s_backups" {
     prevent_destroy = true
   }
 }
+
+resource "cloudflare_r2_bucket" "terraform" {
+  account_id    = local.account_id
+  name          = "terraform"
+  location      = "WNAM"
+  storage_class = "Standard"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
