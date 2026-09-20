@@ -44,15 +44,21 @@ spec:
               - --healthz-address=:8080
               - --allowed-hosts=mcp-grafana.monitoring.svc.cluster.local,mcp-grafana.monitoring.svc.cluster.local:8000
               - --disable-write
+              - --disable-admin
             env:
               GRAFANA_URL: http://grafana-service.monitoring.svc.cluster.local:3000
               GRAFANA_ORG_ID: "1"
               GRAFANA_LOKI_GUARDRAIL_MODE: enforce
-              GRAFANA_SERVICE_ACCOUNT_TOKEN:
+              GRAFANA_USERNAME:
                 valueFrom:
                   secretKeyRef:
-                    name: mcp-grafana-sa-token
-                    key: token
+                    name: grafana-admin-credentials
+                    key: GF_SECURITY_ADMIN_USER
+              GRAFANA_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: grafana-admin-credentials
+                    key: GF_SECURITY_ADMIN_PASSWORD
             envFrom:
               - secretRef:
                   name: mcp-grafana
