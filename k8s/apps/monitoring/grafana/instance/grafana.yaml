@@ -46,10 +46,26 @@ spec:
         && 'GrafanaAdmin'
       role_attribute_strict: "true"
       allow_assign_grafana_admin: "true"
+  persistentVolumeClaim:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 1Gi
   deployment:
     spec:
+      strategy:
+        type: Recreate
       template:
         spec:
+          securityContext:
+            fsGroup: 10001
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-pvc
           containers:
             - name: grafana
               env:
