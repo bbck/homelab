@@ -26,7 +26,6 @@ spec:
       name: terraform-r2-backend-secret
   interval: 1h
   path: ./terraform/cloudflare
-  planOnly: true
   runnerPodTemplate:
     spec:
       envFrom:
