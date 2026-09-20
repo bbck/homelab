@@ -3,7 +3,6 @@
 name: "Claude Code Review"
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review]
     branches:
       - master
 concurrency:
@@ -22,6 +21,11 @@ jobs:
       contents: read
       pull-requests: write
       id-token: write
+    env:
+      # must be job-level: a step env: never reaches a composite action's CLI
+      ANTHROPIC_BASE_URL: http://litellm.ai.svc.cluster.local:4000
+      # the review skill's subagents use the haiku alias; litellm must serve it
+      ANTHROPIC_DEFAULT_HAIKU_MODEL: claude-haiku-4-5
     steps:
       # step-scoped Connect creds, so the review step's shell never sees them
       - name: Load secrets
@@ -30,7 +34,7 @@ jobs:
         env:
           OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
-          ANTHROPIC_API_KEY: op://Homelab/anthropic/ANTHROPIC_API_KEY
+          LITELLM_KEY: op://Homelab/litellm/GITHUB_ACTIONS_KEY
       - name: Checkout
         uses: actions/checkout@v7
         with:
@@ -41,8 +45,18 @@ jobs:
       - name: Review
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ steps.op.outputs.ANTHROPIC_API_KEY }}
+          # required by the action; the bearer token below is what litellm reads
+          anthropic_api_key: ${{ steps.op.outputs.LITELLM_KEY }}
+          # the classifier calls api.anthropic.com directly, so it only 401s here
+          classify_inline_comments: "false"
+          settings: |
+            {
+              "env": {
+                "ANTHROPIC_AUTH_TOKEN": "${{ steps.op.outputs.LITELLM_KEY }}"
+              }
+            }
           prompt: "/code-review medium ${{ github.event.pull_request.number }} --comment"
           claude_args: |
+            --model claude-sonnet-5
             --allowedTools "Read,Glob,Grep,Agent,Task,Skill,TodoWrite,Bash(git:*),Bash(gh:*),mcp__github_inline_comment__create_inline_comment"
             --disallowedTools "Edit,Write,NotebookEdit,WebFetch,WebSearch"
