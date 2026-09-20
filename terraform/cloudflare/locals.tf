@@ -1,11 +1,5 @@
 locals {
-  fields = merge([
-    for section in data.onepassword_item.cloudflare.section : merge([
-      for field in section.field : { "${field.label}" = field.value }
-    ]...)
-  ]...)
-
-  account_id = local.fields["account_id"]
+  account_id = sensitive(data.onepassword_item.cloudflare_account.username)
 
   enable_email = {
     for k, v in var.domains : k => v

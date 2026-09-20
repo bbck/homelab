@@ -23,11 +23,16 @@ data "onepassword_vault" "homelab" {
   name = "Homelab"
 }
 
-data "onepassword_item" "cloudflare" {
+ephemeral "onepassword_item" "cloudflare" {
   vault = data.onepassword_vault.homelab.uuid
-  title = "cloudflare"
+  title = "cloudflare-terraform"
 }
 
 provider "cloudflare" {
-  api_token = local.fields["terraform"]
+  api_token = ephemeral.onepassword_item.cloudflare.credential
+}
+
+data "onepassword_item" "cloudflare_account" {
+  vault = data.onepassword_vault.homelab.uuid
+  title = "cloudflare-account"
 }
