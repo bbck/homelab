@@ -6,4 +6,3 @@ resources:
   - ./cloudflare.yaml
   - ./externalsecret.yaml
   - ./mikrotik-rb5009.yaml
-  - ./minio.yaml

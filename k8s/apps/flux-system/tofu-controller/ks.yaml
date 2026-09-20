@@ -43,10 +43,6 @@ spec:
       kind: Terraform
       name: mikrotik-rb5009
       namespace: *namespace
-    - apiVersion: infra.contrib.fluxcd.io/v1alpha2
-      kind: Terraform
-      name: minio
-      namespace: *namespace
   healthCheckExprs:
     - apiVersion: infra.contrib.fluxcd.io/v1alpha2
       kind: Terraform
