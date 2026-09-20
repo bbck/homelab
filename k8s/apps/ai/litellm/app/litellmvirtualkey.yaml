@@ -11,3 +11,16 @@ spec:
   models:
     - claude-haiku-4-5
     - voyage-4-lite
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMVirtualKey
+metadata:
+  name: github-actions
+spec:
+  proxyRef: litellm
+  secretName: github-actions-litellm-key
+  keyAlias: github-actions
+  models:
+    - claude-opus-5
+    - claude-sonnet-5
+    - claude-haiku-4-5

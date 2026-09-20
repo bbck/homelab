@@ -3,6 +3,28 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
+  name: claude-opus-5
+spec:
+  modelName: claude-opus-5
+  params:
+    model: anthropic/claude-opus-5
+    apiKeyRef:
+      name: litellm-secrets
+      key: ANTHROPIC_API_KEY
+    dropParams: true
+  info:
+    maxInputTokens: 1000000
+    maxOutputTokens: 128000
+    supportsFunctionCalling: true
+    supportsPromptCaching: true
+    supportsVision: true
+    extra:
+      input_cost_per_token: 0.000005
+      output_cost_per_token: 0.000025
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
   name: claude-sonnet-5
 spec:
   modelName: claude-sonnet-5
