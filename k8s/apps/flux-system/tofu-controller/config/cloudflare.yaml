@@ -26,6 +26,7 @@ spec:
       name: terraform-r2-backend-secret
   interval: 1h
   path: ./terraform/cloudflare
+  planOnly: true
   runnerPodTemplate:
     spec:
       envFrom:
@@ -35,7 +36,6 @@ spec:
     kind: GitRepository
     name: homelab
     namespace: flux-system
-  suspend: true
   varsFrom:
     - kind: Secret
       name: terraform-secret
