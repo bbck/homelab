@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Claude Code Review"
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+    branches:
+      - master
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  review:
+    name: Claude code review
+    # Only review personal PRs
+    if: >-
+      github.event.pull_request.user.login == github.repository_owner &&
+      !github.event.pull_request.draft
+    runs-on: [actions-runner]
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      # step-scoped Connect creds, so the review step's shell never sees them
+      - name: Load secrets
+        id: op
+        uses: 1password/load-secrets-action@v5
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
+          ANTHROPIC_API_KEY: op://Homelab/anthropic/ANTHROPIC_API_KEY
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # the review reads git history and blame, so it needs the full clone
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: false
+      - name: Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ steps.op.outputs.ANTHROPIC_API_KEY }}
+          prompt: "/code-review medium ${{ github.event.pull_request.number }} --comment"
+          claude_args: |
+            --allowedTools "Read,Glob,Grep,Agent,Task,Skill,TodoWrite,Bash(git:*),Bash(gh:*),mcp__github_inline_comment__create_inline_comment"
+            --disallowedTools "Edit,Write,NotebookEdit,WebFetch,WebSearch"
