@@ -23,7 +23,7 @@ data "onepassword_vault" "homelab" {
   name = "Homelab"
 }
 
-data "onepassword_item" "routeros" {
+ephemeral "onepassword_item" "routeros" {
   vault = data.onepassword_vault.homelab.uuid
   title = "routeros-terraform"
 }
@@ -31,6 +31,6 @@ data "onepassword_item" "routeros" {
 provider "routeros" {
   hosturl  = var.routeros_host
   insecure = true
-  username = data.onepassword_item.routeros.username
-  password = data.onepassword_item.routeros.password
+  username = ephemeral.onepassword_item.routeros.username
+  password = ephemeral.onepassword_item.routeros.password
 }
