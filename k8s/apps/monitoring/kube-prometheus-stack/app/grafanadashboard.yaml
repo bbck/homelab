@@ -11,7 +11,6 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Prometheus"
     id: 19105
     revision: 9
 ---
@@ -25,7 +24,6 @@ spec:
     matchLabels:
       dashboards: grafana
   grafanaCom:
-    # renovate: depName="Node Exporter Full"
     id: 1860
     revision: 45
 ---
@@ -41,7 +39,6 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Kubernetes / System / API Server"
     id: 15761
     revision: 21
 ---
@@ -57,7 +54,6 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Kubernetes / Views / Global"
     id: 15757
     revision: 43
 ---
@@ -73,7 +69,6 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Kubernetes / Views / Namespaces"
     id: 15758
     revision: 46
 ---
@@ -89,7 +84,6 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Kubernetes / Views / Nodes"
     id: 15759
     revision: 40
 ---
@@ -105,7 +99,6 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Kubernetes / Views / Pods"
     id: 15760
     revision: 41
 ---

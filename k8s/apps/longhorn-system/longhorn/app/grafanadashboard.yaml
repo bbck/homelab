@@ -12,6 +12,5 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Longhorn"
     id: 16888
     revision: 14

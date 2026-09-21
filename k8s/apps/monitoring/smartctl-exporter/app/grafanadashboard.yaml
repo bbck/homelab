@@ -11,6 +11,5 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="SMARTctl Exporter Dashboard"
     id: 22604
     revision: 3

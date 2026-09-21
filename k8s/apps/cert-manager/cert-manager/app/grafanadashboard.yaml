@@ -10,6 +10,5 @@ spec:
     matchLabels:
       dashboards: grafana
   grafanaCom:
-    # renovate: depName="Cert-manager-Kubernetes"
     id: 20842
     revision: 3
