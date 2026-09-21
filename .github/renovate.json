@@ -71,6 +71,12 @@
       ]
     },
     {
+      "groupName": "kopiur",
+      "matchPackageNames": [
+        "/kopiur/"
+      ]
+    },
+    {
       "groupName": "opentofu",
       "matchPackageNames": [
         "opentofu/opentofu",
