@@ -11,6 +11,5 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Mikrotik MKTXP Exporter"
     id: 13679
     revision: 28

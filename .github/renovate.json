@@ -2,7 +2,8 @@
   "extends": [
     "config:recommended",
     ":disableDependencyDashboard",
-    ":disableRateLimiting"
+    ":disableRateLimiting",
+    "github>home-operations/renovate-presets//apps/grafanaDashboards.json5#8.1.0"
   ],
   "kubernetes": {
     "managerFilePatterns": [
@@ -24,7 +25,7 @@
       "matchDatasources": [
         "custom.grafana-dashboards"
       ],
-      "commitMessageTopic": "dashboard {{depName}}"
+      "automerge": true
     },
     {
       "groupName": "flux-operator",
@@ -103,27 +104,6 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^k8s\\/.+\\.yaml$/"
-      ],
-      "matchStrings": [
-        "depName=\"(?<depName>.*)\"\\n(?<indentation>\\s+)id: (?<packageName>\\d+)\\n.+revision: (?<currentValue>\\d+)"
-      ],
-      "autoReplaceStringTemplate": "depName=\"{{{depName}}}\"\n{{{indentation}}}id: {{{packageName}}}\n{{{indentation}}}revision: {{{newValue}}}",
-      "datasourceTemplate": "custom.grafana-dashboards",
-      "versioningTemplate": "regex:^(?<major>\\d+)$"
     }
-  ],
-  "customDatasources": {
-    "grafana-dashboards": {
-      "defaultRegistryUrlTemplate": "https://grafana.com/api/dashboards/{{packageName}}",
-      "format": "json",
-      "transformTemplates": [
-        "{\"releases\":[{\"version\": $string(revision)}]}"
-      ]
-    }
-  }
+  ]
 }

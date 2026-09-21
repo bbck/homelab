@@ -12,6 +12,5 @@ spec:
   datasources:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
-    # renovate: depName="Kubernetes / System / CoreDNS"
     id: 15762
     revision: 22
