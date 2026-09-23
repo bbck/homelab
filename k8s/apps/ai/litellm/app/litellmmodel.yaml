@@ -3,74 +3,41 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: claude-opus-5
+  name: claude-opus
 spec:
-  modelName: claude-opus-5
+  modelName: claude-opus-*
   params:
-    model: anthropic/claude-opus-5
+    model: anthropic/claude-opus-*
     apiKeyRef:
       name: litellm-secrets
       key: ANTHROPIC_API_KEY
     dropParams: true
-  info:
-    maxInputTokens: 1000000
-    maxOutputTokens: 128000
-    supportsFunctionCalling: true
-    supportsPromptCaching: true
-    supportsVision: true
-    extra:
-      input_cost_per_token: 0.000005
-      output_cost_per_token: 0.000025
-      cache_creation_input_token_cost: 0.00000625
-      cache_read_input_token_cost: 0.0000005
 ---
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: claude-sonnet-5
+  name: claude-sonnet
 spec:
-  modelName: claude-sonnet-5
+  modelName: claude-sonnet-*
   params:
-    model: anthropic/claude-sonnet-5
+    model: anthropic/claude-sonnet-*
     apiKeyRef:
       name: litellm-secrets
       key: ANTHROPIC_API_KEY
     dropParams: true
-  info:
-    maxInputTokens: 1000000
-    maxOutputTokens: 128000
-    supportsFunctionCalling: true
-    supportsPromptCaching: true
-    supportsVision: true
-    extra:
-      input_cost_per_token: 0.000002
-      output_cost_per_token: 0.00001
-      cache_creation_input_token_cost: 0.0000025
-      cache_read_input_token_cost: 0.0000002
 ---
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: claude-haiku-4-5
+  name: claude-haiku
 spec:
-  modelName: claude-haiku-4-5
+  modelName: claude-haiku-*
   params:
-    model: anthropic/claude-haiku-4-5
+    model: anthropic/claude-haiku-*
     apiKeyRef:
       name: litellm-secrets
       key: ANTHROPIC_API_KEY
     dropParams: true
-  info:
-    maxInputTokens: 200000
-    maxOutputTokens: 64000
-    supportsFunctionCalling: true
-    supportsPromptCaching: true
-    supportsVision: true
-    extra:
-      input_cost_per_token: 0.000001
-      output_cost_per_token: 0.000005
-      cache_creation_input_token_cost: 0.00000125
-      cache_read_input_token_cost: 0.0000001
 ---
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
@@ -85,5 +52,3 @@ spec:
       key: VOYAGE_API_KEY
     rpm: 3
     tpm: 10000
-  info:
-    mode: embedding
