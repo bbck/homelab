@@ -38,7 +38,6 @@ spec:
       obsidian:
         strategy: Recreate
         initContainers:
-          # sync-setup is one-time; sync-config re-asserts pull-only on every start
           setup:
             image: &image
               repository: ghcr.io/bbck/obsidian-headless
@@ -55,7 +54,7 @@ spec:
                     --password "$OBSIDIAN_E2E_PASSWORD" \
                     --device-name homelab
                 fi
-                ob sync-config --json --path /data/vault --mode pull-only
+                ob sync-config --json --path /data/vault --mode bidirectional
             env: &env
               HOME: /data/state
               XDG_CONFIG_HOME: /data/state
@@ -108,7 +107,7 @@ spec:
             image:
               repository: ghcr.io/bbck/mcpvault
               tag: 0.16.0@sha256:712d0f4e2e8fac2c35c66faf3f8150a31001c7bc2d1f4dcefa08adf2b2958e3c
-            args: ["--host", "0.0.0.0", "--port", "8000", "--", "mcpvault", "/vault", "--read-only"]
+            args: ["--host", "0.0.0.0", "--port", "8000", "--", "mcpvault", "/vault"]
             probes:
               liveness: &mcpProbe
                 enabled: true
@@ -145,7 +144,6 @@ spec:
             mcp:
               - path: /vault
                 subPath: vault
-                readOnly: true
       tmp:
         type: emptyDir
         globalMounts:
