@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: mktxp-exporter
+spec:
+  groups:
+    - name: mktxp-exporter.rules
+      rules:
+        - alert: CriticalLinkDown
+          annotations:
+            description:
+              Interface {{ $labels.name }} ({{ $labels.comment }}) on {{ $labels.routerboard_name }}
+              is down.
+            summary: Critical network link is down.
+          expr: |
+            (
+              increase(mktxp_link_downs_total[5m]) > 0
+            or
+              mktxp_interface_running == 0
+            )
+            * on (routerboard_name, name) group_left (comment)
+              max by (routerboard_name, name, comment) (
+                mktxp_interface_comment_info{comment=~"wan|trunk.*"}
+              )
+          labels:
+            severity: critical
