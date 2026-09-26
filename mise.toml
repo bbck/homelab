@@ -5,7 +5,7 @@ min_version = "2025.1.0"
 [tools]
 opentofu = "1.12.6"
 "github:home-operations/flate" = "0.6.5"
-"github:home-operations/kopiur" = "0.10.9"
+"github:home-operations/kopiur" = "0.10.10"
 
 [env]
 FLATE_PATH = "{{ config_root }}/k8s"
