@@ -10,10 +10,12 @@ spec:
     kind: OCIRepository
     name: ceph-csi-drivers
   install:
+    crds: CreateReplace
     remediation:
       retries: -1
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       retries: 3
   # Rook's values for this chart, with the operator namespace swapped in and
