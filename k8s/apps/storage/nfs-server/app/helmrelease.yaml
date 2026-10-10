@@ -1,0 +1,79 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfs-server
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      # The kernel's nfsd serves on the node's own IP, 192.168.40.47
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: cm3588
+      # The NAS is tainted for its own workloads, see talos/node/cm3588/03-taint.yaml
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: nas
+          effect: NoSchedule
+    controllers:
+      nfs-server:
+        strategy: Recreate
+        containers:
+          nfs-server:
+            image:
+              repository: ghcr.io/bbck/nfs-server
+              tag: 2.6.4-r6@sha256:366a3e616f966caf81008622bf5276c01412f2a02373356fc23733697de893cb
+              pullPolicy: IfNotPresent
+            resources:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 10m
+                memory: 32Mi
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 2049
+                  periodSeconds: 30
+              readiness: *probe
+            securityContext:
+              # Mounts nfsd and rpc_pipefs, and drives the kernel NFS server
+              privileged: true
+    persistence:
+      exports:
+        type: configMap
+        name: nfs-server
+        globalMounts:
+          - path: /etc/exports.d
+            readOnly: true
+      nas:
+        type: hostPath
+        hostPath: /var/mnt/nas
+        hostPathType: Directory
+        globalMounts:
+          - path: /var/mnt/nas
+            # Picks up the ZFS datasets even if they mount after the pod starts
+            mountPropagation: HostToContainer
+      state:
+        # nfsdcld's client database, kept across pod restarts
+        type: hostPath
+        hostPath: /var/lib/nfs
+        hostPathType: DirectoryOrCreate
+        globalMounts:
+          - path: /var/lib/nfs

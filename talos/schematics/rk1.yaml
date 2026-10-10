@@ -1,0 +1,14 @@
+---
+# Turing RK1 (RK3588)
+overlay:
+  image: siderolabs/sbc-rockchip
+  name: turingrk1
+customization:
+  extraKernelArgs:
+    - cpufreq.default_governor=performance
+    - mitigations=off
+    - -selinux
+  systemExtensions:
+    officialExtensions:
+      # NPU, mainline "rocket" accel driver
+      - siderolabs/rockchip-rknn

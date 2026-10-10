@@ -5,6 +5,8 @@ kind: Dragonfly
 metadata:
   name: "${APP}-dragonfly"
 spec:
+  # The operator default is docker.dragonflydb.io, which serves the same digests
+  image: ghcr.io/dragonflydb/dragonfly:v1.39.0
   replicas: 1
   args:
     - --proactor_threads=1
@@ -18,7 +20,7 @@ spec:
     persistentVolumeClaimSpec:
       accessModes:
         - ReadWriteOnce
-      storageClassName: longhorn
+      storageClassName: ceph-block
       resources:
         requests:
           storage: "${DRAGONFLY_SNAPSHOT_CAPACITY:-1Gi}"

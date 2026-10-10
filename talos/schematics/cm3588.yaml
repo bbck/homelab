@@ -1,0 +1,17 @@
+---
+# FriendlyElec CM3588 NAS (RK3588)
+overlay:
+  image: siderolabs/sbc-rockchip
+  name: friendlyelec-cm3588-nas
+customization:
+  extraKernelArgs:
+    - cpufreq.default_governor=performance
+    - mitigations=off
+    - -selinux
+  systemExtensions:
+    officialExtensions:
+      # nfsd kernel module for the NFS server
+      - siderolabs/nfsd
+      # RTL8125B NIC firmware
+      - siderolabs/realtek-firmware
+      - siderolabs/zfs

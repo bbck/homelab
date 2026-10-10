@@ -31,7 +31,7 @@ spec:
         containers:
           api:
             image:
-              repository: docker.io/1password/connect-api
+              repository: ghcr.io/1password/connect-api
               tag: 1.8.3
             env:
               XDG_DATA_HOME: /config
@@ -75,7 +75,7 @@ spec:
                 memory: 256M
           sync:
             image:
-              repository: docker.io/1password/connect-sync
+              repository: ghcr.io/1password/connect-sync
               tag: 1.8.3
             env:
               XDG_DATA_HOME: /config

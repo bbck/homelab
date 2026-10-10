@@ -1,0 +1,12 @@
+---
+# Beelink EQ12 / EQ14 (Intel N-series)
+customization:
+  extraKernelArgs:
+    - cpufreq.default_governor=performance
+    - mitigations=off
+    - -selinux
+    - i915.enable_guc=3
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/i915
+      - siderolabs/intel-ucode

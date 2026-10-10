@@ -1,0 +1,74 @@
+---
+clusterName: homelab
+clusterEndpoint: https://192.168.40.40:6443
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.37.1
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: v1.14.2
+
+# The secrets bundle is kept in 1Password, see bin/topf-secrets-1password
+secretsProvider: topf-secrets-1password
+
+data:
+  vip: 192.168.40.40
+  gateway: 192.168.40.2
+  nameservers:
+    - 1.1.1.2
+    - 9.9.9.9
+
+# Node data keys used by the patch templates:
+#   link:        network interface (or LinkAliasConfig alias) for the node IP
+#   installDisk: device Talos is installed on
+#   dataDisk:    device for /var (EPHEMERAL, capped) and a Ceph OSD partition
+#   zone:        topology.kubernetes.io/zone label (switch port)
+nodes:
+  - host: rk1-1
+    ip: 192.168.40.41
+    role: control-plane
+    schematicId: "@schematics/rk1.yaml"
+    data: &rk1
+      link: end0
+      installDisk: /dev/mmcblk0
+      dataDisk: /dev/nvme0n1
+      zone: ether3
+  - host: rk1-2
+    ip: 192.168.40.42
+    role: control-plane
+    schematicId: "@schematics/rk1.yaml"
+    data: *rk1
+  - host: rk1-3
+    ip: 192.168.40.43
+    role: control-plane
+    schematicId: "@schematics/rk1.yaml"
+    data: *rk1
+  - host: rk1-4
+    ip: 192.168.40.44
+    role: worker
+    schematicId: "@schematics/rk1.yaml"
+    data: *rk1
+  - host: eq12
+    ip: 192.168.40.45
+    role: worker
+    schematicId: "@schematics/intel.yaml"
+    data:
+      link: enp1s0
+      installDisk: /dev/nvme0n1
+      dataDisk: /dev/nvme0n1
+      zone: ether5
+  - host: eq14
+    ip: 192.168.40.46
+    role: worker
+    schematicId: "@schematics/intel.yaml"
+    data:
+      link: enp1s0
+      installDisk: /dev/nvme0n1
+      dataDisk: /dev/nvme0n1
+      zone: ether6
+  - host: cm3588
+    ip: 192.168.40.47
+    role: worker
+    schematicId: "@schematics/cm3588.yaml"
+    data:
+      link: lan0
+      installDisk: /dev/mmcblk0
+      zone: ether7

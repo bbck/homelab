@@ -6,6 +6,6 @@ namespace: ai
 components:
   - ../../components/common
 resources:
-  - ./litellm-operator/ks.yaml
   - ./litellm/ks.yaml
+  - ./litellm-operator/ks.yaml
   - ./toolhive/ks.yaml

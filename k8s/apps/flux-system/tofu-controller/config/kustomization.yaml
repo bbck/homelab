@@ -5,4 +5,6 @@ kind: Kustomization
 resources:
   - ./cloudflare.yaml
   - ./externalsecret.yaml
+  - ./mikrotik-capax.yaml
+  - ./mikrotik-crs310.yaml
   - ./mikrotik-rb5009.yaml

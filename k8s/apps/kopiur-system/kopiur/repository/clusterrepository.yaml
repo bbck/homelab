@@ -10,7 +10,7 @@ spec:
   backend:
     s3:
       bucket: k8s-backups
-      # volsync restic repositories live at the bucket root as <app>/
+      # Existing snapshots live under this prefix, so changing it orphans them
       prefix: kopiur/
       endpoint: ${R2_ACCOUNT_ID}.r2.cloudflarestorage.com
       region: auto

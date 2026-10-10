@@ -3,12 +3,29 @@
 min_version = "2025.1.0"
 
 [tools]
+helm = "4.3.0"
 opentofu = "1.13.1"
+talosctl = "1.14.2"
+yq = "4.54.1"
 "github:home-operations/flate" = "0.6.5"
 "github:home-operations/kopiur" = "0.10.12"
+"github:postfinance/topf" = "0.6.1"
+"github:turing-machines/tpi" = "1.0.7"
 
 [env]
+_.path = ["{{ config_root }}/talos/bin"]
 FLATE_PATH = "{{ config_root }}/k8s"
+TOPFCONFIG = "{{ config_root }}/talos/topf.yaml"
+# The image factory only serves installers for schematics it has been sent, so
+# register them rather than only computing their IDs locally
+TOPF_SUBMIT_TO_FACTORY = "true"
+
+[tasks.kubeconfig]
+description = "Merge the cluster's admin kubeconfig into ~/.kube/config as admin@homelab"
+# Asks the control-plane VIP from topf.yaml, so any control-plane node can
+# answer. --force replaces an existing admin@homelab instead of prompting to
+# rename it.
+run = 'talosctl --talosconfig talos/talosconfig --nodes "$(yq .data.vip "$TOPFCONFIG")" kubeconfig --force'
 
 [tasks.flux-diff]
 description = "Diff rendered Flux manifests against a baseline git rev (default: master)"

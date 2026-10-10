@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: spegel
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: spegel
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+      limits:
+        memory: 128Mi
+    service:
+      registry:
+        # The default 30020 sits inside the NodePort range and can collide with
+        # an allocated NodePort
+        hostPort: 29999
+    serviceMonitor:
+      enabled: true
+    spegel:
+      # Talos reads registry mirror config from here, and keeps unpacked layers
+      # for Spegel via talos/all/06-spegel.yaml
+      containerdRegistryConfigPath: /etc/cri/conf.d/hosts

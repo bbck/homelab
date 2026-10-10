@@ -1,0 +1,9 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/v1.14.2/website/content/v1.14/schemas/config.schema.json
+# Keeps everything but the NAS workloads (nfs-server, sabnzbd) and node agents
+# off the NAS. The kubelet only sets this when the node first registers: a
+# worker isn't allowed to change its own taints afterwards.
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+taints:
+  dedicated: nas:NoSchedule

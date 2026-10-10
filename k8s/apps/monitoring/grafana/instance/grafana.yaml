@@ -50,7 +50,7 @@ spec:
     spec:
       accessModes:
         - ReadWriteOnce
-      storageClassName: longhorn
+      storageClassName: ceph-block
       resources:
         requests:
           storage: 1Gi

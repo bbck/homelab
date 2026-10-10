@@ -1,18 +1,4 @@
 ---
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.toolkit.fluxcd.io/ocirepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: coredns
-spec:
-  interval: 5m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: 1.48.2
-  url: oci://ghcr.io/coredns/charts/coredns
----
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -37,7 +23,7 @@ spec:
     replicaCount: 2
     service:
       name: kube-dns
-      ClusterIP: 10.96.0.10
+      clusterIP: 10.96.0.10
     serviceAccount:
       create: true
     prometheus:
@@ -99,3 +85,15 @@ spec:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
         effect: NoSchedule
+    # Keep the replicas on different nodes, and drain them one at a time, so
+    # losing or draining a single node never takes out cluster DNS
+    podDisruptionBudget:
+      maxUnavailable: 1
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: coredns
+            app.kubernetes.io/name: coredns

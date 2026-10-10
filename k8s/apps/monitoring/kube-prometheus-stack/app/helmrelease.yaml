@@ -6,16 +6,17 @@ metadata:
   name: kube-prometheus-stack
   namespace: monitoring
 spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 91.4.1
-      sourceRef:
-        kind: HelmRepository
-        name: prometheus-community
-        namespace: flux-system
-      interval: 1m
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: kube-prometheus-stack
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     crds:
       enabled: false
@@ -31,14 +32,12 @@ spec:
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
+        image:
+          registry: ghcr.io
         externalUrl: https://alertmanager.bbck.dev
     grafana:
       enabled: false
       forceDeployDashboards: true
-    kubeApiServer:
-      serviceMonitor:
-        selector:
-          k8s-app: kube-apiserver
     kubeScheduler:
       service:
         selector:
@@ -53,6 +52,8 @@ spec:
       !!merge <<: *kubeControllerManager # etcd runs on control plane nodes
     prometheus-node-exporter:
       fullnameOverride: node-exporter
+      image:
+        registry: ghcr.io
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
       rbac:
@@ -346,9 +347,17 @@ spec:
                       suspended: [spec, suspend]
                       revision: [status, lastAppliedRevision]
                       source_name: [spec, sourceRef, name]
+    prometheusOperator:
+      image:
+        registry: ghcr.io
+      prometheusConfigReloader:
+        image:
+          registry: ghcr.io
     prometheus:
       prometheusSpec:
         externalUrl: https://prometheus.bbck.dev
+        image:
+          registry: ghcr.io
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
@@ -364,7 +373,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
+              storageClassName: ceph-block
               resources:
                 requests:
                   storage: 256Gi

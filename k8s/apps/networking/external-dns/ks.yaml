@@ -17,6 +17,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/networking/external-dns/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab
