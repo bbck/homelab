@@ -6,7 +6,7 @@ metadata:
   name: "${APP}-dragonfly"
 spec:
   # The operator default is docker.dragonflydb.io, which serves the same digests
-  image: ghcr.io/dragonflydb/dragonfly:v1.39.0
+  image: ghcr.io/dragonflydb/dragonfly:v1.40.2
   replicas: 1
   args:
     - --proactor_threads=1
