@@ -1,0 +1,4 @@
+# The NFSv4 root, which clients mount paths relative to. Without it mountd puts
+# the root on the container's own overlayfs "/", which can't be exported, and
+# every mount fails with "No such file or directory".
+/var/mnt/nas 192.168.40.0/24(sec=sys,ro,fsid=0,no_subtree_check,mountpoint)

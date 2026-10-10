@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ceph-csi-drivers
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: ceph-csi-drivers
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  # Rook's values for this chart, with the operator namespace swapped in and
+  # only the RBD driver enabled:
+  # https://github.com/rook/rook/blob/v1.21.0/deploy/charts/ceph-csi-drivers/values.yaml
+  values:
+    operatorConfig:
+      namespace: storage
+      driverSpecDefaults:
+        imageSet:
+          name: rook-csi-operator-image-set-configmap
+        nodePlugin:
+          priorityClassName: system-node-critical
+        controllerPlugin:
+          priorityClassName: system-cluster-critical
+    drivers:
+      rbd:
+        enabled: true
+        # Must be <operator namespace>.rbd.csi.ceph.com to match the StorageClass
+        name: storage.rbd.csi.ceph.com
+        # Deploys the csi-snapshotter sidecar, which kopiur backups need
+        snapshotPolicy: volumeSnapshot
+        nodePlugin:
+          # Mount volumes on every node, including tainted ones like the NAS.
+          # Set on the driver: the chart's empty default here overrides the
+          # operatorConfig defaults.
+          tolerations:
+            - operator: Exists
+              effect: NoSchedule
+      cephfs:
+        enabled: false
+      nfs:
+        enabled: false
+      nvmeof:
+        enabled: false

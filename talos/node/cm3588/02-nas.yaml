@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/v1.14.2/website/content/v1.14/schemas/config.schema.json
+# The zfs extension imports all pools at boot. Datasets must be mounted under
+# /var/mnt to be visible to the kubelet and usable as hostPath volumes.
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: zfs
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: nfsd

@@ -43,7 +43,7 @@
     {
       "groupName": "1password",
       "matchPackageNames": [
-        "docker.io/1password/*"
+        "ghcr.io/1password/*"
       ]
     },
     {

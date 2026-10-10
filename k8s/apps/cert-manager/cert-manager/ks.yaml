@@ -17,6 +17,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/cert-manager/cert-manager/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab
@@ -42,6 +43,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/cert-manager/cert-manager/config
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab

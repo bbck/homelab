@@ -17,6 +17,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/networking/tailscale/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab
@@ -40,6 +41,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/networking/tailscale/config
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab

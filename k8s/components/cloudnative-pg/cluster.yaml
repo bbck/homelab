@@ -5,6 +5,9 @@ kind: Cluster
 metadata:
   name: "${APP}-db"
 spec:
+  # A single instance can't satisfy the primary's PodDisruptionBudget while
+  # being evicted, which blocks every node drain (e.g. Talos upgrades)
+  enablePDB: false
   instances: 1
   storage:
     size: "${CNPG_STORAGE:-1Gi}"

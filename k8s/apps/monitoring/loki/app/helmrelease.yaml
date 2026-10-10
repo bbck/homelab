@@ -6,16 +6,17 @@ metadata:
   name: loki
   namespace: monitoring
 spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: loki
-      version: 7.3.0
-      sourceRef:
-        kind: HelmRepository
-        name: grafana
-        namespace: flux-system
-      interval: 1m
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: loki
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     deploymentMode: SingleBinary
     loki:
@@ -51,6 +52,9 @@ spec:
             local:
               directory: /rules
           rule_path: /tmp/scratch
+    sidecar:
+      image:
+        registry: ghcr.io
     singleBinary:
       replicas: 1
     read:

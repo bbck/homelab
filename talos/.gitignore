@@ -1,0 +1,7 @@
+# topf render output
+output/
+# Generated client configs
+talosconfig
+kubeconfig
+# Never commit a local copy of the secrets bundle
+secrets.yaml

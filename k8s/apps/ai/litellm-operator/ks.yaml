@@ -9,6 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: envoy-gateway
+      namespace: networking
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
@@ -17,6 +20,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/ai/litellm-operator/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab

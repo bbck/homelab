@@ -1,0 +1,9 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/v1.14.2/website/content/v1.14/schemas/config.schema.json
+# Keep unpacked layers so Spegel can serve images to other nodes.
+apiVersion: v1alpha1
+kind: CRICustomizationConfig
+name: spegel
+content: |
+  [plugins."io.containerd.cri.v1.images"]
+    discard_unpacked_layers = false

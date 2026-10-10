@@ -5,15 +5,17 @@ kind: HelmRelease
 metadata:
   name: sabnzbd
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 5.2.1
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     defaultPodOptions:
       securityContext:
@@ -24,8 +26,15 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
+      # Runs on the NAS so downloads go straight to disk instead of over NFS
       nodeSelector:
-        feature.node.kubernetes.io/2.5GbE: "true"
+        kubernetes.io/hostname: cm3588
+      # The NAS is tainted for its own workloads, see talos/node/cm3588/03-taint.yaml
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: nas
+          effect: NoSchedule
     controllers:
       sabnzbd:
         replicas: 1
@@ -78,8 +87,10 @@ spec:
       config:
         existingClaim: sabnzbd
       data:
-        type: nfs
-        server: 192.168.254.47
-        path: /mnt/nas/media/downloads/usenet
+        type: hostPath
+        # Fails to start rather than writing to the node's own disk if the
+        # ZFS dataset isn't mounted
+        hostPath: /var/mnt/nas/media/downloads/usenet
+        hostPathType: Directory
         globalMounts:
           - path: /data/media/downloads/usenet

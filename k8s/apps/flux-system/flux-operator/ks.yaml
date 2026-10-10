@@ -17,6 +17,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/flux-system/flux-operator/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab
@@ -45,6 +46,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/flux-system/flux-operator/instance
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab

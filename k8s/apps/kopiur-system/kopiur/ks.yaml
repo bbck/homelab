@@ -10,10 +10,10 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: longhorn
-      namespace: flux-system
+    - name: rook-ceph-cluster
+      namespace: storage
     - name: snapshot-controller
-      namespace: flux-system
+      namespace: kube-system
     - name: external-secrets
       namespace: external-secrets
   healthChecks:
@@ -24,6 +24,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/kopiur-system/kopiur/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab
@@ -51,6 +52,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/kopiur-system/kopiur/repository
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: homelab

@@ -23,7 +23,7 @@ spec:
     keepHourly: 24
     keepDaily: 7
     keepWeekly: 4
-  volumeSnapshotClassName: "${KOPIUR_SNAPSHOTCLASS:-longhorn}"
+  volumeSnapshotClassName: "${KOPIUR_SNAPSHOTCLASS:-ceph-block}"
   mover:
     securityContext:
       runAsUser: ${APP_UID:-65534}

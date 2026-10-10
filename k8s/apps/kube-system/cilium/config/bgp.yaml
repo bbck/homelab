@@ -14,7 +14,7 @@ spec:
       peers:
         - name: "rb5009"
           peerASN: 65530
-          peerAddress: 192.168.88.2
+          peerAddress: 192.168.40.2
           peerConfigRef:
             name: "cilium-peer"
 ---
