@@ -25,7 +25,10 @@ spec:
     - kind: Secret
       name: terraform-r2-backend-secret
   interval: 12h
+  maxRetryInterval: 1h
   path: ./terraform/mikrotik-crs310
+  retryInterval: 1m
+  retryStrategy: ExponentialBackoff
   runnerPodTemplate:
     spec:
       envFrom:
