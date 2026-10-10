@@ -20,11 +20,17 @@ TOPFCONFIG = "{{ config_root }}/talos/topf.yaml"
 # register them rather than only computing their IDs locally
 TOPF_SUBMIT_TO_FACTORY = "true"
 
+[tasks.talosconfig]
+description = "Write talos/talosconfig from the cluster's secrets bundle"
+sources = ["talos/topf.yaml"]
+outputs = ["talos/talosconfig"]
+# Through a private temp file, so a failed secrets lookup can't leave an empty
+# talosconfig behind
+run = 'tmp=$(mktemp) && topf talosconfig > "$tmp" && mv "$tmp" talos/talosconfig'
+
 [tasks.kubeconfig]
 description = "Merge the cluster's admin kubeconfig into ~/.kube/config as admin@homelab"
-# Asks the control-plane VIP from topf.yaml, so any control-plane node can
-# answer. --force replaces an existing admin@homelab instead of prompting to
-# rename it.
+depends = ["talosconfig"]
 run = 'talosctl --talosconfig talos/talosconfig --nodes "$(yq .data.vip "$TOPFCONFIG")" kubeconfig --force'
 
 [tasks.flux-diff]
