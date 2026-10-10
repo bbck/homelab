@@ -16,7 +16,6 @@ spec:
       retries: -1
   upgrade:
     cleanupOnFail: true
-    # CRDs ship in the chart's crds/ directory, which Helm skips on upgrade by default
     crds: CreateReplace
     remediation:
       retries: 3
