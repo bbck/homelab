@@ -11,9 +11,12 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/cloudnative-pg
+    - ../../../../components/cloudnative-pg/restore
     - ../../../../components/dragonfly
   dependsOn:
     - name: litellm-operator
+    - name: plugin-barman-cloud
+      namespace: database
   healthChecks:
     - apiVersion: litellm.home-operations.com/v1alpha1
       kind: LiteLLMProxy

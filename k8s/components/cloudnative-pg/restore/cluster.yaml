@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: "${APP}-db"
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: enabled
+spec:
+  bootstrap:
+    $patch: replace
+    recovery:
+      source: &source r2
+      database: "${APP}"
+      owner: "${APP}"
+  externalClusters:
+    - name: *source
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: "${APP}-db"
+          serverName: "${APP}"
