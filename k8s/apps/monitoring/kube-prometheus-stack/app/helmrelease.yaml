@@ -37,6 +37,13 @@ spec:
         image:
           registry: ghcr.io
         externalUrl: https://alertmanager.bbck.dev
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 1Gi
     grafana:
       enabled: false
       forceDeployDashboards: true
