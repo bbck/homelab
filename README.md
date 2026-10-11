@@ -9,9 +9,10 @@ I have a small apartment so I like to keep things low power, small and quiet.
 | Device | Quantity | CPU | RAM | OS |
 | - | - | - | - | - |
 | [Mikrotik CRS310-8G+2S+IN](https://mikrotik.com/product/crs310_8g_2s_in) | 1 | - | - | RouterOS |
-| [FriendlyElec CM3588 + NAS Kit](https://www.friendlyelec.com/index.php?route=product/product&product_id=294) | 1 | RK3588 | 16GB | Armbian |
+| [FriendlyElec CM3588 + NAS Kit](https://www.friendlyelec.com/index.php?route=product/product&product_id=294) | 1 | RK3588 | 32GB | Talos Linux |
 | [Turing RK1](https://turingpi.com/product/turing-rk1/?attribute_ram=16+GB) | 4 | RK3588 | 16GB | Talos Linux |
 | [Beelink EQ12](https://www.bee-link.com/products/beelink-eq12-n100) | 1 | Intel N100 | 16GB | Talos Linux |
+| [Beelink EQ14](https://www.bee-link.com/products/beelink-eq14-n150) | 1 | Intel N150 | 16GB | Talos Linux |
 
 ## Inspiration & Credits
 

@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/v1.14.2/website/content/v1.14/schemas/config.schema.json
+# TODO: move to WorkloadResourceConfig (kubepods.memory.limit) once Talos 1.15 is out
+apiVersion: v1alpha1
+kind: KubeletConfig
+config:
+  systemReserved:
+    cpu: 50m
+    ephemeral-storage: 256Mi
+    memory: 17Gi
+    pid: "100"

@@ -5,6 +5,8 @@
 apiVersion: v1alpha1
 kind: KernelModuleConfig
 name: zfs
+parameters:
+  - zfs_arc_max=17179869184 # 16Gi
 ---
 apiVersion: v1alpha1
 kind: KernelModuleConfig
