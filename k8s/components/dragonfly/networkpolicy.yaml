@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: "${APP}-dragonfly-metrics"
+  name: "${APP}-dragonfly"
 spec:
   podSelector:
     matchLabels:
@@ -12,6 +12,20 @@ spec:
     - Ingress
   ingress:
     - from:
+        - podSelector: {}
+      ports:
+        - port: 6379
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: database
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: dragonfly-operator
+        - podSelector:
+            matchLabels:
+              app: "${APP}-dragonfly"
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: monitoring
