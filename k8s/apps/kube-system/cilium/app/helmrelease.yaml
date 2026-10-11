@@ -23,6 +23,8 @@ spec:
     autoDirectNodeRoutes: true
     bgpControlPlane:
       enabled: true
+    bpf:
+      masquerade: true
     cgroup:
       autoMount:
         enabled: false
@@ -30,6 +32,8 @@ spec:
     dashboards:
       enabled: true
     envoy:
+      enabled: false
+    hubble:
       enabled: false
     ipam:
       mode: kubernetes

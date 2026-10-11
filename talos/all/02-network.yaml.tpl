@@ -14,3 +14,5 @@ nameservers:
 {{- range .Data.nameservers }}
   - address: {{ . }}
 {{- end }}
+hostDNS:
+  forwardKubeDNSToHost: false # https://github.com/siderolabs/talos/pull/9200
