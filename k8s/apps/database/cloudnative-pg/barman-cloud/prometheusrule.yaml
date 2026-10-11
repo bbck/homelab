@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: plugin-barman-cloud
+spec:
+  groups:
+    - name: plugin-barman-cloud.rules
+      rules:
+        - alert: CNPGBackupFailed
+          expr: |-
+            barman_cloud_cloudnative_pg_io_last_failed_backup_timestamp
+              > barman_cloud_cloudnative_pg_io_last_available_backup_timestamp
+          annotations:
+            summary: >-
+              The latest base backup of {{ $labels.namespace }}/{{ $labels.pod }} failed
+          for: 5m
+          labels:
+            severity: critical
+        - alert: CNPGBackupStale
+          expr: |-
+            time() - barman_cloud_cloudnative_pg_io_last_available_backup_timestamp > 26 * 3600
+          annotations:
+            summary: >-
+              {{ $labels.namespace }}/{{ $labels.pod }} has no base backup from the last 26 hours
+          for: 1h
+          labels:
+            severity: warning
+        - alert: CNPGWALArchivingFailing
+          expr: |-
+            cnpg_pg_stat_archiver_last_failed_time > cnpg_pg_stat_archiver_last_archived_time
+          annotations:
+            summary: >-
+              {{ $labels.namespace }}/{{ $labels.pod }} is failing to archive WAL to R2
+          for: 15m
+          labels:
+            severity: critical

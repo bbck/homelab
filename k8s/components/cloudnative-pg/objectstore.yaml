@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/barmancloud.cnpg.io/objectstore_v1.json
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: "${APP}-db"
+spec:
+  configuration:
+    destinationPath: s3://k8s-backups/cnpg/
+    s3Credentials:
+      accessKeyId:
+        name: "${APP}-db-r2"
+        key: AWS_ACCESS_KEY_ID
+      secretAccessKey:
+        name: "${APP}-db-r2"
+        key: AWS_SECRET_ACCESS_KEY
+    data:
+      compression: bzip2
+    wal:
+      compression: zstd
+  retentionPolicy: 30d
+  instanceSidecarConfiguration:
+    env:
+      - name: AWS_ENDPOINT_URL
+        valueFrom:
+          secretKeyRef:
+            name: "${APP}-db-r2"
+            key: AWS_ENDPOINT_URL
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+      limits:
+        memory: 1Gi

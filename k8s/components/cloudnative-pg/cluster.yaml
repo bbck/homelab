@@ -17,6 +17,12 @@ spec:
       memory: 256Mi
     limits:
       memory: 512Mi
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: "${APP}-db"
+        serverName: "${APP}"
   bootstrap:
     initdb:
       database: "${APP}"
