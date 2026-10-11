@@ -8,7 +8,7 @@ opentofu = "1.13.1"
 talosctl = "1.14.2"
 yq = "4.54.1"
 "github:home-operations/flate" = "0.6.5"
-"github:home-operations/kopiur" = "0.10.12"
+"github:home-operations/kopiur" = "0.10.13"
 "github:postfinance/topf" = "0.6.1"
 "github:turing-machines/tpi" = "1.0.7"
 
