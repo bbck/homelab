@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: konflate
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: konflate
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    config:
+      repo: github://bbck/homelab
+      clusterPath: k8s
+      publicUrl: https://konflate.bbck.dev
+      kubeVersion: "{{ .Capabilities.KubeVersion.Version }}"
+      mcp: true
+      verifyImages: true
+    secret:
+      existingSecret: konflate
+    httpRoute:
+      enabled: true
+      hostnames:
+        - konflate.bbck.dev
+      parentRefs:
+        - name: envoy-internal
+          namespace: networking
+    monitoring:
+      serviceMonitor:
+        enabled: true
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 2Gi

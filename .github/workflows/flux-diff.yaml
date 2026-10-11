@@ -35,7 +35,7 @@ jobs:
           # fences and the truncation notice.
           if [[ $(wc -c < "${RUNNER_TEMP}/diff.txt") -gt 60000 ]]; then
             head -c 60000 "${RUNNER_TEMP}/diff.txt" > "${RUNNER_TEMP}/diff.trunc"
-            printf '\n... diff truncated, run `mise run flux-diff` locally for the rest\n' >> "${RUNNER_TEMP}/diff.trunc"
+            printf '\n... diff truncated, see konflate or run `mise run flux-diff` locally for the rest\n' >> "${RUNNER_TEMP}/diff.trunc"
             mv "${RUNNER_TEMP}/diff.trunc" "${RUNNER_TEMP}/diff.txt"
           fi
           {
@@ -50,6 +50,8 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           message-failure: Unable to post diff
           message: |
+            [View the full diff in konflate](https://konflate.bbck.dev/#/pr/${{ github.event.pull_request.number }})
+
             `````diff
             ${{ steps.diff.outputs.diff }}
             `````
