@@ -48,6 +48,7 @@ spec:
               EMBEDDING_DIMENSIONS: "1024"
               EMBEDDING_CONTEXT_LENGTH: "32000"
               EMBEDDING_ENABLE_AUTO_INDEXING: "true"
+              S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: "1"
             envFrom:
               - secretRef:
                   name: karakeep
@@ -65,6 +66,7 @@ spec:
               startup:
                 enabled: true
             securityContext:
+              allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
       chrome:
@@ -189,3 +191,11 @@ spec:
           karakeep:
             app:
               - path: /app/apps/web/.next/cache
+      run:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 64Mi
+        advancedMounts:
+          karakeep:
+            app:
+              - path: /run
