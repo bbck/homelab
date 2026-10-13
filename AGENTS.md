@@ -32,7 +32,7 @@ This is a personal homelab repository for a Kubernetes cluster using Talos Linux
 
 ### Kubernetes
 
-- Ensure the flate diff comment matches the expected changes
+- Ensure the flate diff matches the expected changes
 - Resource requests and limits should be specified
 - Prefer ghcr.io as the container registry
 - If the `Kustomization` depends on an existing one, it should be specified in the `.spec.dependsOn`
