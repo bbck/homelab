@@ -37,8 +37,18 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
           persist-credentials: false
+      - name: Setup flate
+        uses: home-operations/flate/action@v0.6.5
+      - name: Set flate base
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: echo "FLATE_BASE=$(git merge-base "$BASE_SHA" HEAD)" >> "$GITHUB_ENV"
       - name: Review
         uses: anthropics/claude-code-action@v1
+        env:
+          FLATE_PATH: k8s
+          FLATE_NO_PROGRESS: "true"
+          GOMEMLIMIT: 512MiB
         with:
           claude_code_oauth_token: ${{ steps.op.outputs.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
@@ -55,10 +65,15 @@ jobs:
 
             Follow the PR Reviews section in AGENTS.md for this repository's conventions.
 
+            mise isn't installed here, so for changes under k8s/ run flate directly:
+            - `flate diff all`: the rendered YAML diff against where this branch forked from master
+            - `flate test all`: check that every Kustomization and HelmRelease renders
+            - `flate build ks <name>`: the full rendered output of one Kustomization
+
             Use `gh pr comment` for top-level feedback.
             Use `mcp__github_inline_comment__create_inline_comment` (with `confirmed: true`) to highlight specific code issues.
             Only post GitHub comments - don't submit review text as messages.
           claude_args: |
             --model claude-sonnet-5-5
-            --allowedTools "Read,Glob,Grep,Bash(git:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),mcp__github_inline_comment__create_inline_comment"
+            --allowedTools "Read,Glob,Grep,Bash(git blame:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(flate build:*),Bash(flate diff:*),Bash(flate get:*),Bash(flate test:*),mcp__github_inline_comment__create_inline_comment"
             --disallowedTools "Edit,Write,NotebookEdit,WebFetch,WebSearch"
