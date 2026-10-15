@@ -14,3 +14,5 @@ apiVersion: v1alpha1
 kind: SysfsConfig
 params:
   module.zfs.parameters.zfs_arc_max: "17179869184" # 16Gi
+  # Spread NIC packet processing over cpu4,5,7 (the A76s minus the IRQ core)
+  class.net.enP4p65s0.queues.rx-0.rps_cpus: "b0"
