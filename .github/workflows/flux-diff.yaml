@@ -29,6 +29,8 @@ jobs:
           base: ${{ github.event.pull_request.base.sha }}
       - name: Compute diff
         id: diff
+        env:
+          GOMEMLIMIT: 1GiB
         run: |
           flate diff all --path k8s --no-progress -o github > "${RUNNER_TEMP}/diff.txt"
           # A PR comment caps out at 65536 characters, so leave room for the
