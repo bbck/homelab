@@ -10,6 +10,7 @@ resources:
   - ./coredns/ks.yaml
   - ./intel-device-plugin/ks.yaml
   - ./metrics-server/ks.yaml
+  - ./nic-irq-pinner/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./spegel/ks.yaml

@@ -8,6 +8,9 @@ customization:
     - cpufreq.default_governor=performance
     - mitigations=off
     - -selinux
+    # Reserve cpu6 (A76) for the NIC IRQ, which nic-irq-pinner moves there
+    - irqaffinity=0-5,7
+    - isolcpus=domain,managed_irq,6
   systemExtensions:
     officialExtensions:
       # nfsd kernel module for the NFS server

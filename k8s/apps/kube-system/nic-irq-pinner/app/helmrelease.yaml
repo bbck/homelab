@@ -1,0 +1,89 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nic-irq-pinner
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      # Keeps the single-queue NIC's IRQ on a fast core. The kernel puts it on
+      # the boot CPU (an A55) and Talos can't configure /proc/irq, so it has to
+      # be moved at runtime.
+      nodeSelector:
+        kubernetes.io/hostname: cm3588
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: nas
+          effect: NoSchedule
+      securityContext:
+        # Root is all /proc/irq needs; no capabilities or privileged mode
+        runAsUser: 0
+        runAsGroup: 0
+        seccompProfile:
+          type: RuntimeDefault
+    controllers:
+      nic-irq-pinner:
+        type: daemonset
+        containers:
+          app:
+            image:
+              repository: mirror.gcr.io/library/alpine
+              tag: 3.24.2@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
+              pullPolicy: IfNotPresent
+            env:
+              CPU: "6"
+              INTERVAL: "60"
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                while :; do
+                  for irq in $(ls /host/pcidev/msi_irqs); do
+                    cur=$(cat /host/proc/irq/$irq/smp_affinity_list)
+                    if [ "$cur" != "$CPU" ]; then
+                      echo "IRQ $irq on cpu $cur, moving to cpu $CPU"
+                      echo "$CPU" > /host/proc/irq/$irq/smp_affinity_list
+                    fi
+                  done
+                  sleep "$INTERVAL"
+                done
+            resources:
+              requests:
+                cpu: 5m
+                memory: 16Mi
+              limits:
+                memory: 16Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
+    persistence:
+      # The NIC's PCI device, to find its IRQ number (changes every boot)
+      pcidev:
+        type: hostPath
+        hostPath: /sys/bus/pci/devices/0004:41:00.0
+        hostPathType: Directory
+        globalMounts:
+          - path: /host/pcidev
+            readOnly: true
+      irq:
+        type: hostPath
+        hostPath: /proc/irq
+        hostPathType: Directory
+        globalMounts:
+          - path: /host/proc/irq
