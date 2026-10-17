@@ -118,7 +118,7 @@ spec:
           app:
             image:
               repository: getmeili/meilisearch
-              tag: v1.54.3
+              tag: v1.55.0
             args:
               - /bin/meilisearch
               - --upgrade-db
