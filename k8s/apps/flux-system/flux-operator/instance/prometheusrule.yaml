@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: flux
+spec:
+  groups:
+    - name: flux.rules
+      rules:
+        - alert: FluxMetricsAbsent
+          expr: |-
+            absent(flux_instance_info)
+          annotations:
+            summary: >-
+              flux-operator is not reporting metrics, Flux health alerts cannot fire
+          for: 10m
+          labels:
+            severity: critical
+        - alert: FluxInstanceNotReady
+          expr: |-
+            label_replace(
+              max by (exported_namespace, name) (
+                flux_instance_info{ready!="True", suspended="False"}
+              ),
+              "namespace", "$1", "exported_namespace", "(.+)"
+            )
+          annotations:
+            summary: >-
+              FluxInstance {{ $labels.namespace }}/{{ $labels.name }} has not been ready for 15 minutes
+          for: 15m
+          labels:
+            severity: critical
+        - alert: FluxResourceNotReady
+          expr: |-
+            label_replace(
+              max by (exported_namespace, kind, name) (
+                flux_resource_info{ready!="True", suspended="False", reason!="DependencyNotReady"}
+              ),
+              "namespace", "$1", "exported_namespace", "(.+)"
+            )
+          annotations:
+            summary: >-
+              {{ $labels.kind }} {{ $labels.namespace }}/{{ $labels.name }} has not been ready for 15 minutes
+              {{- with printf `flux_resource_info{kind="%s",exported_namespace="%s",name="%s"}` $labels.kind $labels.namespace $labels.name | query }}: {{ . | first | label "reason" }}{{ end }}
+            description: >-
+              https://fluxcd.bbck.dev/resource/{{ $labels.kind }}/{{ $labels.namespace }}/{{ $labels.name }}
+          for: 15m
+          labels:
+            severity: warning
