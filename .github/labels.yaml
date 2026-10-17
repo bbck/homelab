@@ -1,0 +1,28 @@
+---
+- name: area/docs
+  color: "0e8a16"
+  description: Changes made to Markdown docs
+- name: area/github
+  color: "0e8a16"
+  description: Changes made in the .github directory
+- name: area/hack
+  color: "0e8a16"
+  description: Changes made in the hack directory
+- name: area/kubernetes
+  color: "0e8a16"
+  description: Changes made in the k8s directory
+- name: area/mise
+  color: "0e8a16"
+  description: Changes made to mise.toml
+- name: area/talos
+  color: "0e8a16"
+  description: Changes made in the talos directory
+- name: area/terraform
+  color: "0e8a16"
+  description: Changes made in the terraform directory
+- name: do-not-merge
+  color: "b60205"
+  description: Marks PR that is not (yet) in a mergeable state
+- name: needs-verification
+  color: "fbca04"
+  description: Needs a manual check or follow-up change before merging
