@@ -5,6 +5,7 @@ kind: LiteLLMProxy
 metadata:
   name: litellm
 spec:
+  image: ghcr.io/berriai/litellm:v1.104.2@sha256:3d88bd757134a00e8c00237b85a021ab1f6d54abb9c1df750f411dbe7256a500
   env:
     - name: DATABASE_URL
       valueFrom:
@@ -58,6 +59,7 @@ spec:
     failureThreshold: 3
   generalSettings:
     store_prompts_in_spend_logs: true
+    disable_env_credential_login: true
   litellmSettings:
     default_internal_user_params:
       user_role: proxy_admin
