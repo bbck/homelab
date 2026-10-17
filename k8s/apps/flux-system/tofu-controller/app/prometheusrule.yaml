@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: tofu-controller
+spec:
+  groups:
+    - name: tofu-controller.rules
+      rules:
+        - alert: TerraformMetricsAbsent
+          expr: |-
+            absent(gotk_resource_info{customresource_kind="Terraform"})
+          annotations:
+            summary: >-
+              kube-state-metrics is not reporting Terraform metrics, Terraform health alerts cannot fire
+          for: 10m
+          labels:
+            severity: critical
+        - alert: TerraformNotReady
+          expr: |-
+            label_replace(
+              max by (exported_namespace, name) (
+                gotk_resource_info{customresource_kind="Terraform", ready!="True", suspended!="true"}
+              ),
+              "namespace", "$1", "exported_namespace", "(.+)"
+            )
+          annotations:
+            summary: >-
+              Terraform {{ $labels.namespace }}/{{ $labels.name }} has not been ready for 15 minutes
+              {{- with printf `gotk_resource_info{customresource_kind="Terraform",exported_namespace="%s",name="%s"}` $labels.namespace $labels.name | query }}: {{ . | first | label "reason" }}{{ end }}
+          for: 15m
+          labels:
+            severity: warning

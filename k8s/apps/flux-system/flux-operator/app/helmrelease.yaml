@@ -19,6 +19,9 @@ spec:
     remediation:
       retries: 3
   values:
+    # Refresh the flux_resource_info metrics used for alerting more often than the 5m default
+    reporting:
+      interval: 30s
     serviceMonitor:
       create: true
     web:
