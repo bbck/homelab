@@ -34,7 +34,7 @@ spec:
           api:
             image:
               repository: ghcr.io/1password/connect-api
-              tag: 1.8.3
+              tag: 1.8.3@sha256:a0cefa9fb93999b1ca67325ec3a79b38f3d3803a0790a6ec6630d4657896a54f
             env:
               XDG_DATA_HOME: /config
               OP_HTTP_PORT: &apiPort 8080
@@ -78,7 +78,7 @@ spec:
           sync:
             image:
               repository: ghcr.io/1password/connect-sync
-              tag: 1.8.3
+              tag: 1.8.3@sha256:5b6dcfa57e86f44b4d8a766b0edbf0321c519a9b6d327ed0a79d8583b6c7bfb5
             env:
               XDG_DATA_HOME: /config
               OP_HTTP_PORT: &syncPort 8081
