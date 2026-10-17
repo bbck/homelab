@@ -8,6 +8,7 @@ spec:
   nameserver:
     image:
       repo: ghcr.io/tailscale/k8s-nameserver
-      tag: v1.102.3
+      # renovate: datasource=docker depName=ghcr.io/tailscale/k8s-nameserver
+      tag: v1.104.1
     service:
       clusterIP: 10.96.0.53
