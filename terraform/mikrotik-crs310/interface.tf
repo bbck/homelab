@@ -9,8 +9,8 @@ locals {
   ethernet = {
     ether1       = { comment = "lunarian", vlan = 10, disabled = false }
     ether2       = { comment = "appletv", vlan = 10, disabled = false }
-    ether3       = { comment = "turingpi", vlan = 40, disabled = false }
-    ether4       = { comment = "turingpi - second nic", vlan = 40, disabled = true }
+    ether3       = { comment = "turingpi - ge0", vlan = 40, disabled = false }
+    ether4       = { comment = "turingpi - ge1", vlan = 40, disabled = false }
     ether5       = { comment = "eq12", vlan = 40, disabled = false }
     ether6       = { comment = "eq14", vlan = 40, disabled = false }
     ether7       = { comment = "cm3588", vlan = 40, disabled = false }
