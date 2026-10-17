@@ -25,7 +25,7 @@ nodes:
     ip: 192.168.40.41
     role: control-plane
     schematicId: "@schematics/rk1.yaml"
-    data: &rk1
+    data:
       link: end0
       installDisk: /dev/mmcblk0
       dataDisk: /dev/nvme0n1
@@ -34,17 +34,29 @@ nodes:
     ip: 192.168.40.42
     role: control-plane
     schematicId: "@schematics/rk1.yaml"
-    data: *rk1
+    data:
+      link: end0
+      installDisk: /dev/mmcblk0
+      dataDisk: /dev/nvme0n1
+      zone: ether3
   - host: rk1-3
     ip: 192.168.40.43
     role: control-plane
     schematicId: "@schematics/rk1.yaml"
-    data: *rk1
+    data:
+      link: end0
+      installDisk: /dev/mmcblk0
+      dataDisk: /dev/nvme0n1
+      zone: ether4
   - host: rk1-4
     ip: 192.168.40.44
     role: worker
     schematicId: "@schematics/rk1.yaml"
-    data: *rk1
+    data:
+      link: end0
+      installDisk: /dev/mmcblk0
+      dataDisk: /dev/nvme0n1
+      zone: ether4
   - host: eq12
     ip: 192.168.40.45
     role: worker
