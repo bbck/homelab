@@ -7,7 +7,7 @@ metadata:
 spec:
   groupRef:
     name: homelab
-  image: ghcr.io/bbck/things-cloud-mcp:v1.4.4@sha256:d740c9ac43da5c1b815de2510357836a9d0c436b0e0c493fd952c4eca16f68ed
+  image: ghcr.io/bbck/things-cloud-mcp:v1.4.4@sha256:960b19c5a5d3b824a354974bdecd981df0c934c68b29bd9c0ea087a16c66c33b
   transport: streamable-http
   mcpPort: 8080
   externalAuthConfigRef:
