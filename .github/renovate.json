@@ -24,6 +24,16 @@
   "packageRules": [
     {
       "matchDatasources": [
+        "docker"
+      ],
+      "matchManagers": [
+        "kubernetes",
+        "helm-values"
+      ],
+      "pinDigests": true
+    },
+    {
+      "matchDatasources": [
         "custom.grafana-dashboards"
       ],
       "automerge": true
