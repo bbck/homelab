@@ -23,6 +23,9 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: true
+      prometheusRuleOverrides:
+        CephNodeDiskspaceWarning:
+          disabled: true
     cephClusterSpec:
       mgr:
         count: 1
