@@ -23,7 +23,7 @@ spec:
     fullnameOverride: smartctl-exporter
     image:
       repository: ghcr.io/joryirving/smartctl_exporter
-      tag: 0.15.0
+      tag: 0.15.0@sha256:96874f3e5f890904c91bae542cbccbe35c1751ab5f3e129f4a9ae3e09a495e87
     config:
       devices:
         - /dev/nvme0n1

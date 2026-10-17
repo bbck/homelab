@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/karakeep-app/karakeep
-              tag: 0.33.2
+              tag: 0.33.2@sha256:b069e4307dec06ea06d16989c6861c30a1ff208568be44ed5fb5d422cd3e950c
             env:
               MEILI_ADDR: http://karakeep-meilisearch.default.svc.cluster.local:7700
               BROWSER_WEB_URL: http://karakeep-chrome.default.svc.cluster.local:9222
@@ -79,7 +79,7 @@ spec:
           app:
             image:
               repository: ghcr.io/karakeep-app/karakeep-chrome
-              tag: 154.0.8037.57-r1
+              tag: 154.0.8037.57-r1@sha256:c51a8c8e6c3c1040a50fa0ecfd0b2fc298401b4229262636552458151f6f18fa
               pullPolicy: IfNotPresent
             args:
               - --disable-gpu
@@ -123,7 +123,7 @@ spec:
           app:
             image:
               repository: getmeili/meilisearch
-              tag: v1.55.0
+              tag: v1.55.0@sha256:ff546679970126f8822e15d1b6a06bfbff1f2ce2e43f810cfb5258012f92de5c
             args:
               - /bin/meilisearch
               - --upgrade-db
