@@ -20,7 +20,7 @@ spec:
       retries: 3
   values:
     operatorConfig:
-      hostname: turingpi
+      hostname: k8s-operator
       image:
         repository: ghcr.io/tailscale/k8s-operator
       logging: debug

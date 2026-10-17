@@ -21,6 +21,8 @@ spec:
             limits:
               memory: 1Gi
       envoyService:
+        annotations:
+          tailscale.com/hostname: k8s-envoy-internal
         loadBalancerClass: tailscale
   shutdown:
     drainTimeout: 180s
