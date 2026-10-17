@@ -6,6 +6,7 @@ metadata:
   name: karakeep
 spec:
   proxyRef: litellm
+  proxyNamespace: ai
   secretName: karakeep-litellm-key
   keyAlias: karakeep
   models:
