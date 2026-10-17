@@ -14,3 +14,4 @@ resources:
   - ./node-feature-discovery/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./spegel/ks.yaml
+  - ./tuppr/ks.yaml

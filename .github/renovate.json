@@ -3,7 +3,8 @@
     "config:recommended",
     ":disableDependencyDashboard",
     ":disableRateLimiting",
-    "github>home-operations/renovate-presets//apps/grafanaDashboards.json5#8.1.0"
+    "github>home-operations/renovate-presets//apps/grafanaDashboards.json5#8.1.0",
+    "github>home-operations/renovate-presets//apps/talosFactory.json5#8.1.0"
   ],
   "kubernetes": {
     "managerFilePatterns": [
@@ -77,6 +78,14 @@
       ]
     },
     {
+      "groupName": "talos",
+      "matchDepNames": [
+        "siderolabs/talos",
+        "talosctl"
+      ],
+      "minimumGroupSize": 2
+    },
+    {
       "groupName": "opentofu",
       "matchPackageNames": [
         "opentofu/opentofu",
@@ -110,6 +119,19 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^talos/.+\\.yaml(\\.tpl)?$/"
+      ],
+      "matchStrings": [
+        "raw\\.githubusercontent\\.com/siderolabs/talos/(?<currentValue>v\\d+\\.\\d+\\.\\d+)/website/content/v\\d+\\.\\d+/schemas/config\\.schema\\.json"
+      ],
+      "datasourceTemplate": "custom.talos-factory",
+      "depNameTemplate": "siderolabs/talos",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "raw.githubusercontent.com/siderolabs/talos/{{{newValue}}}/website/content/v{{{newMajor}}}.{{{newMinor}}}/schemas/config.schema.json"
     }
   ]
 }
