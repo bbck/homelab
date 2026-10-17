@@ -3,7 +3,7 @@ clusterName: homelab
 clusterEndpoint: https://192.168.40.40:6443
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.37.1
-talosVersion: v1.14.2
+talosVersion: v1.14.4
 
 # The secrets bundle is kept in 1Password, see bin/topf-secrets-1password
 secretsProvider: topf-secrets-1password

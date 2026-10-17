@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/v1.14.2/website/content/v1.14/schemas/config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/v1.14.4/website/content/v1.14/schemas/config.schema.json
 # Only honored when the volumes are first provisioned: the data disk must not
 # already have an EPHEMERAL partition filling it.
 {{- with get .Node.Data "dataDisk" }}
