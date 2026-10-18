@@ -13,13 +13,25 @@ It has to be two bridges. The BMC's
 [switch driver](https://github.com/turing-machines/BMC-Firmware/blob/master/tp2bmc/patches/linux/realtek-switch.patch)
 isolates each bridge in hardware, but doesn't offload VLAN filtering or STP.
 
+The BMC has a static address, `192.168.40.48`, on `br0`. ifupdown-ng can't set DNS servers, so
+`/etc/resolv.conf`, a symlink to the `/tmp/resolv.conf` that udhcpc writes, is replaced with a file. chrony
+needs DNS to resolve `pool.ntp.org`.
+
 ## Steps
 
 1. Leave `ge1` unplugged.
-2. SSH to the BMC as `root` and replace `/etc/network/interfaces` with the file below. The edit is saved to
-   the BMC's persistent overlay.
-3. Reboot the BMC. Check that `bridge link` shows `node1`, `node2` and `ge0` with `master br0`, and
-   `node3`, `node4` and `ge1` with `master br1`.
+2. SSH to the BMC as `root` and replace `/etc/network/interfaces` with the file below. Then replace the
+   resolv.conf symlink. It has to be world-readable because chronyd runs as `chrony`, and root's umask is
+   `077`. Both edits are saved to the BMC's persistent overlay.
+
+   ```sh
+   rm /etc/resolv.conf
+   printf 'nameserver 1.1.1.2\nnameserver 9.9.9.9\n' > /etc/resolv.conf
+   chmod 644 /etc/resolv.conf
+   ```
+
+3. Reboot the BMC and SSH to it on `192.168.40.48`. Check that `bridge link` shows `node1`, `node2` and
+   `ge0` with `master br0`, and `node3`, `node4` and `ge1` with `master br1`.
 4. Plug in `ge1`.
 
 ```
@@ -28,11 +40,12 @@ iface lo inet loopback
 
 # Nodes 1-2, uplinked through ge0. The BMC keeps its address here.
 auto br0
-iface br0 inet dhcp
+iface br0 inet static
   bridge-ports node1 node2 ge0
+  address 192.168.40.48/24
+  gateway 192.168.40.2
   pre-up /etc/network/nfs_check
   wait-delay 15
-  hostname $(hostname)
 
 # Nodes 3-4, uplinked through ge1. Each bridge gets its own isolation mask and
 # FDB in the switch chip, so ge0 and ge1 never forward to each other.
