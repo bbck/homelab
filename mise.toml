@@ -44,3 +44,14 @@ run = "flate build ks --no-progress"
 [tasks.flux-test]
 description = "Validate that every Flux Kustomization and HelmRelease renders"
 run = "flate test all --no-progress"
+
+[tasks.tofu]
+description = "Run tofu in the current directory with the R2 credentials and state passphrase from 1Password"
+dir = "{{ cwd }}"
+run = "op run -- tofu"
+
+[tasks.tofu.env]
+AWS_ACCESS_KEY_ID = "op://Homelab/terraform-r2/AWS_ACCESS_KEY_ID"
+AWS_SECRET_ACCESS_KEY = "op://Homelab/terraform-r2/AWS_SECRET_ACCESS_KEY"
+AWS_ENDPOINT_URL_S3 = "op://Homelab/terraform-r2/endpoint"
+TF_VAR_state_passphrase = "op://Homelab/terraform-r2/TF_STATE_PASSPHRASE"
