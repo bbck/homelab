@@ -41,6 +41,8 @@ spec:
               DISABLE_SIGNUPS: "true"
               DISABLE_NEW_RELEASE_CHECK: "true"
               CRAWLER_PARSER_MEM_LIMIT_MB: "2048"
+              CRAWLER_PARSE_TIMEOUT_SEC: "180"
+              CRAWLER_JOB_TIMEOUT_SEC: "240"
               OPENAI_BASE_URL: http://litellm.ai.svc.cluster.local:4000
               OPENAI_API_KEY:
                 valueFrom:
@@ -89,7 +91,7 @@ spec:
               - --window-size=1440,900
             resources:
               limits:
-                memory: 500Mi
+                memory: 1Gi
               requests:
                 cpu: 10m
                 memory: 32Mi
