@@ -52,6 +52,7 @@ jobs:
           AWS_ACCESS_KEY_ID: op://Homelab/terraform-r2/AWS_ACCESS_KEY_ID
           AWS_SECRET_ACCESS_KEY: op://Homelab/terraform-r2/AWS_SECRET_ACCESS_KEY
           AWS_ENDPOINT_URL_S3: op://Homelab/terraform-r2/endpoint
+          TF_VAR_state_passphrase: op://Homelab/terraform-r2/TF_STATE_PASSPHRASE
       - name: Checkout
         uses: actions/checkout@v7
         with:

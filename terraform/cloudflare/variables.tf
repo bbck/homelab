@@ -32,3 +32,9 @@ variable "domains" {
     },
   }
 }
+
+variable "state_passphrase" {
+  type      = string
+  sensitive = true
+  ephemeral = true
+}

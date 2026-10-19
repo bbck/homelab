@@ -14,3 +14,9 @@ variable "routeros_host" {
   type    = string
   default = "apis://192.168.88.4:8729"
 }
+
+variable "state_passphrase" {
+  type      = string
+  sensitive = true
+  ephemeral = true
+}
