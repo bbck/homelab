@@ -8,14 +8,9 @@ terraform {
       keys = key_provider.pbkdf2.state
     }
 
-    method "unencrypted" "migrate" {}
-
     state {
-      method = method.aes_gcm.state
-
-      fallback {
-        method = method.unencrypted.migrate
-      }
+      method   = method.aes_gcm.state
+      enforced = true
     }
 
     plan {
