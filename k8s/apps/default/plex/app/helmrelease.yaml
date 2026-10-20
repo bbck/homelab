@@ -68,6 +68,12 @@ spec:
               TZ: America/Los_Angeles
               PLEX_PREFERENCE_1: "logDebug=1"
               PLEX_PREFERENCE_2: "LanNetworksBandwidth=192.168.0.0/16,10.244.0.0/16"
+              PLEX_PREFERENCE_3: "secureConnections=0"
+              PLEX_PREFERENCE_4: "allowedNetworks="
+              PLEX_PREFERENCE_5: "allowMediaDeletion=0"
+              PLEX_PREFERENCE_6: "TreatWanIpAsLocal=0"
+              PLEX_PREFERENCE_7: "GdmEnabled=0"
+              PLEX_PREFERENCE_8: "DlnaEnabled=0"
             resources:
               limits:
                 gpu.intel.com/i915: 1
@@ -83,6 +89,7 @@ spec:
                   httpGet:
                     path: /identity
                     port: 32400
+                    scheme: HTTPS
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -95,26 +102,19 @@ spec:
                   failureThreshold: 30
             securityContext:
               allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
               capabilities:
                 drop: ["ALL"]
     service:
       plex:
         controller: plex
         type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 192.168.40.130
         externalTrafficPolicy: Local
         ports:
-          http:
+          https:
             port: 32400
-    route:
-      app:
-        hostnames: ["plex.bbck.dev"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: networking
-        rules:
-          - backendRefs:
-              - identifier: plex
-                port: http
     persistence:
       config:
         existingClaim: plex
@@ -139,3 +139,4 @@ spec:
         path: /media
         globalMounts:
           - path: /media
+            readOnly: true

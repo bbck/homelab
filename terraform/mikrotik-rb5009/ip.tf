@@ -72,6 +72,17 @@ resource "routeros_ip_firewall_filter" "homelab_ingress_port_forwards" {
   place_before         = routeros_ip_firewall_filter.homelab_ingress_drop.id
 }
 
+resource "routeros_ip_firewall_nat" "plex" {
+  chain             = "dstnat"
+  action            = "dst-nat"
+  in_interface_list = "WAN"
+  protocol          = "tcp"
+  dst_port          = "32400"
+  to_addresses      = "192.168.40.130"
+  to_ports          = "32400"
+  comment           = "homelab: plex remote access"
+}
+
 # Traffic out of vlan40
 
 resource "routeros_ip_firewall_filter" "homelab_egress_drop" {
