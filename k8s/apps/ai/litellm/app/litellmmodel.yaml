@@ -52,3 +52,6 @@ spec:
       key: VOYAGE_API_KEY
     rpm: 3
     tpm: 10000
+    additional:
+      # Voyage rejects encoding_format=float, which karakeep >= 0.34 always sends
+      additional_drop_params: ["encoding_format"]
