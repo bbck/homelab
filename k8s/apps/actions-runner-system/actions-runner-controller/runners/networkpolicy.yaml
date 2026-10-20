@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/networking.k8s.io/networkpolicy_v1.json
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: actions-runner
+spec:
+  podSelector:
+    matchLabels:
+      actions.github.com/scale-set-name: actions-runner
+      app.kubernetes.io/component: runner
+  policyTypes:
+    - Ingress
+    - Egress
+  egress:
+    # Cluster DNS
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    # 1Password Connect for workflow secrets
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: external-secrets
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: onepassword-connect
+      ports:
+        - port: 8080
+          protocol: TCP
+    # RouterOS API-SSL for the tofu-plan workflow
+    - to:
+        - ipBlock:
+            cidr: 192.168.88.2/32
+        - ipBlock:
+            cidr: 192.168.88.3/32
+        - ipBlock:
+            cidr: 192.168.88.4/32
+      ports:
+        - port: 8729
+          protocol: TCP
+    # Public internet over HTTP(S), no private ranges
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 100.64.0.0/10
+              - 169.254.0.0/16
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+      ports:
+        - port: 80
+          protocol: TCP
+        - port: 443
+          protocol: TCP
