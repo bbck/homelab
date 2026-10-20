@@ -33,6 +33,31 @@ spec:
         feature.node.kubernetes.io/i915-gpu: "true"
     controllers:
       plex:
+        initContainers:
+          # Plex only logs to files, so stream the server log to stdout
+          logs:
+            image:
+              repository: ghcr.io/home-operations/busybox
+              tag: "1.38.0@sha256:7e2c04dd50ede647bf4a7a4c8dbd629dd4971cd139b9b88fb22bfc3c7a6c13df"
+              pullPolicy: IfNotPresent
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                trap 'exit 0' TERM
+                tail -n+1 -F "/config/Library/Application Support/Plex Media Server/Logs/Plex Media Server.log" &
+                wait
+            restartPolicy: Always
+            resources:
+              limits:
+                memory: 32Mi
+              requests:
+                cpu: 10m
+                memory: 16Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
         containers:
           plex:
             image:
@@ -41,6 +66,8 @@ spec:
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
+              PLEX_PREFERENCE_1: "logDebug=1"
+              PLEX_PREFERENCE_2: "LanNetworksBandwidth=192.168.0.0/16,10.244.0.0/16"
             resources:
               limits:
                 gpu.intel.com/i915: 1
