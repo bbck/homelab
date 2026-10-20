@@ -75,6 +75,26 @@ loki.source.kubernetes "pod_logs" {
 
 loki.process "pod_logs" {
   forward_to = [loki.write.default.receiver]
+
+  // Plex server log, streamed to stdout by its logs sidecar
+  stage.match {
+    selector = "{app=\"plex\", container=\"logs\"}"
+
+    stage.regex {
+      expression = "^\\w{3} \\d{1,2}, \\d{4} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} \\[\\d+\\] (?P<level>[A-Z]+) - "
+    }
+
+    stage.template {
+      source   = "level"
+      template = "{{ ToLower .Value }}"
+    }
+
+    stage.structured_metadata {
+      values = {
+        level = "",
+      }
+    }
+  }
 }
 
 loki.source.kubernetes_events "cluster_events" {
