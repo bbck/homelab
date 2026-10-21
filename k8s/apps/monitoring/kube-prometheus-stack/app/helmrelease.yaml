@@ -63,6 +63,11 @@ spec:
       fullnameOverride: node-exporter
       image:
         registry: ghcr.io
+      prometheus:
+        monitor:
+          relabelings:
+            - sourceLabels: [__meta_kubernetes_pod_node_name]
+              targetLabel: node
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
       rbac:
