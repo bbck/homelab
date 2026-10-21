@@ -27,7 +27,36 @@ spec:
     config:
       devices:
         - /dev/nvme0n1
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: NotIn
+                  values: ["cm3588"]
+    resources: &resources
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 64Mi
+    extraInstances:
+      # The NAS drives in the ZFS pool
+      - config:
+          devices:
+            - /dev/nvme0n1
+            - /dev/nvme1n1
+            - /dev/nvme2n1
+            - /dev/nvme3n1
+        nodeSelector:
+          kubernetes.io/hostname: cm3588
+        tolerations:
+          - effect: NoSchedule
+            operator: Exists
+        resources: *resources
     serviceMonitor:
       enabled: true
-      attachMetadata:
-        node: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: node

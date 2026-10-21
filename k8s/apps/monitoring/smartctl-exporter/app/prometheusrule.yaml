@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: smartctl-exporter
+spec:
+  groups:
+    - name: smartctl-exporter.rules
+      rules:
+        - alert: SmartDataMissing
+          annotations:
+            description:
+              smartctl-exporter on {{ $labels.node }} is reading fewer drives than it's configured
+              for, or isn't running, so drive health alerts can't fire for the missing drives.
+            summary: SMART data is missing for some drives.
+          expr: |
+            smartctl_devices
+            > on (instance) group_left ()
+              (count by (instance) (smartctl_device) or on (instance) 0 * smartctl_devices)
+            or
+            (group by (node) (up{job="node-exporter"} == 1) unless on (node) smartctl_devices)
+          for: 15m
+          labels:
+            severity: warning
+        - alert: SmartDeviceCriticalWarning
+          annotations:
+            description:
+              Drive {{ $labels.device }} ({{ $labels.model_name }}, serial {{ $labels.serial_number }})
+              on {{ $labels.node }} reports NVMe critical warning bitmask {{ $value }} (1 spare low,
+              2 temperature, 4 reliability degraded, 8 read-only, 16 volatile backup failed).
+            summary: Drive reports a critical warning.
+          expr: |
+            (smartctl_device_critical_warning > 0)
+            * on (instance, device) group_left (model_name, serial_number)
+              smartctl_device
+          for: 5m
+          labels:
+            severity: critical
+        - alert: SmartDeviceMediaErrors
+          annotations:
+            description:
+              Drive {{ $labels.device }} ({{ $labels.model_name }}, serial {{ $labels.serial_number }})
+              on {{ $labels.node }} logged {{ $value }} new unrecovered media errors in the last hour.
+            summary: Drive has new media errors.
+          expr: |
+            (
+              smartctl_device_media_errors
+              * on (instance, device) group_left (model_name, serial_number)
+                smartctl_device
+            )
+            - on (serial_number) group_left ()
+              max by (serial_number) (
+                smartctl_device_media_errors offset 1h
+                * on (instance, device) group_left (serial_number)
+                  smartctl_device offset 1h
+              )
+            > 0
+          labels:
+            severity: critical
+        - alert: SmartDeviceWornOut
+          annotations:
+            description:
+              Drive {{ $labels.device }} ({{ $labels.model_name }}, serial {{ $labels.serial_number }})
+              on {{ $labels.node }} has used {{ $value }}% of its rated endurance.
+            summary: Drive is nearing the end of its rated endurance.
+          expr: |
+            (smartctl_device_percentage_used >= 80)
+            * on (instance, device) group_left (model_name, serial_number)
+              smartctl_device
+          for: 1h
+          labels:
+            severity: warning
+        - alert: SmartDeviceTemperatureHigh
+          annotations:
+            description:
+              Drive {{ $labels.device }} ({{ $labels.model_name }}, serial {{ $labels.serial_number }})
+              on {{ $labels.node }} is at {{ $value }}°C.
+            summary: Drive temperature is high.
+          expr: |
+            (smartctl_device_temperature{temperature_type="current"} > 70)
+            * on (instance, device) group_left (model_name, serial_number)
+              smartctl_device
+          for: 10m
+          labels:
+            severity: warning

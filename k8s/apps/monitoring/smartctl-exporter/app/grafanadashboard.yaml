@@ -12,4 +12,4 @@ spec:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
     id: 22604
-    revision: 3
+    revision: 4

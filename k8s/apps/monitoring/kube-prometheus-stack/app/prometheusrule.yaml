@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: zfs
+spec:
+  groups:
+    - name: zfs.rules
+      rules:
+        - alert: ZfsPoolMissing
+          annotations:
+            description:
+              node-exporter on cm3588 is up but doesn't report ZFS pool nas, so the pool isn't
+              imported and none of its datasets are mounted.
+            summary: ZFS pool is missing.
+          expr: |
+            up{job="node-exporter", node="cm3588"} == 1
+            unless on (node) node_zfs_zpool_state{zpool="nas"}
+          for: 10m
+          labels:
+            severity: critical
+        - alert: ZfsPoolUnhealthy
+          annotations:
+            description: ZFS pool {{ $labels.zpool }} on {{ $labels.node }} is {{ $labels.state }}.
+            summary: ZFS pool is unhealthy.
+          expr: |
+            node_zfs_zpool_state{state!="online"} > 0
+          for: 1m
+          labels:
+            severity: critical
