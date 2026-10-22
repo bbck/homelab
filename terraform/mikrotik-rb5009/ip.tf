@@ -127,10 +127,11 @@ resource "routeros_ip_pool" "untrusted" {
 }
 
 resource "routeros_ip_dhcp_server" "untrusted" {
-  name         = routeros_interface_vlan.untrusted.name
-  interface    = routeros_interface_vlan.untrusted.name
-  address_pool = routeros_ip_pool.untrusted.name
-  lease_time   = "12h"
+  name                      = routeros_interface_vlan.untrusted.name
+  interface                 = routeros_interface_vlan.untrusted.name
+  address_pool              = routeros_ip_pool.untrusted.name
+  lease_time                = "12h"
+  dynamic_lease_identifiers = "client-mac,client-id"
 }
 
 resource "routeros_ip_dhcp_server_network" "untrusted" {
