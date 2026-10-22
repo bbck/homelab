@@ -1,4 +1,6 @@
 locals {
+  bridge = "bridge1"
+
   # The SFP+ port has no PoE
   ethernet = {
     ether1       = { comment = "wan", poe_out = "off", disabled = false }
@@ -21,4 +23,22 @@ resource "routeros_interface_ethernet" "this" {
   comment      = each.value.comment
   disabled     = each.value.disabled
   poe_out      = each.value.poe_out
+}
+
+resource "routeros_interface_vlan" "untrusted" {
+  name      = "vlan20"
+  comment   = "untrusted"
+  interface = local.bridge
+  vlan_id   = 20
+}
+
+resource "routeros_interface_bridge_vlan" "untrusted" {
+  bridge   = local.bridge
+  comment  = "untrusted"
+  vlan_ids = [routeros_interface_vlan.untrusted.vlan_id]
+  tagged = [
+    local.bridge,
+    routeros_interface_ethernet.this["ether2"].name,
+    routeros_interface_ethernet.this["sfp-sfpplus1"].name,
+  ]
 }

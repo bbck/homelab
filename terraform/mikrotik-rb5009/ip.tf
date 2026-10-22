@@ -112,3 +112,66 @@ resource "routeros_ip_firewall_filter" "homelab_egress_switch_api" {
   comment      = "homelab: RouterOS API on the cAP ax and CRS310 for mktxp"
   place_before = routeros_ip_firewall_filter.homelab_egress_drop.id
 }
+
+# vlan20 (untrusted) can only reach the internet. It isn't in the LAN interface
+# list, so the default rules already drop its traffic to the router.
+
+resource "routeros_ip_address" "untrusted" {
+  address   = "192.168.20.2/24"
+  interface = routeros_interface_vlan.untrusted.name
+}
+
+resource "routeros_ip_pool" "untrusted" {
+  name   = routeros_interface_vlan.untrusted.name
+  ranges = ["192.168.20.128-192.168.20.254"]
+}
+
+resource "routeros_ip_dhcp_server" "untrusted" {
+  name         = routeros_interface_vlan.untrusted.name
+  interface    = routeros_interface_vlan.untrusted.name
+  address_pool = routeros_ip_pool.untrusted.name
+  lease_time   = "12h"
+}
+
+resource "routeros_ip_dhcp_server_network" "untrusted" {
+  address    = "192.168.20.0/24"
+  gateway    = "192.168.20.2"
+  dns_server = ["1.1.1.2", "9.9.9.9"]
+}
+
+# DHCP has to go before the default drop, which isn't managed here
+data "routeros_ip_firewall" "defconf_input_drop" {
+  rules {
+    filter = {
+      chain   = "input"
+      comment = "defconf: drop all not coming from LAN"
+    }
+  }
+}
+
+resource "routeros_ip_firewall_filter" "untrusted_input_dhcp" {
+  chain        = "input"
+  action       = "accept"
+  in_interface = routeros_interface_vlan.untrusted.name
+  protocol     = "udp"
+  dst_port     = "67"
+  comment      = "untrusted: DHCP"
+  place_before = data.routeros_ip_firewall.defconf_input_drop.rules[0].id
+}
+
+resource "routeros_ip_firewall_filter" "untrusted_egress_drop" {
+  chain         = "forward"
+  action        = "drop"
+  in_interface  = routeros_interface_vlan.untrusted.name
+  out_interface = "!${routeros_interface_vlan.untrusted.name}"
+  comment       = "untrusted: drop everything else out of vlan20"
+}
+
+resource "routeros_ip_firewall_filter" "untrusted_egress_internet" {
+  chain              = "forward"
+  action             = "accept"
+  in_interface       = routeros_interface_vlan.untrusted.name
+  out_interface_list = "WAN"
+  comment            = "untrusted: allow internet"
+  place_before       = routeros_ip_firewall_filter.untrusted_egress_drop.id
+}
