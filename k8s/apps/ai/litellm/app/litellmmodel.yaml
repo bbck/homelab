@@ -3,11 +3,11 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: claude-opus
+  name: claude-opus-5-5
 spec:
-  modelName: claude-opus-*
+  modelName: claude-opus-5-5
   params:
-    model: anthropic/claude-opus-*
+    model: anthropic/claude-opus-5-5
     apiKeyRef:
       name: litellm-secrets
       key: ANTHROPIC_API_KEY
@@ -16,11 +16,11 @@ spec:
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: claude-sonnet
+  name: claude-sonnet-5-5
 spec:
-  modelName: claude-sonnet-*
+  modelName: claude-sonnet-5-5
   params:
-    model: anthropic/claude-sonnet-*
+    model: anthropic/claude-sonnet-5-5
     apiKeyRef:
       name: litellm-secrets
       key: ANTHROPIC_API_KEY
@@ -29,11 +29,11 @@ spec:
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: claude-haiku
+  name: claude-haiku-5-5
 spec:
-  modelName: claude-haiku-*
+  modelName: claude-haiku-5-5
   params:
-    model: anthropic/claude-haiku-*
+    model: anthropic/claude-haiku-5-5
     apiKeyRef:
       name: litellm-secrets
       key: ANTHROPIC_API_KEY
