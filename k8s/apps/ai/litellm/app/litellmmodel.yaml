@@ -55,3 +55,29 @@ spec:
     additional:
       # Voyage rejects encoding_format=float, which karakeep >= 0.34 always sends
       additional_drop_params: ["encoding_format"]
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: grok-4-7
+spec:
+  modelName: grok-4.7
+  params:
+    model: xai/grok-4.7
+    apiKeyRef:
+      name: litellm-secrets
+      key: XAI_API_KEY
+    dropParams: true
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: grok-build-0-1
+spec:
+  modelName: grok-build-0.1
+  params:
+    model: xai/grok-build-0.1
+    apiKeyRef:
+      name: litellm-secrets
+      key: XAI_API_KEY
+    dropParams: true
