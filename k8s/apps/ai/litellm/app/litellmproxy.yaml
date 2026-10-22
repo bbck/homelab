@@ -6,6 +6,25 @@ metadata:
   name: litellm
 spec:
   image: ghcr.io/berriai/litellm:v1.105.1@sha256:b7b9e2c306343721802253d0dd9436b9634a2eb4e14da7c7cf06c5c7b7530802
+  automountServiceAccountToken: false
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      memory: 2Gi
   env:
     - name: DATABASE_URL
       valueFrom:
@@ -45,6 +64,8 @@ spec:
       value: sub
     - name: GENERIC_USER_DISPLAY_NAME_ATTRIBUTE
       value: name
+    - name: CHECKPOINT_DISABLE
+      value: "1"
   apiAccess:
     masterKeyRef:
       name: litellm-secrets
