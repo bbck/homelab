@@ -81,3 +81,33 @@ spec:
       name: litellm-secrets
       key: XAI_API_KEY
     dropParams: true
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: gemma4-26b
+spec:
+  modelName: gemma4-26b
+  params:
+    model: ollama_chat/gemma4:26b
+    apiBase: http://ollama-egress:11434
+    dropParams: true
+    additional:
+      num_ctx: 8192
+  info:
+    mode: chat
+    maxInputTokens: 8192
+    supportsFunctionCalling: true
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: embeddinggemma-300m
+spec:
+  modelName: embeddinggemma-300m
+  params:
+    model: ollama/embeddinggemma:300m
+    apiBase: http://ollama-egress:11434
+    dropParams: true
+  info:
+    mode: embedding

@@ -17,6 +17,8 @@ spec:
     - name: litellm-operator
     - name: plugin-barman-cloud
       namespace: database
+    - name: tailscale-config
+      namespace: networking
   healthChecks:
     - apiVersion: litellm.home-operations.com/v1alpha1
       kind: LiteLLMProxy
