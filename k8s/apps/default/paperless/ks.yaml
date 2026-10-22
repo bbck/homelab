@@ -19,6 +19,8 @@ spec:
       namespace: kopiur-system
     - name: plugin-barman-cloud
       namespace: database
+    - name: litellm
+      namespace: ai
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
