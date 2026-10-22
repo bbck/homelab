@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app paperless
+  namespace: &namespace default
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/cloudnative-pg
+    - ../../../../components/dragonfly
+    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/restore
+  dependsOn:
+    - name: kopiur-repository
+      namespace: kopiur-system
+    - name: plugin-barman-cloud
+      namespace: database
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
+      namespace: *namespace
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
+      name: paperless-db
+      namespace: *namespace
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      name: paperless-dragonfly
+      namespace: *namespace
+  interval: 1h
+  path: ./k8s/apps/default/paperless/app
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      KOPIUR_CAPACITY: 10Gi
