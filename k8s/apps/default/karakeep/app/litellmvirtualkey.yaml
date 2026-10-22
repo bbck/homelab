@@ -10,5 +10,5 @@ spec:
   secretName: karakeep-litellm-key
   keyAlias: karakeep
   models:
-    - claude-haiku-4-5
+    - claude-haiku-5-5
     - voyage-4-lite
