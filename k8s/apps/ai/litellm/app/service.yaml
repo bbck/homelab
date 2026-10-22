@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/core/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: ollama-egress
+  annotations:
+    tailscale.com/tailnet-fqdn: lunarian.taild1477.ts.net
+    tailscale.com/hostname: k8s-ollama-egress
+    # The operator rewrites externalName, don't fight it
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
+spec:
+  type: ExternalName
+  externalName: placeholder
+  ports:
+    - name: http
+      port: 11434
+      protocol: TCP
