@@ -88,6 +88,20 @@
       ]
     },
     {
+      "groupName": "karakeep",
+      "matchPackageNames": [
+        "ghcr.io/karakeep-app/karakeep",
+        "ghcr.io/karakeep-app/karakeep-mcp"
+      ]
+    },
+    {
+      "groupName": "tailscale",
+      "matchPackageNames": [
+        "/tailscale-operator/",
+        "ghcr.io/tailscale/k8s-nameserver"
+      ]
+    },
+    {
       "groupName": "talos",
       "matchDepNames": [
         "siderolabs/talos",
