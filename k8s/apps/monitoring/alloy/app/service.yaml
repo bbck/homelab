@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/core/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: alloy-syslog
+  annotations:
+    lbipam.cilium.io/ips: 192.168.40.131
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app.kubernetes.io/name: alloy
+    app.kubernetes.io/instance: alloy
+  ports:
+    - name: syslog
+      port: 514
+      targetPort: 5514
+      protocol: UDP

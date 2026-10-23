@@ -1,5 +1,5 @@
 resource "routeros_system_identity" "this" {
-  name = "cAP ax"
+  name = "cap-ax"
 }
 
 resource "routeros_system_clock" "this" {

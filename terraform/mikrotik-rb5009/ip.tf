@@ -1,7 +1,7 @@
 # vlan40 (homelab) is self-contained: it can only reach the internet, and only
-# vlan10 (trusted) and port forwards can reach into it. The RouterOS default
-# rules stay unmanaged. These are appended after them, with each accept placed
-# before the drop it is an exception to.
+# vlan10 (trusted), port forwards and syslog from the management network can
+# reach into it. The RouterOS default rules stay unmanaged. These are appended
+# after them, with each accept placed before the drop it is an exception to.
 
 # Traffic from vlan40 to the router itself. ICMP is already accepted by the
 # default rules.
@@ -72,6 +72,18 @@ resource "routeros_ip_firewall_filter" "homelab_ingress_port_forwards" {
   place_before         = routeros_ip_firewall_filter.homelab_ingress_drop.id
 }
 
+resource "routeros_ip_firewall_filter" "homelab_ingress_syslog" {
+  chain         = "forward"
+  action        = "accept"
+  src_address   = "192.168.88.0/24"
+  dst_address   = routeros_system_logging_action.loki.remote
+  out_interface = "vlan40"
+  protocol      = "udp"
+  dst_port      = "514"
+  comment       = "homelab: syslog from the management network"
+  place_before  = routeros_ip_firewall_filter.homelab_ingress_drop.id
+}
+
 resource "routeros_ip_firewall_nat" "plex" {
   chain             = "dstnat"
   action            = "dst-nat"
@@ -109,7 +121,7 @@ resource "routeros_ip_firewall_filter" "homelab_egress_switch_api" {
   dst_address  = "192.168.88.0/24"
   protocol     = "tcp"
   dst_port     = "8729"
-  comment      = "homelab: RouterOS API on the cAP ax and CRS310 for mktxp"
+  comment      = "homelab: RouterOS API on the management network for mktxp"
   place_before = routeros_ip_firewall_filter.homelab_egress_drop.id
 }
 
