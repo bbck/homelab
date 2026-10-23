@@ -115,6 +115,45 @@ loki.process "cluster_events" {
   }
 }
 
+// MikroTik devices, through the alloy-syslog LoadBalancer Service
+loki.source.syslog "mikrotik" {
+  listener {
+    address       = "0.0.0.0:5514"
+    protocol      = "udp"
+    syslog_format = "rfc3164"
+    labels        = { job = "mikrotik" }
+  }
+
+  relabel_rules = loki.relabel.mikrotik.rules
+  forward_to    = [loki.process.mikrotik.receiver]
+}
+
+// Only supplies relabel_rules, the syslog source drops __ labels otherwise
+loki.relabel "mikrotik" {
+  forward_to = []
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    regex         = "([a-z0-9-]+)"
+    target_label  = "host"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_severity"]
+    target_label  = "level"
+  }
+}
+
+loki.process "mikrotik" {
+  forward_to = [loki.write.default.receiver]
+
+  stage.structured_metadata {
+    values = {
+      level = "",
+    }
+  }
+}
+
 loki.write "default" {
   endpoint {
     url = "http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push"
