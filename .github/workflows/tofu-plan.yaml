@@ -61,7 +61,7 @@ jobs:
         uses: opentofu/setup-opentofu@v2
         with:
           # renovate: datasource=github-releases depName=opentofu/opentofu
-          tofu_version: 1.13.1
+          tofu_version: 1.13.2
           tofu_wrapper: false
       - name: OpenTofu fmt
         id: fmt
