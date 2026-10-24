@@ -10,7 +10,7 @@ locals {
     ether5       = { comment = "spare", poe_out = "off", disabled = true }
     ether6       = { comment = "spare", poe_out = "off", disabled = true }
     ether7       = { comment = "spare", poe_out = "off", disabled = true }
-    ether8       = { comment = "spare", poe_out = "off", disabled = true }
+    ether8       = { comment = "breakglass", poe_out = "off", disabled = false }
     sfp-sfpplus1 = { comment = "trunk - crs310", poe_out = null, disabled = false }
   }
 }
