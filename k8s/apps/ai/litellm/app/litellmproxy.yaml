@@ -5,7 +5,7 @@ kind: LiteLLMProxy
 metadata:
   name: litellm
 spec:
-  image: ghcr.io/berriai/litellm:v1.105.1@sha256:b7b9e2c306343721802253d0dd9436b9634a2eb4e14da7c7cf06c5c7b7530802
+  image: ghcr.io/berriai/litellm:v1.106.3@sha256:74d0696a9f0afcc993c7659d246f0c542f003368298633e852228250779f1032
   automountServiceAccountToken: false
   podSecurityContext:
     runAsNonRoot: true
