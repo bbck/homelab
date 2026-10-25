@@ -28,6 +28,12 @@ spec:
       namespace: kopiur-system
       key: KOPIA_PASSWORD
   moverDefaults:
+    cache:
+      mode: Persistent
+      capacity: 2Gi
+      storageClassName: ceph-block
+      contentCacheSizeMb: 512
+      metadataCacheSizeMb: 1024
     resources:
       requests:
         cpu: 100m
