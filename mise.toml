@@ -9,7 +9,7 @@ talosctl = "1.14.4"
 yq = "4.54.1"
 "github:home-operations/flate" = "0.6.5"
 "github:home-operations/kopiur" = "0.10.16"
-"github:postfinance/topf" = "0.6.1"
+"github:postfinance/topf" = "0.6.2"
 "github:turing-machines/tpi" = "1.0.7"
 
 [env]
