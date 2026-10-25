@@ -36,7 +36,7 @@ spec:
           sonarr:
             image:
               repository: ghcr.io/home-operations/sonarr
-              tag: "5.0.0.2701@sha256:1620725621cfda0360bd680dacf3246c4696c27c4b768b4346e07e8917e94499"
+              tag: "5.0.0.2785@sha256:825bf13276077b2fa57dd1c0a67d10b2e71891b7391d19636615ede8ddc0a4a5"
               pullPolicy: IfNotPresent
             env:
               TZ: America/Los_Angeles
