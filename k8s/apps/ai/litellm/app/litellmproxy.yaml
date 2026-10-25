@@ -25,6 +25,12 @@ spec:
       memory: 512Mi
     limits:
       memory: 2Gi
+  volumes:
+    - name: tmp
+      emptyDir: {}
+  volumeMounts:
+    - name: tmp
+      mountPath: /tmp
   env:
     - name: DATABASE_URL
       valueFrom:
