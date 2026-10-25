@@ -25,11 +25,6 @@ spec:
         memory: 128Mi
       limits:
         memory: 128Mi
-    service:
-      registry:
-        # The default 30020 sits inside the NodePort range and can collide with
-        # an allocated NodePort
-        hostPort: 29999
     serviceMonitor:
       enabled: true
     spegel:
