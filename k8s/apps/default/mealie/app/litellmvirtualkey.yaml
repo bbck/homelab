@@ -10,5 +10,5 @@ spec:
   secretName: mealie-litellm-key
   keyAlias: mealie
   models:
-    - claude-haiku-5-5
+    - grok-4.7
     - claude-sonnet-5-5
