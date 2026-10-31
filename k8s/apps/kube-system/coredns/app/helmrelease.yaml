@@ -74,6 +74,19 @@ spec:
             parameters: 30
           - name: forward
             parameters: . 10.96.0.53
+      # Quad9 SERVFAILs plex.direct AAAA lookups
+      - zones:
+          - zone: plex.direct
+            scheme: dns://
+        port: 53
+        plugins:
+          - name: errors
+          - name: prometheus
+            parameters: 0.0.0.0:9153
+          - name: cache
+            parameters: 30
+          - name: forward
+            parameters: . 1.1.1.2
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
