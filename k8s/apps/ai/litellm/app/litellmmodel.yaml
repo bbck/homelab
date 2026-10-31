@@ -72,19 +72,6 @@ spec:
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: grok-build-0-1
-spec:
-  modelName: grok-build-0.1
-  params:
-    model: xai/grok-build-0.1
-    apiKeyRef:
-      name: litellm-secrets
-      key: XAI_API_KEY
-    dropParams: true
----
-apiVersion: litellm.home-operations.com/v1alpha1
-kind: LiteLLMModel
-metadata:
   name: gemma4-26b
 spec:
   modelName: gemma4-26b
