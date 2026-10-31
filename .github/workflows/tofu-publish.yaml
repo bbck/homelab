@@ -1,0 +1,88 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Terraform Publish"
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "terraform/**"
+      - ".github/workflows/tofu-publish.yaml"
+  workflow_dispatch:
+jobs:
+  changed-projects:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: [actions-runner]
+    permissions:
+      contents: read
+    outputs:
+      projects: ${{ steps.projects.outputs.projects }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Get changed terraform files
+        id: changed-files
+        if: ${{ github.event_name == 'push' }}
+        uses: tj-actions/changed-files@v47.0.6
+        with:
+          files: |
+            terraform/**
+            .github/workflows/tofu-publish.yaml
+          dir_names: true
+          dir_names_max_depth: 2
+          matrix: true
+      - name: List projects to publish
+        id: projects
+        env:
+          CHANGED: ${{ steps.changed-files.outputs.all_modified_files }}
+        run: |
+          # Manual runs and changes to this workflow republish every project
+          if [[ -z "${CHANGED}" ]] || jq -e 'index(".github/workflows")' <<<"${CHANGED}" >/dev/null; then
+            dirs=$(find terraform -mindepth 1 -maxdepth 1 -type d)
+          else
+            dirs=$(jq -r '.[]' <<<"${CHANGED}")
+          fi
+          projects=$(for dir in ${dirs}; do
+            if [[ "${dir}" == terraform/* ]] && compgen -G "${dir}/*.tf" >/dev/null; then
+              basename "${dir}"
+            fi
+          done | jq -Rnc '[inputs]')
+          echo "projects=${projects}" >> "${GITHUB_OUTPUT}"
+          echo "Publishing: ${projects}"
+  publish:
+    runs-on: [actions-runner]
+    needs: [changed-projects]
+    if: ${{ needs.changed-projects.outputs.projects != '[]' }}
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        project: ${{ fromJSON(needs.changed-projects.outputs.projects) }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.project }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Setup Flux CLI
+        uses: fluxcd/flux2/action@v2.10.0
+        with:
+          # renovate: datasource=github-releases depName=fluxcd/flux2
+          version: 2.10.0
+      - name: Publish OCI artifact
+        env:
+          ARTIFACT: oci://ghcr.io/${{ github.repository_owner }}/terraform/${{ matrix.project }}
+          CREDS: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+          PROJECT: ${{ matrix.project }}
+        run: |
+          flux push artifact "${ARTIFACT}:${GITHUB_SHA::7}" \
+            --path="terraform/${PROJECT}" \
+            --source="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}" \
+            --revision="${GITHUB_REF_NAME}@sha1:${GITHUB_SHA}" \
+            --creds="${CREDS}"
+          flux tag artifact "${ARTIFACT}:${GITHUB_SHA::7}" --tag=master --creds="${CREDS}"
