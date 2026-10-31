@@ -8,3 +8,4 @@ resources:
   - ./mikrotik-capax.yaml
   - ./mikrotik-crs310.yaml
   - ./mikrotik-rb5009.yaml
+  - ./ocirepository.yaml

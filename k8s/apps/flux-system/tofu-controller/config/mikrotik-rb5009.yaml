@@ -26,7 +26,7 @@ spec:
       name: terraform-r2-backend-secret
   interval: 12h
   maxRetryInterval: 1h
-  path: ./terraform/mikrotik-rb5009
+  path: ./
   retryInterval: 1m
   retryStrategy: ExponentialBackoff
   runnerPodTemplate:
@@ -35,8 +35,8 @@ spec:
         - secretRef:
             name: terraform-r2-secret
   sourceRef:
-    kind: GitRepository
-    name: homelab
+    kind: OCIRepository
+    name: terraform-mikrotik-rb5009
     namespace: flux-system
   varsFrom:
     - kind: Secret
