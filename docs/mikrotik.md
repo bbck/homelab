@@ -59,3 +59,13 @@ Each device is managed by its OpenTofu project in `terraform/`.
 /ip route add dst-address=0.0.0.0/0 gateway=192.168.88.2
 /certificate add name=MikroTik common-name=192.168.88.3 days-valid=3650 key-usage=digital-signature,key-encipherment,tls-server
 ```
+
+## crs310
+
+```
+/interface bridge add name=bridge1 vlan-filtering=yes auto-mac=no admin-mac=[/interface ethernet get sfp-sfpplus2 orig-mac-address]
+/interface bridge port add bridge=bridge1 interface=sfp-sfpplus2
+/ip address add address=192.168.88.4/24 interface=bridge1
+/ip route add dst-address=0.0.0.0/0 gateway=192.168.88.2
+/certificate add name=MikroTik common-name=192.168.88.4 days-valid=3650 key-usage=digital-signature,key-encipherment,tls-server
+```

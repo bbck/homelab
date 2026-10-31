@@ -1,11 +1,7 @@
 locals {
   bridge = "bridge1"
+  trunk  = "sfp-sfpplus2"
 
-  # Carries VLAN 10 and 40 tagged to the RB5009. Switch management stays on
-  # the untagged VLAN 1.
-  trunk = "sfp-sfpplus2"
-
-  # vlan is the untagged VLAN of an access port
   ethernet = {
     ether1       = { comment = "lunarian", vlan = 10, disabled = false }
     ether2       = { comment = "appletv", vlan = 10, disabled = false }
@@ -31,28 +27,56 @@ resource "routeros_interface_ethernet" "this" {
   disabled     = each.value.disabled
 }
 
+resource "routeros_interface_bridge" "this" {
+  name           = local.bridge
+  vlan_filtering = true
+  auto_mac       = false
+  admin_mac      = routeros_interface_ethernet.this[local.trunk].orig_mac_address
+}
+
+resource "routeros_interface_bridge_port" "trunk" {
+  bridge    = routeros_interface_bridge.this.name
+  interface = local.trunk
+}
+
 resource "routeros_interface_bridge_port" "port" {
   for_each = local.access_ports
 
-  bridge            = local.bridge
+  bridge            = routeros_interface_bridge.this.name
   interface         = each.key
   pvid              = each.value.vlan
   frame_types       = "admit-only-untagged-and-priority-tagged"
   ingress_filtering = true
 }
 
+# bridge1 itself only gets the untagged VLAN 1, not the access port VLANs
+resource "routeros_interface_list" "management" {
+  name = "management"
+}
+
+resource "routeros_interface_list_member" "management" {
+  list      = routeros_interface_list.management.name
+  interface = routeros_interface_bridge.this.name
+}
+
 resource "routeros_interface_bridge_vlan" "trusted" {
-  bridge   = local.bridge
+  bridge   = routeros_interface_bridge.this.name
   comment  = "trusted"
   vlan_ids = ["10"]
-  tagged   = [local.trunk]
-  untagged = [for name, port in local.access_ports : name if port.vlan == 10]
+  tagged   = [routeros_interface_bridge_port.trunk.interface]
+  untagged = [
+    for port in routeros_interface_bridge_port.port : port.interface
+    if port.pvid == 10
+  ]
 }
 
 resource "routeros_interface_bridge_vlan" "homelab" {
-  bridge   = local.bridge
+  bridge   = routeros_interface_bridge.this.name
   comment  = "homelab"
   vlan_ids = ["40"]
-  tagged   = [local.trunk]
-  untagged = [for name, port in local.access_ports : name if port.vlan == 40]
+  tagged   = [routeros_interface_bridge_port.trunk.interface]
+  untagged = [
+    for port in routeros_interface_bridge_port.port : port.interface
+    if port.pvid == 40
+  ]
 }
