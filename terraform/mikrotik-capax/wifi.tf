@@ -5,16 +5,12 @@ locals {
       vlan                 = 10
       item                 = "wifi-blips-and-chitz"
       authentication_types = ["wpa3-psk"]
-      client_isolation     = false
-      bridge_horizon       = null
     }
     untrusted = {
       ssid                 = "Jerryboree"
       vlan                 = 20
       item                 = "wifi-jerryboree"
       authentication_types = ["wpa2-psk", "wpa3-psk"]
-      client_isolation     = true
-      bridge_horizon       = 1
     }
   }
 
@@ -25,15 +21,12 @@ resource "routeros_wifi_cap" "this" {
   enabled = false
 }
 
-# client_isolation is per radio, so the horizon blocks 2.4 <-> 5 GHz traffic
 resource "routeros_wifi_datapath" "this" {
   for_each = local.networks
 
-  name             = each.key
-  bridge           = routeros_interface_bridge.this.name
-  vlan_id          = each.value.vlan
-  client_isolation = each.value.client_isolation
-  bridge_horizon   = each.value.bridge_horizon
+  name    = each.key
+  bridge  = routeros_interface_bridge.this.name
+  vlan_id = each.value.vlan
 }
 
 resource "routeros_wifi_security" "this" {
