@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: terraform-cloudflare
+spec:
+  interval: 5m
+  ref:
+    tag: master
+  url: oci://ghcr.io/bbck/terraform/cloudflare
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: terraform-mikrotik-capax
+spec:
+  interval: 5m
+  ref:
+    tag: master
+  url: oci://ghcr.io/bbck/terraform/mikrotik-capax
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: terraform-mikrotik-crs310
+spec:
+  interval: 5m
+  ref:
+    tag: master
+  url: oci://ghcr.io/bbck/terraform/mikrotik-crs310
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: terraform-mikrotik-rb5009
+spec:
+  interval: 5m
+  ref:
+    tag: master
+  url: oci://ghcr.io/bbck/terraform/mikrotik-rb5009
