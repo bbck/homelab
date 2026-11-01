@@ -11,4 +11,4 @@ resource "routeros_routing_bgp_instance" "this" {
 # with a routeros_routing_bgp_connection once that's fixed:
 # https://github.com/terraform-routeros/terraform-provider-routeros/issues/959
 #
-#   /routing/bgp/connection add name=k8s instance=bgp-instance-1 as=65530 routing-table=main multihop=no local.address=192.168.40.2 local.role=ebgp remote.address=192.168.40.40/29 remote.as=65535
+#   /routing/bgp/connection add name=k8s instance=bgp-instance-1 routing-table=main multihop=no local.address=192.168.40.2 local.role=ebgp remote.address=192.168.40.40/29 remote.as=65535

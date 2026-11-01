@@ -9,7 +9,6 @@ variable "op_connect_token" {
   default   = null
 }
 
-# API-SSL, the same as mktxp uses
 variable "routeros_host" {
   type    = string
   default = "apis://192.168.88.2:8729"

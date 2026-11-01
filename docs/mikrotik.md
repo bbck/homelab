@@ -16,7 +16,7 @@ Each device is managed by its OpenTofu project in `terraform/`.
    `/system reset-configuration no-defaults=yes skip-backup=yes`.
 3. Plug a laptop into the breakglass port, `ether8` on the RB5009. Open the
    device in Winbox by its MAC address from the Neighbors tab, and log in as
-   `admin` with the password on the sticker.
+   `admin` with no password.
 4. If `/system/device-mode/print` doesn't show `mode: home`, run
    `/system/device-mode/update mode=home`, then press the reset or mode button
    or unplug the power within 5 minutes.
@@ -41,14 +41,31 @@ Each device is managed by its OpenTofu project in `terraform/`.
    ```
 
 8. Check that `mise run tofu -- plan` shows no changes. If you applied code
-   that isn't on master yet, merge it and wait for the Terraform workflow to
-   finish, then resume tofu-controller.
+   that isn't on master yet, merge it and wait for the Terraform Publish
+   workflow to finish.
+9. Refresh the source and resume tofu-controller only once the revision shows
+   the merge commit.
 
    ```sh
+   flux reconcile source oci terraform-<project>
+   kubectl -n flux-system get ocirepository terraform-<project> \
+     -o jsonpath='{.status.artifact.metadata.org\.opencontainers\.image\.revision}'
    kubectl -n flux-system patch terraform <project> --type merge \
      -p '{"spec":{"suspend":false}}'
    flux resume kustomization tofu-controller-config
    ```
+
+## rb5009
+
+Unplug the WAN until step 7 finishes. Give the laptop `192.168.88.10/24` and
+internet from a hotspot. Adding `ether8` to the bridge drops the Winbox session.
+
+```
+/interface bridge add name=bridge1 vlan-filtering=yes auto-mac=no admin-mac=[/interface ethernet get ether2 orig-mac-address]
+/ip address add address=192.168.88.2/24 interface=bridge1
+/certificate add name=MikroTik common-name=192.168.88.2 days-valid=3650 key-usage=digital-signature,key-encipherment,tls-server
+/interface bridge port add bridge=bridge1 interface=ether8
+```
 
 ## cap-ax
 

@@ -36,3 +36,10 @@ provider "routeros" {
   username = ephemeral.onepassword_item.routeros.username
   password = ephemeral.onepassword_item.routeros.password
 }
+
+data "onepassword_item" "user" {
+  for_each = local.users
+
+  vault = data.onepassword_vault.homelab.uuid
+  title = each.value.item
+}
