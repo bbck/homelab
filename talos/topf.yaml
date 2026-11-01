@@ -12,8 +12,8 @@ data:
   vip: 192.168.40.40
   gateway: 192.168.40.2
   nameservers:
-    - 1.1.1.2
-    - 9.9.9.9
+    - 1.1.1.1
+    - 1.0.0.1
 
 # Node data keys used by the patch templates:
 #   link:        network interface (or LinkAliasConfig alias) for the node IP
