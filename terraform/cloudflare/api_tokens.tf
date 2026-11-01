@@ -63,7 +63,9 @@ resource "cloudflare_account_token" "this" {
     }
   ]
 
+  # IP filters are managed in the dashboard
   lifecycle {
     prevent_destroy = true
+    ignore_changes  = [condition]
   }
 }
