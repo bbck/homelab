@@ -87,102 +87,112 @@ spec:
         data:
           mktxp.conf: |-
             [rb5009]
-              hostname = 192.168.88.2
+                hostname = 192.168.88.2
 
             [cap-ax]
-              hostname = 192.168.88.3
+                hostname = 192.168.88.3
+                remote_dhcp_entry = rb5009
 
             [crs310]
-              hostname = 192.168.88.4
-              poe = False
+                hostname = 192.168.88.4
+                poe = False
+                switch_port = True
 
             [default]
-              username = username     # RouterOS user, needs to have 'read' and 'api' permissions
-              password = password
-              credentials_file = /mktxp/credentials
+                # this affects configuration of all routers, unless overloaded on their specific levels
 
-              custom_labels = None    # Custom labels to be injected to all device metrics, comma-separated key:value (or key=value) pairs
+                enabled = True          # turns metrics collection for this RouterOS device on / off
+                module_only = False     # use this entry only as a probe module (skip /metrics collection)
+                probe_allowed_targets = None # Allowed probe targets for dynamic modules: CIDRs, IPs, hostnames (e.g. 192.168.88.0/24, *.corp.local, or * for all)
+                hostname = localhost    # RouterOS IP address
+                port = 8729             # RouterOS IP Port
 
-              enabled = True          # turns metrics collection for this RouterOS device on / off
-              module_only = False     # use this entry only as a probe module (skip /metrics collection)
-              hostname = localhost    # RouterOS IP address
-              port = 8729             # RouterOS IP Port
+                username = username     # RouterOS user, needs to have 'read' and 'api' permissions
+                password = password
+                credentials_file = /mktxp/credentials   # To use an external file in YAML format for both username and password, specify the path here
 
-              use_ssl = True                  # enables connection via API-SSL servis
-              no_ssl_certificate = False      # enables API_SSL connect without router SSL certificate
-              ssl_certificate_verify = False  # turns SSL certificate verification on / off
-              ssl_check_hostname = False      # check if the hostname matches the peer cert’s hostname
-              ssl_ca_file = ""                # path to the certificate authority file to validate against, leave empty to use system store
-              plaintext_login = True          # for legacy RouterOS versions below 6.43 use False
+                custom_labels = None    # Custom labels to be injected to all device metrics, comma-separated key:value (or key=value) pairs
 
-              health = True                   # System Health metrics
-              installed_packages = True       # Installed packages
-              dhcp = True                     # DHCP general metrics
-              dhcp_lease = True               # DHCP lease metrics
+                use_ssl = True                  # enables connection via API-SSL servis
+                no_ssl_certificate = False      # enables API_SSL connect without router SSL certificate
+                ssl_certificate_verify = False  # turns SSL certificate verification on / off
+                ssl_check_hostname = False      # check if the hostname matches the peer cert’s hostname
+                ssl_ca_file = ""                # path to the certificate authority file to validate against, leave empty to use system store
+                plaintext_login = True          # for legacy RouterOS versions below 6.43 use False
 
-              connections = True              # IP connections metrics
-              connection_stats = False        # Open IP connections metrics
-              connection_stats_destinations = False   # Track individual destination IPs/ports (Warning: High Cardinality)
+                health = True                   # System Health metrics
+                installed_packages = True       # Installed packages
+                dhcp = True                     # DHCP general metrics
+                dhcp_lease = True               # DHCP lease metrics
 
-              interface = True                # Interfaces traffic metrics
-              interface_with_default_name = False # Append default_name label to interface metrics
-              routerboard = False             # RouterBOARD inventory / firmware metrics
-              wireguard_peers = False         # Wireguard peers metrics
-              bridge_vlan = False             # Bridge VLAN metrics
+                connections = True              # IP connections metrics
+                connection_stats = False        # Open IP connections metrics
+                connection_stats_destinations = False   # Set to True to track individual destination IPs/ports (Warning: High Cardinality)
 
-              route = True                    # IPv4 Routes metrics
-              pool = True                     # IPv4 Pool metrics
-              firewall = True                 # IPv4 Firewall rules traffic metrics
-              neighbor = True                 # IPv4 Reachable Neighbors
-              address_list = None             # Firewall Address List metrics, a comma-separated list of names
-              total_address_list_counts = True # Firewall Address List total counts across all lists (set False if large lists cause timeouts)
-              dns = False                     # DNS stats
+                interface = True                    # Interfaces traffic metrics
+                interface_with_default_name = False # Append default_name label to interface metrics
+                routerboard = True                  # RouterBOARD inventory / firmware metrics
+                wireguard_peers = False             # Wireguard peers metrics
+                bridge_vlan = False                 # Bridge VLAN metrics
 
-              ipv6_route = False              # IPv6 Routes metrics
-              ipv6_pool = False               # IPv6 Pool metrics
-              ipv6_firewall = False           # IPv6 Firewall rules traffic metrics
-              ipv6_neighbor = False           # IPv6 Reachable Neighbors
-              ipv6_address_list = None        # IPv6 Firewall Address List metrics, a comma-separated list of names
-              ipv6_total_address_list_counts = True # IPv6 Firewall Address List total counts across all lists (set False if large lists cause timeouts)
+                route = True                    # IPv4 Routes metrics
+                pool = True                     # IPv4 Pool metrics
+                firewall = True                 # IPv4 Firewall rules traffic metrics
+                neighbor = True                 # IPv4 Reachable Neighbors
+                address_list = None             # Firewall Address List metrics, a comma-separated list of names
+                address_list_entries = True     # Emit individual address list entry metrics (set False if large lists cause high cardinality / only counts are needed)
+                total_address_list_counts = True # Firewall Address List total counts across all lists (set False if large lists cause timeouts)
+                dns = False                     # DNS stats
 
-              poe = True                      # POE metrics
-              monitor = True                  # Interface monitor metrics
-              netwatch = True                 # Netwatch metrics
-              public_ip = True                # Public IP metrics
-              wireless = True                 # WLAN general metrics
-              wireless_clients = True         # WLAN clients metrics
-              capsman = True                  # CAPsMAN general metrics
-              capsman_clients = True          # CAPsMAN clients metrics
-              w60g = False                    # W60G metrics
+                ipv6_route = False              # IPv6 Routes metrics
+                ipv6_pool = False               # IPv6 Pool metrics
+                ipv6_firewall = False           # IPv6 Firewall rules traffic metrics
+                ipv6_neighbor = False           # IPv6 Reachable Neighbors
+                ipv6_address_list = None        # IPv6 Firewall Address List metrics, a comma-separated list of names
+                ipv6_address_list_entries = True # Emit individual IPv6 address list entry metrics (set False if large lists cause high cardinality / only counts are needed)
+                ipv6_total_address_list_counts = True # IPv6 Firewall Address List total counts across all lists (set False if large lists cause timeouts)
 
-              eoip = False                    # EoIP status metrics
-              gre = False                     # GRE status metrics
-              ipip = False                    # IPIP status metrics
-              lte = False                     # LTE signal and status metrics (requires additional 'test' permission policy on RouterOS v6)
-              ipsec = False                   # IPSec active peer metrics
-              switch_port = False             # Switch Port metrics
+                poe = True                      # POE metrics
+                monitor = True                  # Interface monitor metrics
+                netwatch = True                 # Netwatch metrics
+                public_ip = True                # Public IP metrics
+                wireless = True                 # WLAN general metrics
+                wireless_clients = True         # WLAN clients metrics
+                capsman = False                 # CAPsMAN general metrics
+                capsman_clients = False         # CAPsMAN clients metrics
+                w60g = False                    # W60G metrics
 
-              kid_control_assigned = False    # Allow Kid Control metrics for connected devices with assigned users
-              kid_control_dynamic = False     # Allow Kid Control metrics for all connected devices, including those without assigned user
+                eoip = False                    # EoIP status metrics
+                gre = False                     # GRE status metrics
+                ipip = False                    # IPIP status metrics
+                lte = False                     # LTE signal and status metrics (requires additional 'test' permission policy on RouterOS v6)
+                ipsec = False                   # IPSec active peer metrics
+                switch_port = False             # Switch Port metrics
 
-              user = True                     # Active Users metrics
-              queue = True                    # Queues metrics
+                kid_control_assigned = False    # Allow Kid Control metrics for connected devices with assigned users
+                kid_control_dynamic = False     # Allow Kid Control metrics for all connected devices, including those without assigned user
 
-              bfd = False                     # BFD sessions metrics
-              bgp = True                      # BGP sessions metrics
-              routing_stats = False           # Routing process stats
-              certificate = False             # Certificates metrics
+                user = True                     # Active Users metrics
+                queue = True                    # Queues metrics
 
-              container = False               # Containers metrics
+                bfd = False                     # BFD sessions metrics
+                bgp = True                      # BGP sessions metrics
+                routing_stats = False           # Routing process stats
+                certificate = False             # Certificates metrics
 
-              remote_dhcp_entry = None        # An MKTXP entry to provide for remote DHCP info / resolution
-              remote_capsman_entry = None     # An MKTXP entry to provide for remote capsman info 
+                container = False               # Containers metrics
 
-              interface_name_format = name    # Format to use for interface / resource names, allowed values: 'name', 'comment', or 'combined'
-                                                  # 'name': use interface name only (e.g. 'ether1')
-                                                  # 'comment': use comment if available, fallback to name if not
-                                                  # 'combined': use both (e.g. 'ether1 (Office Switch)')
-              check_for_updates = False       # check for available ROS updates
+                remote_dhcp_entry = None        # An MKTXP entry to provide for remote DHCP info / resolution
+                remote_capsman_entry = None     # An MKTXP entry to provide for remote capsman info
+
+                interface_name_format = name    # Format to use for interface / resource names, allowed values: 'name', 'comment', or 'combined'
+                                                    # 'name': use interface name only (e.g. 'ether1')
+                                                    # 'comment': use comment if available, fallback to name if not
+                                                    # 'combined': use both (e.g. 'ether1 (Office Switch)')
+                check_for_updates = False       # check for available ROS updates
+
+                rsc_ssh_port = None             # Custom SSH port for live RSC exports (defaults to 22 if None)
+                rsc_ssh_user = None             # Custom SSH user for live RSC exports (defaults to router 'username' if None)
           _mktxp.conf: |-
             ## Copyright (c) 2020 Arseniy Kuznetsov
             ##
@@ -194,6 +204,7 @@ spec:
             ## This program is distributed in the hope that it will be useful,
             ## but WITHOUT ANY WARRANTY; without even the implied warranty of
             ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+            ## GNU General Public License for more details.
 
 
             [MKTXP]
@@ -204,14 +215,14 @@ spec:
                 max_delay_on_failure = 900
                 delay_inc_div = 5
 
-                bandwidth = False                # Turns metrics bandwidth metrics collection on / off
+                bandwidth = False                   # Turns metrics bandwidth metrics collection on / off
                 bandwidth_test_dns_server = 8.8.8.8 # The DNS server to be used for the bandwidth test connectivity check
-                bandwidth_test_interval = 600    # Interval for collecting bandwidth metrics
-                minimal_collect_interval = 5     # Minimal metric collection interval
+                bandwidth_test_interval = 600       # Interval for collecting bandwidth metrics
+                minimal_collect_interval = 5        # Minimal metric collection interval
 
-                verbose_mode = True              # Set it on for troubleshooting
+                verbose_mode = False             # Set it on for troubleshooting
 
-                fetch_routers_in_parallel = False   # Fetch metrics from multiple routers in parallel / sequentially 
+                fetch_routers_in_parallel = False   # Fetch metrics from multiple routers in parallel / sequentially
                 max_worker_threads = 5              # Max number of worker threads that can fetch routers (parallel fetch only)
                 max_scrape_duration = 30            # Max duration of individual routers' metrics collection (parallel fetch only)
                 total_max_scrape_duration = 90      # Max overall duration of all metrics collection (parallel fetch only)
@@ -225,3 +236,44 @@ spec:
                 probe_connection_pool = False             # Enable probe-only connection reuse keyed by module+target
                 probe_connection_pool_ttl = 300           # Probe connection TTL in seconds
                 probe_connection_pool_max_size = 128      # Max number of probe connections to keep
+
+                enable_probe = False                      # Enables the /probe multi-target scraping endpoint
+                probe_allowed_targets = None              # Global allowlist of probe targets (CIDRs, IPs, hostnames, or '*' for all)
+
+
+            [RSC]
+                base_dir = './exports'                    # Default destination directory for split .rsc files
+                numbered_files = True                     # Prefix output files with numbers according to handler_order
+                wrap_lines = False                        # Wrap long command lines with backslashes
+                wrap_column = 80                          # Column width for line wrapping
+                extract_scripts = False                   # For the split command, extracts scripts to standalone .rsc sidecar files
+                strip_mac_addresses = False               # Strip dynamic MAC addresses
+                ssh_port = 22                             # Default SSH port for live exports
+                ssh_timeout = 15                          # SSH connection timeout in seconds
+                show_sensitive = False                    # Default sensitive data export setting
+
+                handler_order = base, wifi, system, ip, dhcp-leases, firewall, lte, wireguard
+
+                handler_base = /interface bridge, /interface ethernet, /interface vlan, /interface list, /interface macvlan, /interface ovpn-server
+                handler_wifi = /caps-man, /interface wifi, /interface wireless
+                handler_system = /system, /user, /certificate, /zerotier, /ppp, /queue, /snmp, /interface l2tp-server, /interface sstp-server, /ip smb, /ip neighbor discovery-settings, /ip settings, /ipv6 settings, /ip ipsec, /ip service, /ip ssh, /ipv6 nd, /routing bfd, /routing bgp, /routing ospf, /tool bandwidth-server, /tool mac-server, /tool romon, /tool e-mail, /tool netwatch, /tool traffic-monitor, /app, /ip kid-control, /caps-man access-list
+                handler_dhcp-leases = /ip dhcp-server lease
+                handler_ip = /ip address, /ipv6 address, /ip pool, /ipv6 pool, /ip dhcp-client, /ip dhcp-server, /ipv6 dhcp-client, /ipv6 dhcp-server, /ip dns, /ip route, /ipv6 route, /ip cloud, /routing table, /routing rule
+                handler_firewall = /ip firewall, /ipv6 firewall
+                handler_lte = /interface lte, /tool sms
+                handler_wireguard = /interface wireguard
+
+
+            [DIAG]
+                # Wireless & CAPsMAN defaults
+                low_signal_threshold = -75          # Default dBm threshold for --low-signal (matches <= -75 dBm)
+                min_signal_threshold = -60          # Default dBm threshold for --min-signal (matches >= -60 dBm)
+                low_rate_threshold = '18M'          # Default rate for --low-rate (matches <= 18 Mbps)
+                recent_duration = '15m'             # Default duration for --recent (matches uptime <= 15m)
+
+                # IP Connections & Bandwidth defaults
+                top_connections_count = 10          # Default limit for connection stats --top
+                rate_above_threshold = '1M'         # Default rate for kid control / bandwidth --rate-above
+
+                # Interface Monitor defaults
+                degraded_threshold = '100M'         # Default rate for interface monitor --degraded (matches < 100 Mbps or half-duplex)
