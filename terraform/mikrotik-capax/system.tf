@@ -9,6 +9,11 @@ locals {
     monitoring = { group = "monitoring", item = "routeros-monitoring" }
     terraform  = { group = "terraform", item = "routeros-terraform" }
   }
+
+  admin_ssh_keys = {
+    yubikey-27402302 = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIMUSQSfXgo4APs0Y742cUhRuQS/s5IB4DowRHqMaT2+oAAAABHNzaDo="
+    yubikey-14705946 = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPhudJxBfExDk+Y9VQJsJqZHj60eqqVKzHoiBeYdS2ZeAAAABHNzaDo="
+  }
 }
 
 resource "routeros_system_identity" "this" {
@@ -41,6 +46,14 @@ resource "routeros_system_user" "this" {
   password = data.onepassword_item.user[each.key].password
 
   depends_on = [routeros_system_user_group.this]
+}
+
+resource "routeros_system_user_sshkeys" "admin" {
+  for_each = local.admin_ssh_keys
+
+  user    = routeros_system_user.this["admin"].name
+  key     = each.value
+  comment = each.key
 }
 
 resource "routeros_system_logging_action" "loki" {
