@@ -26,7 +26,7 @@ needs DNS to resolve `pool.ntp.org`.
 
    ```sh
    rm /etc/resolv.conf
-   printf 'nameserver 1.1.1.2\nnameserver 9.9.9.9\n' > /etc/resolv.conf
+   printf 'nameserver 1.1.1.1\nnameserver 1.0.0.1\n' > /etc/resolv.conf
    chmod 644 /etc/resolv.conf
    ```
 
