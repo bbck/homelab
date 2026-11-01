@@ -21,6 +21,17 @@ spec:
       name: *app
       namespace: *namespace
   interval: 1h
+  patches:
+    - patch: |-
+        - op: replace
+          path: /spec/retention
+          value:
+            keepHourly: 24
+            keepDaily: 30
+            keepWeekly: 26
+            keepMonthly: 24
+      target:
+        kind: SnapshotPolicy
   path: ./k8s/apps/default/obsidian/app
   prune: true
   retryInterval: 2m
