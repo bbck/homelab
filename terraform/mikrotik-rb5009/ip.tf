@@ -10,6 +10,7 @@ locals {
     { action = "accept", in = "homelab", protocol = "tcp", dst_port = "8729", dst_address = "192.168.88.2", comment = "homelab: RouterOS API for tofu-controller and mktxp" },
     { action = "accept", in = "homelab", protocol = "udp", dst_port = "67", comment = "homelab: DHCP" },
     { action = "accept", in = "untrusted", protocol = "udp", dst_port = "67", comment = "untrusted: DHCP" },
+    { action = "accept", in = "untrusted", protocol = "udp", dst_port = "5353", comment = "untrusted: mDNS" },
     { action = "drop", comment = "everything else" },
   ]
 
@@ -182,6 +183,10 @@ resource "routeros_ip_dhcp_server_lease" "homelab" {
 
 resource "routeros_ip_dns" "this" {
   servers = ["1.1.1.1", "1.0.0.1"]
+  mdns_repeat_ifaces = [
+    routeros_interface_vlan.this["trusted"].name,
+    routeros_interface_vlan.this["untrusted"].name,
+  ]
 }
 
 resource "routeros_ip_service" "this" {
