@@ -6,6 +6,7 @@ namespace: default
 components:
   - ../../components/common
 resources:
+  - ./gw2tools/ks.yaml
   - ./home-assistant/ks.yaml
   - ./karakeep/ks.yaml
   - ./mealie/ks.yaml
