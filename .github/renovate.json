@@ -39,6 +39,12 @@
       "automerge": true
     },
     {
+      "matchPackageNames": [
+        "ghcr.io/bbck/gw2tools"
+      ],
+      "automerge": true
+    },
+    {
       "groupName": "flux-operator",
       "matchPackageNames": [
         "/flux-operator/",
