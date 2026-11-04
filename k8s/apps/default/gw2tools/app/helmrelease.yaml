@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/bbck/gw2tools
-              tag: rolling@sha256:08b6cfca3ff8c9d4fac2eba9c5229c1a275f8fef985de28bb6cba172a97f47f4
+              tag: rolling@sha256:3c32f3d6b15a84677919c38ba7e67ad2463e65a71dea3dee4e48f304f3e343ff
             envFrom:
               - secretRef:
                   name: gw2tools
