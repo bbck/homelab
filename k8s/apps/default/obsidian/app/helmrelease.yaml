@@ -103,15 +103,27 @@ spec:
             image:
               repository: ghcr.io/bbck/mcpvault
               tag: 0.18.3@sha256:d726f10584382d846b33de5f377ba2ce014c51dfb3432fa171759d8953e0722c
-            args: ["--host", "0.0.0.0", "--port", "8000", "--", "mcpvault", "/vault"]
+            args:
+              - --host
+              - 0.0.0.0
+              - --port
+              - "8000"
+              - --allowed-host
+              - obsidian.default.svc.cluster.local:8000
+              - --
+              - mcpvault
+              - /vault
             probes:
               liveness: &mcpProbe
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /status
+                    path: /healthz
                     port: 8000
+                    httpHeaders:
+                      - name: Host
+                        value: localhost:8000
                   periodSeconds: 30
                   failureThreshold: 3
               readiness: *mcpProbe
