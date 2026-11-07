@@ -10,8 +10,11 @@ spec:
       kind: Gateway
   compressor:
     - type: Brotli
+      brotli: {}
     - type: Gzip
+      gzip: {}
     - type: Zstd
+      zstd: {}
   tcpKeepalive: {}
   timeout:
     http:
