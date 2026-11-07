@@ -119,7 +119,8 @@
         "siderolabs/talos",
         "talosctl"
       ],
-      "minimumGroupSize": 2
+      "minimumGroupSize": 2,
+      "separateMinorPatch": true
     },
     {
       "groupName": "opentofu",
