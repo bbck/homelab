@@ -37,7 +37,7 @@ spec:
           nfs-server:
             image:
               repository: ghcr.io/bbck/nfs-server
-              tag: 2.6.4-r6@sha256:b2df32df0790599cae5aeebd2ccb432154e27304d9084eb9873da30b29828841
+              tag: 2.6.4-r6@sha256:cfc6d5c81f1499e4c3bfc51a1e4025fb8d7edcd0fc098eb4db3468122c061d4a
               pullPolicy: IfNotPresent
             resources:
               limits:
