@@ -8,6 +8,7 @@ components:
 resources:
   - ./gw2tools/ks.yaml
   - ./home-assistant/ks.yaml
+  - ./immich/ks.yaml
   - ./karakeep/ks.yaml
   - ./mealie/ks.yaml
   - ./obsidian/ks.yaml

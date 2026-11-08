@@ -107,6 +107,13 @@
       ]
     },
     {
+      "description": "Tags are <postgres>-<vectorchord>. VectorChord sorts first so a newer Postgres minor never downgrades it; Postgres majors stay manual",
+      "matchPackageNames": [
+        "ghcr.io/tensorchord/cloudnative-vectorchord"
+      ],
+      "versioning": "regex:^(?<compatibility>\\d+)\\.(?<build>\\d+)-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+    {
       "groupName": "tailscale",
       "matchPackageNames": [
         "/tailscale-operator/",
@@ -157,6 +164,17 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "description": "CloudNativePG Cluster imageName",
+      "managerFilePatterns": [
+        "/k8s/.+\\.yaml$/"
+      ],
+      "matchStrings": [
+        "imageName: (?<depName>[^:\\s]+):(?<currentValue>[^@\\s]+)(@(?<currentDigest>sha256:[a-f0-9]+))?"
+      ],
+      "datasourceTemplate": "docker"
     },
     {
       "customType": "regex",
