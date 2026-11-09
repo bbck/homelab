@@ -18,7 +18,7 @@ This is a personal homelab repository for a Kubernetes cluster using Talos Linux
 - `mise run flux-test`: validate that every Flux Kustomization and HelmRelease renders
 - `mise run flux-build <name>`: render a single Flux Kustomization to YAML, e.g. `mise run flux-build home-assistant`
 - `mise run flux-diff`: diff the rendered manifests against `master`
-- `tofu fmt -check`: check Terraform formatting
+- `mise run tofu-check`: from a `terraform/` project directory, check formatting and validate the configuration without touching state
 
 ## Conventions
 
@@ -41,4 +41,4 @@ This is a personal homelab repository for a Kubernetes cluster using Talos Linux
 ### Terraform
 
 - Secrets must be ephemeral resources if supported
-- `tofu fmt -check` must pass
+- `mise run tofu-check` must pass in each changed project

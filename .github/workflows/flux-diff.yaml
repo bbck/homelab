@@ -23,16 +23,21 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Setup flate
-        uses: home-operations/flate/action@v0.6.5
+      - name: Install tools
+        uses: jdx/mise-action@v5
         with:
-          base: ${{ github.event.pull_request.base.sha }}
+          # renovate: datasource=github-releases depName=jdx/mise
+          version: 2026.11.2
+          install_args: github:home-operations/flate
+          cache: false
       - name: Compute diff
         id: diff
         env:
+          FLATE_BASE: ${{ github.event.pull_request.base.sha }}
           GOMEMLIMIT: 1GiB
+          MISE_TASK_RUN_AUTO_INSTALL: "false"
         run: |
-          flate diff all --path k8s --no-progress -o github > "${RUNNER_TEMP}/diff.txt"
+          mise run flux-diff -o github > "${RUNNER_TEMP}/diff.txt"
           # A PR comment caps out at 65536 characters, so leave room for the
           # fences and the truncation notice.
           if [[ $(wc -c < "${RUNNER_TEMP}/diff.txt") -gt 60000 ]]; then
