@@ -38,7 +38,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           persist-credentials: false
       - name: Setup flate
-        uses: home-operations/flate/action@v0.6.5
+        uses: home-operations/flate/action@v0.7.3
       - name: Set flate base
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
