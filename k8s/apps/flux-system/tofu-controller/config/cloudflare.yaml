@@ -24,7 +24,7 @@ spec:
   backendConfigsFrom:
     - kind: Secret
       name: terraform-r2-backend-secret
-  interval: 1h
+  interval: 12h
   maxRetryInterval: 1h
   path: ./
   retryInterval: 1m
