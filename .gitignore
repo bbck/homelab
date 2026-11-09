@@ -4,6 +4,7 @@ k8s/**/apps/**/secret.yaml
 
 # Manual terraform runs
 **/.terraform/*
+**/terraform.d/
 *.terraform.lock.hcl
 *.tfstate
 *.tfstate.*

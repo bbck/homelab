@@ -74,6 +74,23 @@ jobs:
         with:
           # renovate: datasource=github-releases depName=fluxcd/flux2
           version: 2.10.0
+      - name: Install OpenTofu
+        uses: jdx/mise-action@v5
+        with:
+          install_args: opentofu
+      - name: Vendor providers
+        working-directory: terraform/${{ matrix.project }}
+        run: |
+          mirror="${RUNNER_TEMP}/mirror"
+          tofu providers mirror -platform=linux_amd64 -platform=linux_arm64 "${mirror}"
+          # flux push artifact ignores *.zip, so convert to the unpacked mirror layout
+          find "${mirror}" -name '*.zip' -print0 | while IFS= read -r -d '' zip; do
+            rel="${zip#"${mirror}"/}"
+            IFS=_ read -r _ version os arch <<<"$(basename "${zip}" .zip)"
+            dest="terraform.d/plugins/${rel%/*}/${version}/${os}_${arch}"
+            mkdir -p "${dest}"
+            unzip -q "${zip}" -d "${dest}"
+          done
       - name: Publish OCI artifact
         env:
           ARTIFACT: oci://ghcr.io/${{ github.repository_owner }}/terraform/${{ matrix.project }}
