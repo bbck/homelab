@@ -27,7 +27,7 @@ jobs:
         uses: jdx/mise-action@v5
         with:
           # renovate: datasource=github-releases depName=jdx/mise
-          version: 2026.11.2
+          version: 2026.11.5
           install_args: github:home-operations/flate
           cache: false
       - name: Compute diff
