@@ -7,6 +7,7 @@ helm = "4.3.1"
 opentofu = "1.13.9"
 talosctl = "1.14.5"
 yq = "4.54.2"
+"github:fluxcd/flux2" = "2.10.0"
 "github:home-operations/flate" = "0.6.5"
 "github:home-operations/kopiur" = "0.10.17"
 "github:postfinance/topf" = "0.6.2"
@@ -44,6 +45,16 @@ run = "flate build ks --no-progress"
 [tasks.flux-test]
 description = "Validate that every Flux Kustomization and HelmRelease renders"
 run = "flate test all --no-progress"
+
+[tasks.tofu-check]
+description = "Check formatting and validate the OpenTofu project in the current directory without touching state"
+dir = "{{ cwd }}"
+run = [
+  'ls ./*.tf >/dev/null 2>&1 || { echo "tofu-check: no .tf files in $PWD, run it from a terraform/ project directory" >&2; exit 1; }',
+  "tofu fmt -check",
+  "tofu init -backend=false -input=false -upgrade",
+  "tofu validate",
+]
 
 [tasks.tofu]
 description = "Run tofu in the current directory with the R2 credentials and state passphrase from 1Password"

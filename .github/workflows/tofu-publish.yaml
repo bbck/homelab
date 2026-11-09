@@ -69,15 +69,12 @@ jobs:
         uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - name: Setup Flux CLI
-        uses: fluxcd/flux2/action@v2.10.0
-        with:
-          # renovate: datasource=github-releases depName=fluxcd/flux2
-          version: 2.10.0
-      - name: Install OpenTofu
+      - name: Install tools
         uses: jdx/mise-action@v5
         with:
-          install_args: opentofu
+          # renovate: datasource=github-releases depName=jdx/mise
+          version: 2026.11.2
+          install_args: opentofu github:fluxcd/flux2
       - name: Vendor providers
         working-directory: terraform/${{ matrix.project }}
         run: |

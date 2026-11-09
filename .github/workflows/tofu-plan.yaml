@@ -57,17 +57,13 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Install OpenTofu
-        uses: opentofu/setup-opentofu@v2
+      - name: Install tools
+        uses: jdx/mise-action@v5
         with:
-          # renovate: datasource=github-releases depName=opentofu/opentofu
-          tofu_version: 1.13.9
-          tofu_wrapper: false
-      - name: OpenTofu fmt
-        id: fmt
-        run: tofu fmt -check
-        working-directory: ${{ matrix.files }}
-        continue-on-error: true
+          # renovate: datasource=github-releases depName=jdx/mise
+          version: 2026.11.2
+          install_args: opentofu
+          cache: false
       - name: OpenTofu Init
         id: init
         run: tofu init
@@ -85,3 +81,9 @@ jobs:
           terraform-cmd: tofu
           working-directory: ${{ matrix.files }}
           header: 📝 Terraform Plan for ${{ matrix.files }}
+      - name: OpenTofu check
+        if: ${{ !cancelled() }}
+        env:
+          MISE_TASK_RUN_AUTO_INSTALL: "false"
+        run: mise run tofu-check
+        working-directory: ${{ matrix.files }}
