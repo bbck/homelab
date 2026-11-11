@@ -11,6 +11,7 @@ spec:
   args:
     - --proactor_threads=1
     - --default_lua_flags=allow-undeclared-keys
+    - --dbfilename=dump
   authentication:
     passwordFromSecret:
       name: "${APP}-dragonfly"
