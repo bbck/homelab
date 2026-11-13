@@ -73,7 +73,7 @@ jobs:
         uses: jdx/mise-action@v5
         with:
           # renovate: datasource=github-releases depName=jdx/mise
-          version: 2026.11.5
+          version: 2026.11.8
           install_args: opentofu github:fluxcd/flux2
       - name: Vendor providers
         working-directory: terraform/${{ matrix.project }}
