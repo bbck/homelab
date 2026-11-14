@@ -34,7 +34,7 @@ spec:
   moverDefaults:
     cache:
       mode: Persistent
-      capacity: 2Gi
+      capacity: 5Gi
       storageClassName: ceph-block
       contentCacheSizeMb: 512
       metadataCacheSizeMb: 1024
