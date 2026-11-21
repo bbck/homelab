@@ -130,11 +130,18 @@
       "separateMinorPatch": true
     },
     {
-      "groupName": "opentofu",
+      "groupName": "tofu-controller",
       "matchPackageNames": [
-        "opentofu/opentofu",
+        "ghcr.io/flux-iac/charts/tofu-controller",
         "ghcr.io/home-operations/opentofu-runner"
       ]
+    },
+    {
+      "description": "Runner tags follow tf-runner since 0.17.0; older tags followed OpenTofu",
+      "matchPackageNames": [
+        "ghcr.io/home-operations/opentofu-runner"
+      ],
+      "allowedVersions": "!/^1\\.(9|1[0-3])(\\.\\d+)?$/"
     },
     {
       "matchDatasources": [
