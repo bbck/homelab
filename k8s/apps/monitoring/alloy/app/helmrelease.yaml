@@ -26,6 +26,12 @@ spec:
         create: false
         name: alloy
         key: config.alloy
+      resources:
+        requests:
+          cpu: 25m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
     controller:
       # Collect logs from every node, including tainted ones like the NAS
       tolerations:
@@ -34,3 +40,9 @@ spec:
     configReloader:
       image:
         registry: ghcr.io
+      resources:
+        requests:
+          cpu: 5m
+          memory: 32Mi
+        limits:
+          memory: 64Mi

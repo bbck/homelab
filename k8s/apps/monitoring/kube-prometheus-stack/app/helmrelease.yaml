@@ -37,6 +37,12 @@ spec:
         image:
           registry: ghcr.io
         externalUrl: https://alertmanager.bbck.dev
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
         storage:
           volumeClaimTemplate:
             spec:
@@ -63,6 +69,12 @@ spec:
       fullnameOverride: node-exporter
       image:
         registry: ghcr.io
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 128Mi
       prometheus:
         monitor:
           relabelings:
@@ -70,6 +82,12 @@ spec:
               targetLabel: node
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
       rbac:
         extraRules:
           - apiGroups:
@@ -105,9 +123,21 @@ spec:
     prometheusOperator:
       image:
         registry: ghcr.io
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          memory: 256Mi
       prometheusConfigReloader:
         image:
           registry: ghcr.io
+        resources:
+          requests:
+            cpu: 5m
+            memory: 32Mi
+          limits:
+            memory: 64Mi
     prometheus:
       prometheusSpec:
         externalUrl: https://prometheus.bbck.dev
@@ -125,6 +155,12 @@ spec:
               values:
                 - "true"
         retention: 30d
+        resources:
+          requests:
+            cpu: 150m
+            memory: 2Gi
+          limits:
+            memory: 4Gi
         storageSpec:
           volumeClaimTemplate:
             spec:
