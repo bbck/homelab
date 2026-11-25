@@ -21,6 +21,11 @@ spec:
       retries: 3
   values:
     defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |
+          [{"name": "iot", "namespace": "kube-system", "ips": ["192.168.20.20/24"], "mac": "02:00:c0:a8:14:14"}]
+      nodeSelector:
+        feature.node.kubernetes.io/iot-vlan: "true"
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
@@ -64,11 +69,6 @@ spec:
         ports:
           http:
             port: 8123
-          mdns:
-            port: 5353
-            protocol: UDP
-          homekit:
-            port: 21063
     route:
       app:
         hostnames: ["hass.bbck.dev"]
