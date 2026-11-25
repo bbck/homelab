@@ -13,7 +13,7 @@ yq = "4.54.3"
 "github:home-operations/kopiur" = "0.11.2"
 "github:postfinance/topf" = "0.6.2"
 "github:turing-machines/tpi" = "1.0.7"
-"pipx:esphome" = "2026.11.0"
+"pipx:esphome" = "2026.11.1"
 
 [env]
 _.path = ["{{ config_root }}/talos/bin"]
