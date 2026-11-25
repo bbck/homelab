@@ -16,6 +16,8 @@ locals {
   }
 
   access_ports = { for name, port in local.ethernet : name => port if port.vlan != null }
+
+  untrusted_tagged_ports = ["ether5", "ether6"]
 }
 
 resource "routeros_interface_ethernet" "this" {
@@ -45,7 +47,7 @@ resource "routeros_interface_bridge_port" "port" {
   bridge            = routeros_interface_bridge.this.name
   interface         = each.key
   pvid              = each.value.vlan
-  frame_types       = "admit-only-untagged-and-priority-tagged"
+  frame_types       = contains(local.untrusted_tagged_ports, each.key) ? "admit-all" : "admit-only-untagged-and-priority-tagged"
   ingress_filtering = true
 }
 
@@ -68,6 +70,16 @@ resource "routeros_interface_bridge_vlan" "trusted" {
     for port in routeros_interface_bridge_port.port : port.interface
     if port.pvid == 10
   ]
+}
+
+resource "routeros_interface_bridge_vlan" "untrusted" {
+  bridge   = routeros_interface_bridge.this.name
+  comment  = "untrusted"
+  vlan_ids = ["20"]
+  tagged = concat(
+    [routeros_interface_bridge_port.trunk.interface],
+    [for name in local.untrusted_tagged_ports : routeros_interface_bridge_port.port[name].interface],
+  )
 }
 
 resource "routeros_interface_bridge_vlan" "homelab" {
