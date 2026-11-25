@@ -20,6 +20,7 @@ data:
 #   installDisk: device Talos is installed on
 #   dataDisk:    device for /var (EPHEMERAL, capped) and a Ceph OSD partition
 #   zone:        topology.kubernetes.io/zone label (switch port)
+#   iotVlan:     VLAN ID of the untrusted network
 nodes:
   - host: rk1-1
     ip: 192.168.40.41
@@ -66,6 +67,7 @@ nodes:
       installDisk: /dev/nvme0n1
       dataDisk: /dev/nvme0n1
       zone: ether5
+      iotVlan: 20
   - host: eq14
     ip: 192.168.40.46
     role: worker
@@ -75,6 +77,7 @@ nodes:
       installDisk: /dev/nvme0n1
       dataDisk: /dev/nvme0n1
       zone: ether6
+      iotVlan: 20
   - host: cm3588
     ip: 192.168.40.47
     role: worker
