@@ -1,0 +1,26 @@
+---
+esphome:
+  name: heat-pump
+  friendly_name: Heat pump
+
+esp32:
+  board: m5stack-atom
+  framework:
+    type: esp-idf
+
+packages:
+  base: !include common/base.yaml
+
+remote_transmitter:
+  pin: GPIO12
+  carrier_duty_percent: 50%
+  non_blocking: true
+
+climate:
+  - platform: mitsubishi
+    name: None
+    set_fan_mode: quiet_4levels
+    supports_dry: true
+    supports_fan_only: true
+    fahrenheit_compatibility: true
+    vertical_default: middle

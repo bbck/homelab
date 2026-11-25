@@ -3,6 +3,9 @@
 area/docs:
   - changed-files:
       - any-glob-to-any-file: "**/*.md"
+area/esphome:
+  - changed-files:
+      - any-glob-to-any-file: "esphome/**"
 area/github:
   - changed-files:
       - any-glob-to-any-file: ".github/**"

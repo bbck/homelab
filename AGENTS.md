@@ -12,6 +12,7 @@ This is a personal homelab repository for a Kubernetes cluster using Talos Linux
 - `terraform/`: OpenTofu projects for infrastructure not in the Kubernetes cluster
 - `talos/`: Configuration for Talos Linux, the OS installed on Kubernetes nodes
 - `hack/`: one-off scripts
+- `esphome/`: ESPHome device configs, with shared Wi-Fi, API and OTA settings in `esphome/common/`
 
 ## Commands
 
@@ -25,7 +26,7 @@ This is a personal homelab repository for a Kubernetes cluster using Talos Linux
 - Always follow the [Conventional Commits](https://www.conventionalcommits.org/) specification
 - Secrets are stored in 1Password and referenced by: the external-secrets operator in Kubernetes, the `onepassword_item` data resource in Terraform, and the `op` 1Password CLI in scripts
 - The filename for resources deployed by flux should match the Kubernetes object in all lower case, e.g. `OCIRepository` in `ocirepository.yaml`
-- Every YAML file starts with `---` and a `# yaml-language-server: $schema=...` line
+- Every YAML file starts with `---`, followed by a `# yaml-language-server: $schema=...` line when a schema exists for it
 - Tools required to run commands are pinned in `mise.toml`
 
 ## PR Reviews
