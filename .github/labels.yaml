@@ -2,6 +2,9 @@
 - name: area/docs
   color: "0e8a16"
   description: Changes made to Markdown docs
+- name: area/esphome
+  color: "0e8a16"
+  description: Changes made in the esphome directory
 - name: area/github
   color: "0e8a16"
   description: Changes made in the .github directory

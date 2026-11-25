@@ -6,12 +6,14 @@ min_version = "2025.1.0"
 helm = "4.3.2"
 opentofu = "1.13.9"
 talosctl = "1.14.6"
+uv = "0.12.13"
 yq = "4.54.3"
 "github:fluxcd/flux2" = "2.10.1"
 "github:home-operations/flate" = "0.8.0"
 "github:home-operations/kopiur" = "0.11.2"
 "github:postfinance/topf" = "0.6.2"
 "github:turing-machines/tpi" = "1.0.7"
+"pipx:esphome" = "2026.11.0"
 
 [env]
 _.path = ["{{ config_root }}/talos/bin"]
@@ -66,3 +68,9 @@ AWS_ACCESS_KEY_ID = "op://Homelab/terraform-r2/AWS_ACCESS_KEY_ID"
 AWS_SECRET_ACCESS_KEY = "op://Homelab/terraform-r2/AWS_SECRET_ACCESS_KEY"
 AWS_ENDPOINT_URL_S3 = "op://Homelab/terraform-r2/endpoint"
 TF_VAR_state_passphrase = "op://Homelab/terraform-r2/TF_STATE_PASSPHRASE"
+
+[tasks.esphome]
+description = "Run the esphome CLI in esphome/ with secrets from 1Password, e.g. mise run esphome run heat-pump.yaml"
+dir = "{{ config_root }}/esphome"
+# secrets.yaml exists only for the length of the run
+run = "trap 'rm -f secrets.yaml' EXIT INT TERM && op inject --force --in-file secrets.yaml.tpl --out-file secrets.yaml && esphome"
