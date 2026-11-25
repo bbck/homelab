@@ -25,10 +25,13 @@ spec:
       enabled: true
     bpf:
       masquerade: true
+      vlanBypass: [20]
     cgroup:
       autoMount:
         enabled: false
       hostRoot: /sys/fs/cgroup
+    cni:
+      exclusive: false
     dashboards:
       enabled: true
     envoy:

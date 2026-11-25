@@ -6,3 +6,4 @@ resources:
   - ./2dot5-gbe.yaml
   - ./apc-ups.yaml
   - ./intel-gpu-device.yaml
+  - ./iot-vlan.yaml
