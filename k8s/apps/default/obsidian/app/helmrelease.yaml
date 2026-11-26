@@ -102,7 +102,7 @@ spec:
           mcp:
             image:
               repository: ghcr.io/bbck/mcpvault
-              tag: 0.18.4@sha256:a1a32b3c0f2d4ced42913c93f3efa1e4297a502d8548faa6160ab83f1615fca1
+              tag: 0.18.4@sha256:0cd209bca888476732d33bfb1f3b5eb539466bf1fdf19c22d08c95d94e371289
             args:
               - --host
               - 0.0.0.0
