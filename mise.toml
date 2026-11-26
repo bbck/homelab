@@ -4,7 +4,7 @@ min_version = "2025.1.0"
 
 [tools]
 helm = "4.3.2"
-opentofu = "1.13.9"
+opentofu = "1.13.10"
 talosctl = "1.14.7"
 uv = "0.13.10"
 yq = "4.54.3"
