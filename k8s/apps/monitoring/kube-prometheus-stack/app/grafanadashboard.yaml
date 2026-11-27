@@ -70,7 +70,7 @@ spec:
     - {inputName: DS_PROMETHEUS, datasourceName: Prometheus}
   grafanaCom:
     id: 15758
-    revision: 46
+    revision: 47
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
